@@ -1,0 +1,6730 @@
+WEBVTT
+
+1
+00:00:01.450 --> 00:00:01.950
+Benny Astria: Mereka
+
+2
+00:00:02.928 --> 00:00:17.770
+Benny Astria: apa namanya? Sistemnya Satu subscribe. Subscribe kedua. Enggak, semua perusahaan itu mau yang namanya Open Datanya ada di sana. Kadang mereka ada mau putus juga kayak gitu gitu. Jadi
+
+3
+00:00:18.837 --> 00:00:26.789
+Benny Astria: ketika diajak kayak gini. Seru juga sih nih ngomongin Echar sama dunia It yang
+
+4
+00:00:27.747 --> 00:00:36.100
+Benny Astria: Ketemunya sama yang ahlinya juga nih. Yang paham gitu. Di dunia programming ini kayak gitu. Karena memang banyak. Sebetulnya kalau mau
+
+5
+00:00:36.688 --> 00:00:42.310
+Benny Astria: mau di apa Ya, mau dianalisa kebutuhan Kebutuhan acara yang paling fundamental.
+
+6
+00:00:43.460 --> 00:00:57.139
+Benny Astria: Database nya itu sendiri sih. Dan Mas Bari waktu itu sudah pernah bahas, walaupun saya Belum, belum pernah ngikutin. Baru Melihat gitu saja. Saya sudah punya gambaran sih. Dan itu sudah langkah yang tepat, sih, Kalau menurut saya
+
+7
+00:00:57.705 --> 00:01:02.690
+Benny Astria: dengan membuat database karyawan itu. Karena dari situlah itu semua bisa dikembangin.
+
+8
+00:01:03.475 --> 00:01:06.400
+Code Bahri: Iya, ini saya. Coba Share itu, Mas. Ya.
+
+9
+00:01:06.636 --> 00:01:07.110
+Benny Astria: Boleh. Ya.
+
+10
+00:01:07.596 --> 00:01:14.900
+Code Bahri: Jadi, sudah ku deploy. Na, aku belum share namanya. Itu baru deploy. Kemarin payah. Lupa
+
+11
+00:01:16.373 --> 00:01:25.569
+Code Bahri: namanya. Itu jago gejian. Akhirnya Enggak tahu namanya. Kalau nanti jelek. Jag beli lagi lah. Di sini kan cuma nama Mas, ya? Nah, itu
+
+12
+00:01:31.363 --> 00:01:32.010
+Code Bahri: sebentar.
+
+13
+00:01:33.600 --> 00:01:37.379
+Code Bahri: Lihat log in nya Tuh, Oke, oke,
+
+14
+00:01:49.210 --> 00:01:49.589
+Code Bahri: admin
+
+15
+00:01:54.095 --> 00:01:54.440
+Code Bahri: gitu, ya.
+
+16
+00:02:06.020 --> 00:02:11.240
+Code Bahri: Jadi, ada data karyawan Mas. Di sini, semuanya. Nah, kayak gini, kan?
+
+17
+00:02:11.810 --> 00:02:13.839
+Benny Astria: Nah, ini kayak kalau mau nambah, ya.
+
+18
+00:02:14.436 --> 00:02:15.780
+Code Bahri: Data datanya gitu, kan.
+
+19
+00:02:16.880 --> 00:02:17.689
+Benny Astria: Tambah karyawan ya?
+
+20
+00:02:17.990 --> 00:02:27.309
+Code Bahri: Iya, nah, sebenarnya sebelum ini, kan? Aku juga buat Mas Untuk Pamo. Pamora. Ini baru lah baru aku buat. Dan Ini masih di. Masih. Apa itu di testing? Mereka juga gitu.
+
+21
+00:02:27.822 --> 00:02:29.920
+Code Bahri: Ini juga lebih lengkap. Ini jadi kan? Aku.
+
+22
+00:02:30.173 --> 00:02:30.299
+Benny Astria: Gitu.
+
+23
+00:02:30.640 --> 00:02:35.740
+Code Bahri: Tapi kan ini kan punya client, kan? Jadinya aku bikin baru yang agak beda gitu
+
+24
+00:02:36.546 --> 00:02:43.699
+Code Bahri: ini. Ini juga lengkap, Mas. Ini kan info dasar dulu, kan? Kode karyawan. Nama email gitu, kan? Telepon
+
+25
+00:02:44.395 --> 00:02:47.020
+Code Bahri: terus, Nik Akasim, kan?
+
+26
+00:02:47.186 --> 00:02:47.353
+Benny Astria: Iya.
+
+27
+00:02:47.910 --> 00:02:54.250
+Code Bahri: Jika nama ibu terus Departemen Jabatan Shift Nip, semuanya lah.
+
+28
+00:02:54.906 --> 00:03:02.160
+Code Bahri: Kerjaan Rfid, Kunci Pkwt gini, kan? Karena ini Based on. Memang ini Kalau ini memang perusahaan.
+
+29
+00:03:02.420 --> 00:03:03.199
+Benny Astria: Kebutuhan mereka. Ya.
+
+30
+00:03:03.764 --> 00:03:05.590
+Code Bahri: Itu sudah punya database nya gitu.
+
+31
+00:03:06.192 --> 00:03:08.740
+Code Bahri: Xl, kan? Makanya aku bisa bikin seperti ini
+
+32
+00:03:09.350 --> 00:03:28.590
+Code Bahri: gitu. Nah, Bpjs nya. Info bank gitu, kan? Biasanya terus baru kontak darurat sama lokasi penugasannya lah kayak dia Itu di cabang mana kan? Dia ini perusahaannya, kan? Punya banyak Cabang, kan? Gitu Sebenarnya gitu ada brand. Brand lah. Kita ada di Ikn dan lain lain.
+
+33
+00:03:29.293 --> 00:03:29.866
+Code Bahri: Nah,
+
+34
+00:03:31.140 --> 00:03:48.370
+Code Bahri: kalau ini yang mau saya buka di Course Course kan enggak selengkap. Itulah gitu. Bayangan kan gitu kan? Gitu kan gitu. Tapi kan hampir sama Kayak ada departemen. Ada Jabatan Gitu, kan? Nah, nanti ada kehadiran. Kehadiran. Laporan kehadiran. Jadwal gitu kan
+
+35
+00:03:49.051 --> 00:04:00.560
+Code Bahri: Terus ngajuan lembur. Pengaturan lembur gitu gitu kan ada nih Kayak jamnya ada Nelayan ada cuti. Ada. Ini karir. Ini karena aku, Nyontak yang di kan ada karir
+
+36
+00:04:01.046 --> 00:04:03.049
+Code Bahri: jalur karir dan lain lain lah gitu.
+
+37
+00:04:03.600 --> 00:04:04.620
+Code Bahri: Nah, kelekuan nih.
+
+38
+00:04:04.885 --> 00:04:06.209
+Benny Astria: Kan udah nyampe. Kpi ya.
+
+39
+00:04:07.250 --> 00:04:09.050
+Code Bahri: Di dalam Regipa gitu, kan.
+
+40
+00:04:09.415 --> 00:04:11.970
+Benny Astria: Itu sebetulnya malah satu fitur tersendiri. Tuh.
+
+41
+00:04:12.616 --> 00:04:13.449
+Code Bahri: Ini segini ini, ya?
+
+42
+00:04:13.850 --> 00:04:22.670
+Benny Astria: Iya, yang Scoop itu tuh sebetulnya fitur sendiri Jadi wak kalau saya waktu itu pakai Axio, jadi mereka ada beberapa Fitur.
+
+43
+00:04:23.398 --> 00:04:25.289
+Benny Astria: Jadi, fitur fundamentalnya adalah database.
+
+44
+00:04:25.728 --> 00:04:29.239
+Code Bahri: Hasil itu apa? Nam Web webnya? Apa hasilnya.
+
+45
+00:04:30.157 --> 00:04:31.799
+Benny Astria: A X I double. O.
+
+46
+00:04:32.690 --> 00:04:32.950
+Code Bahri: Ini
+
+47
+00:04:37.597 --> 00:04:38.549
+Code Bahri: Asio yang mana?
+
+48
+00:04:39.184 --> 00:04:40.126
+Benny Astria: Coba ya bentar.
+
+49
+00:04:40.930 --> 00:04:42.400
+Code Bahri: Itu Asio Microsoft.
+
+50
+00:04:44.013 --> 00:04:46.654
+Benny Astria: Dia dari sini sih.
+
+51
+00:04:47.440 --> 00:04:48.999
+Code Bahri: Coba share di chat.
+
+52
+00:04:49.283 --> 00:04:49.566
+Benny Astria: Coba.
+
+53
+00:04:52.253 --> 00:04:58.700
+Code Bahri: Rasio yang mana nih? Soalnya udah banyak istilah. Asio Laptop. Laptop juga nih. Asio.
+
+54
+00:05:05.983 --> 00:05:09.010
+Benny Astria: Ini, coba saya.
+
+55
+00:05:13.775 --> 00:05:17.359
+Code Bahri: Nah, makanya saya ini semakin ke sini, kan? Masih Opro ini.
+
+56
+00:05:22.838 --> 00:05:24.310
+Code Bahri: Ini Free Bank. Bayar.
+
+57
+00:05:25.570 --> 00:05:25.980
+Benny Astria: Berbayar.
+
+58
+00:05:26.732 --> 00:05:27.859
+Code Bahri: Ini bayar, ya.
+
+59
+00:05:29.599 --> 00:05:31.399
+Code Bahri: Bayar berapa kalian ini?
+
+60
+00:05:32.105 --> 00:05:38.189
+Benny Astria: Itu beda beda nih. Waktu saya di Holland Bakery, kita pakai semua fitur.
+
+61
+00:05:38.580 --> 00:05:39.749
+Code Bahri: Semua fitur jadi.
+
+62
+00:05:40.347 --> 00:05:42.729
+Benny Astria: Fitur database yang sudah pasti. Ya.
+
+63
+00:05:43.240 --> 00:05:44.260
+Code Bahri: Itu Fairoll.
+
+64
+00:05:45.070 --> 00:05:56.469
+Benny Astria: Fitur Kpi. Penilaian terus di situ juga Kita bisa simpan kontrak itu tersendiri lagi. Industrial Relationship masuknya.
+
+65
+00:05:57.054 --> 00:05:57.317
+Code Bahri: Terus.
+
+66
+00:05:57.904 --> 00:06:02.619
+Benny Astria: Ada training. Nah, itu terpisah lagi tuh untuk nge record training. Segala macam kayak gitu.
+
+67
+00:06:02.895 --> 00:06:03.444
+Code Bahri: Model Ya.
+
+68
+00:06:04.086 --> 00:06:12.479
+Benny Astria: Dari proses rekrutmennya juga. Kita sudah bisa masuk sama absensi absensinya. Waktu itu saya masih manual. Jadi,
+
+69
+00:06:13.268 --> 00:06:20.120
+Benny Astria: mesin pinjarnya itu. Kita sambungin ke? Apa namanya? Attendant Solution. Jadi, secara otomatis, dia akan narik.
+
+70
+00:06:20.650 --> 00:06:25.460
+Benny Astria: Tapi itu kalau mereka tuh perlu di setting dulu. Schedule nya.
+
+71
+00:06:25.976 --> 00:06:26.570
+Code Bahri: Pola, schedule.
+
+72
+00:06:26.880 --> 00:06:33.670
+Benny Astria: Sebetulnya, untuk yang kalau misalkan ada shifting segala macam. Jadi mereka ada ada adjustment lah kayak gitu.
+
+73
+00:06:37.400 --> 00:06:37.780
+Code Bahri: Dia tuh.
+
+74
+00:06:38.101 --> 00:06:45.169
+Benny Astria: Sudah sudah satu fitur sendiri. Itu sebetulnya. Jadi, Mas, Mari bisa bisa. Apa namanya? Karena di. Kalau di perusahaan sekarang yang saya.
+
+75
+00:06:46.550 --> 00:06:50.950
+Benny Astria: Kita pakai aksi yo. Tapi hanya untuk performance Evaluation.
+
+76
+00:06:53.016 --> 00:06:57.649
+Benny Astria: Kurang lebih sih. Kayaknya harganya sama tuh. Seingat saya saat itu, jadi
+
+77
+00:06:58.734 --> 00:07:08.649
+Benny Astria: yang di saya. Itu dulu di dua ribu berapa? Ya, delapan belas. Kalau enggak salah karena belinya sebelum saya masuk sih, Sekitar dua ratusan, lima puluh jutaan lah.
+
+78
+00:07:09.552 --> 00:07:11.459
+Code Bahri: Itu sekali Beli atau gimana? Dua ratus.
+
+79
+00:07:11.880 --> 00:07:15.370
+Benny Astria: Sekali beli biaya maintenance nya. Beda tuh. Iya.
+
+80
+00:07:18.532 --> 00:07:20.710
+Code Bahri: Berarti di Install. Di di sana, di mana?
+
+81
+00:07:21.386 --> 00:07:23.969
+Code Bahri: Di Di kantor gitu, Di server.
+
+82
+00:07:24.156 --> 00:07:31.470
+Benny Astria: Uh, uh, di enggak. Karena bisa kita akses di mana aja sih?
+
+83
+00:07:33.918 --> 00:07:41.300
+Code Bahri: Maksudnya database nya di. Bukan di servernya. Mereka kan gitu atau di seluruhnya. Adil.
+
+84
+00:07:41.595 --> 00:07:42.969
+Benny Astria: Kayaknya sih di mereka deh.
+
+85
+00:07:43.941 --> 00:07:46.049
+Code Bahri: Sus juga loh. Berarti sus gitu loh.
+
+86
+00:07:47.810 --> 00:07:48.510
+Benny Astria: Subscription. Maksudnya.
+
+87
+00:07:49.315 --> 00:07:51.759
+Code Bahri: Sus itu tuh software askel Service, Ya, jadi.
+
+88
+00:07:52.433 --> 00:07:52.769
+Benny Astria: Kita.
+
+89
+00:07:53.215 --> 00:07:56.469
+Code Bahri: Kita bayar itu. Bayar sekali. Apa bayar bayar tahunan.
+
+90
+00:07:58.239 --> 00:07:58.439
+Benny Astria: Yuk.
+
+91
+00:07:58.743 --> 00:07:59.350
+Code Bahri: Daftarnya itu.
+
+92
+00:08:00.158 --> 00:08:04.270
+Benny Astria: Untuk beli aplikasinya Sekali tahunannya. Itu biaya maintenance.
+
+93
+00:08:05.300 --> 00:08:06.160
+Code Bahri: Maintennya berapa?
+
+94
+00:08:07.248 --> 00:08:09.339
+Benny Astria: Wah, saya. Kalau kurang tahu tuh.
+
+95
+00:08:14.131 --> 00:08:22.369
+Benny Astria: Kalau dulu di dua ribu berapa? Ya? Saya di Holland. Dua ribu, tujuh belas. Berarti mungkin di sekitaran dua ribu.
+
+96
+00:08:24.223 --> 00:08:29.219
+Benny Astria: Tujuh belas, dua ribu, Lima Belasan lah. Itu dengan harga yang sama. Semua fiturnya kebuka.
+
+97
+00:08:31.050 --> 00:08:33.100
+Code Bahri: Jadi sekarang di tempatmu. Apa.
+
+98
+00:08:34.059 --> 00:08:41.960
+Benny Astria: Kalau yang sekarang, untuk database karyawan dipegang langsung dari Headquarter sih dari Jepang itu masih pakai sap.
+
+99
+00:08:42.763 --> 00:08:43.389
+Code Bahri: Oke, siap.
+
+100
+00:08:43.946 --> 00:08:46.729
+Benny Astria: Kalau untuk absensi, pakai Sigma.
+
+101
+00:08:48.573 --> 00:08:48.886
+Code Bahri: Sigma.
+
+102
+00:08:49.875 --> 00:08:50.350
+Benny Astria: Sigma.
+
+103
+00:08:51.700 --> 00:08:51.960
+Code Bahri: Sigma.
+
+104
+00:08:54.450 --> 00:08:55.380
+Benny Astria: Mbak, coba
+
+105
+00:09:06.146 --> 00:09:06.520
+Benny Astria: ini.
+
+106
+00:09:08.336 --> 00:09:09.370
+Benny Astria: Buah Airlines.
+
+107
+00:09:18.780 --> 00:09:19.030
+Code Bahri: Haris.
+
+108
+00:09:24.533 --> 00:09:28.049
+Benny Astria: Cuma agak kurang suka hiu. I Ux nya jelek banget. Soalnya.
+
+109
+00:09:28.773 --> 00:09:29.859
+Code Bahri: Cedul banget ya.
+
+110
+00:09:30.325 --> 00:09:33.120
+Benny Astria: Iya, malah lebih jadul daripada Aksio.
+
+111
+00:09:34.300 --> 00:09:34.510
+Code Bahri: Oke.
+
+112
+00:09:35.268 --> 00:09:40.420
+Benny Astria: Dulu kita komplain komplain soal aktio. Karena tampilannya kurang menarik gitu.
+
+113
+00:09:41.335 --> 00:09:46.570
+Benny Astria: Cuma ini karena kebutuhan. Jadi harus buru buru Saat itu.
+
+114
+00:09:47.483 --> 00:09:48.050
+Code Bahri: Iya, iya.
+
+115
+00:09:49.642 --> 00:09:56.850
+Benny Astria: Kalau ini hanya sekedar data karyawan Basic sama teh roll
+
+116
+00:10:04.512 --> 00:10:11.789
+Benny Astria: ini juga polanya sama sih. Jadi beli aplikasi terus. Ada Biaya maintenance tahunan kayak gitu.
+
+117
+00:10:13.625 --> 00:10:15.520
+Code Bahri: Belinya berapa sekali? Beli Kalau risiko.
+
+118
+00:10:17.255 --> 00:10:22.119
+Benny Astria: Kemarin kurang lebih hampir sama lah. Ya, sekitar dua ratusan. Lima puluh.
+
+119
+00:10:22.300 --> 00:10:22.659
+Code Bahri: Dua setengah.
+
+120
+00:10:22.814 --> 00:10:23.279
+Benny Astria: Potongan gitu ya.
+
+121
+00:10:23.662 --> 00:10:24.450
+Code Bahri: Mahal banget, sih.
+
+122
+00:10:26.173 --> 00:10:26.799
+Benny Astria: Itu dia.
+
+123
+00:10:27.780 --> 00:10:30.300
+Code Bahri: Jakarta tuh harganya nguri Nguri gitu ya?
+
+124
+00:10:31.690 --> 00:10:37.600
+Benny Astria: Itulah Mas. Makanya kenapa saya ngambil Course Course? Itu tujuan awalnya
+
+125
+00:10:38.172 --> 00:10:40.920
+Benny Astria: ingin membangun sistem sendiri gitu di internal.
+
+126
+00:10:41.273 --> 00:10:49.290
+Code Bahri: Uh, uh, padahal ini orang aku. Yang ini. Yang ini nih. Sistem ini.
+
+127
+00:10:49.813 --> 00:10:57.490
+Code Bahri: Ini. Ini nggak cuma Sar dong. Ya, Cuma ada. Ada ceklis ceklis. Itu kayak Ini kan dia, kafe. Untuk
+
+128
+00:10:58.083 --> 00:11:07.460
+Code Bahri: apa itu? Resto lah Resto gitu. Dia punya banyak cabang resto gitu, Dia itu Awalnya itu pengin bikin sistem untuk ceklis. Correction lah gitu. Jadi, kayak tiap pagi itu.
+
+129
+00:11:07.920 --> 00:11:12.599
+Code Bahri: Apa itu? Si karyawan itu harus ceklis gitu. Ini sudah benar Belum, Ini benar belum gitu. Kayak.
+
+130
+00:11:12.746 --> 00:11:13.040
+Benny Astria: Uh, uh.
+
+131
+00:11:13.703 --> 00:11:17.019
+Code Bahri: Kompornya. Toiletnya gitu. Gitu kan.
+
+132
+00:11:17.295 --> 00:11:18.399
+Benny Astria: Checklist, Preparation Gitu ya.
+
+133
+00:11:18.916 --> 00:11:24.850
+Code Bahri: Ke Checklist. Sudah empat jam sekali gitu, kan? Jadi, biar nggak perlu disuruh Suruh lagi. Harus tahu Sop dan lain lain gitu.
+
+134
+00:11:25.565 --> 00:11:26.690
+Code Bahri: Nah, terus meeting
+
+135
+00:11:27.189 --> 00:11:34.210
+Code Bahri: itu. Kayaknya cocoknya. Nyambung ke app Ke apps Nya bilang gitu kan? Apps Absensi gitu loh. Absensinya ada nggak Sekarang ada cuman.
+
+136
+00:11:34.897 --> 00:11:42.669
+Code Bahri: Ini enggak puas saya, Mas. Saya bilang gitu sudah bikin, tapi banyak erornya. Gini gini atau mau saya hitung sekalian? Mas, Hitungin.
+
+137
+00:11:43.206 --> 00:11:44.120
+Benny Astria: Kita hitungin.
+
+138
+00:11:44.662 --> 00:11:50.939
+Code Bahri: Ini tuh terus kalau. Kalau cacipitzi bilangnya memang hampir seratusan gitu. Kak,
+
+139
+00:11:51.500 --> 00:11:54.299
+Code Bahri: seratusan ini cuman loh. Ini seratus supaya ini Maksudnya
+
+140
+00:11:54.789 --> 00:12:03.690
+Code Bahri: terus tak ajukan. Enam puluh enam puluh ditawar. Tawar kena lima, dua lah. Gitu. Itu pun juga server dan lain lain, aku bayarin setahun lah gitu, kak.
+
+141
+00:12:04.086 --> 00:12:06.229
+Benny Astria: Bersih, bersih. Paling lima puluh lah. Gitu.
+
+142
+00:12:07.043 --> 00:12:09.729
+Code Bahri: Gitu Itu pun juga.
+
+143
+00:12:10.031 --> 00:12:17.880
+Benny Astria: Enggak tahu. Mungkin karena saya di Jogja. Terus Zaman Ai, kan? Kayak se segala sesuatunya. Itu kayak sekarang. Itu lebih Murah gitu, Mas. Sebenarnya, ya.
+
+144
+00:12:18.163 --> 00:12:23.839
+Code Bahri: Nah, contoh kayak bikin apps kayak gini saja. Sekarang ini juga. Ini kemarin. Bikin cuma sehari. Dua hari gitu. Wah,
+
+145
+00:12:24.478 --> 00:12:29.680
+Code Bahri: Aku pengin lah buat harus buat nih gitu kan? Kalau nggak nggak bisa untuk demo demo gitu. Ceritanya.
+
+146
+00:12:30.445 --> 00:12:34.680
+Benny Astria: Justru tampilan ini malah lebih bagus dan lebih mengakomodir, sih. Kalau menurut saya.
+
+147
+00:12:35.738 --> 00:12:38.650
+Code Bahri: Dari mana dari yang ini? Apa dari yang.
+
+148
+00:12:39.617 --> 00:12:44.479
+Benny Astria: Dari baik yang Axio maupun Sigma. Tapi
+
+149
+00:12:45.141 --> 00:12:49.969
+Benny Astria: jujur aja, di Axio, itu memang secara fitur lengkap banget.
+
+150
+00:12:52.060 --> 00:12:54.719
+Benny Astria: Cuma Ux nya saja yang kurang jelek.
+
+151
+00:12:55.502 --> 00:12:58.759
+Benny Astria: Karena dia benar benar bisa memotorisasi
+
+152
+00:13:00.397 --> 00:13:07.570
+Benny Astria: siapa saja yang bisa lihat. Jadi, layer. Apa Authority Ride nya? Ya.
+
+153
+00:13:08.733 --> 00:13:23.799
+Code Bahri: Itu sih harusnya sekarang gampang kayak ini, kan? Sebenarnya di sini kan juga ada kayak Authority nya, kan? Kayak admin Itu dia, nanti bisa apa saja gitu. Ntar kalau di sini, itu. Dia ada di rule Akses gini, loh, Mas Jadi aku kita sudah Bikin, kan?
+
+154
+00:13:25.467 --> 00:13:29.450
+Code Bahri: Tentu, employees. Dia di sana. Lihat apa gitu, kan?
+
+155
+00:13:30.315 --> 00:13:34.360
+Benny Astria: Kayak gitu bisa. Sebenarnya dia bisa edit atau enggak gitu gitu.
+
+156
+00:13:34.902 --> 00:13:38.230
+Code Bahri: Edit, lihat. Tambah gitu gitu, kan? Sebenarnya, sekarang itu sudah
+
+157
+00:13:39.075 --> 00:13:41.120
+Code Bahri: kuhp. Itu umum lah gitu, kan? Bukan sesuai.
+
+158
+00:13:41.286 --> 00:13:41.619
+Benny Astria: Iya, iya.
+
+159
+00:13:42.205 --> 00:13:43.630
+Code Bahri: Susah gitu. Sebenarnya.
+
+160
+00:13:44.239 --> 00:13:55.689
+Benny Astria: Nah, saat itu di aksi itu bisa bisa ngatur setiap kolom yang di situ benar benar bisa diatur kayak tadi tuh yang kayak Mas Baris Kasih lihat ya. Karena misalkan.
+
+161
+00:13:56.031 --> 00:13:58.760
+Code Bahri: Untuk seorang admin. Dia enggak boleh lihat gaji.
+
+162
+00:14:00.026 --> 00:14:05.360
+Benny Astria: Datanya akan jadi bintang Bintang tuh. Sisa datanya La yang lain. Dia akan muncul kayak gitu.
+
+163
+00:14:07.797 --> 00:14:08.720
+Code Bahri: Iya, iya, iya.
+
+164
+00:14:10.797 --> 00:14:19.889
+Benny Astria: Tapi level tertingginya berarti Master Admin. Nah, dialah yang bisa menghapus
+
+165
+00:14:20.493 --> 00:14:23.930
+Benny Astria: melihat semuanya kayak gitu. Pokoknya, dia yang paling bisa merubah
+
+166
+00:14:25.168 --> 00:14:33.770
+Benny Astria: di dalam situ. Jadi dia yang bisa ngehapus karyawan. Jadi kalau kayak cuma admin, dia bisa nambahin. Tapi dia enggak bisa menghapus gitu.
+
+167
+00:14:34.065 --> 00:14:39.660
+Code Bahri: Iya, iya, iya, iya. Di sini kan Bisa diganti juga gitu. Ini kan kayak ini seper admin lah. Bahasanya.
+
+168
+00:14:40.028 --> 00:14:45.180
+Benny Astria: Tapi itu kurang lebih sama, tuh. Jadi super administrator yang bisa bisa ngatur. Ya.
+
+169
+00:14:46.423 --> 00:14:46.650
+Code Bahri: Gitu.
+
+170
+00:14:46.959 --> 00:14:50.059
+Benny Astria: Mungkin cuma masalah. Nanti tinggal diatur Ceklis annya aja, kan?
+
+171
+00:14:50.425 --> 00:14:51.520
+Code Bahri: Gini kan? Ini enggak apa. Apa.
+
+172
+00:14:51.667 --> 00:14:52.110
+Benny Astria: Uh, uh, uh.
+
+173
+00:14:52.443 --> 00:14:53.110
+Code Bahri: Gitu kan.
+
+174
+00:14:53.470 --> 00:14:59.590
+Benny Astria: Betul, Nah, itu enak tuh. Kalau udah ada kayak gininya. Authority right nya jadi lebih fleksibel, kan?
+
+175
+00:15:00.314 --> 00:15:04.660
+Code Bahri: Bisa nanti ngaruh ke sini? Tampilannya muncul. Apa enggak gitu gitu? Sebenarnya.
+
+176
+00:15:05.367 --> 00:15:11.829
+Benny Astria: Karena dari situ ngasih fleksibilitas ke user
+
+177
+00:15:12.502 --> 00:15:15.310
+Benny Astria: yang punya. Baik itu tim kecil maupun tim besar.
+
+178
+00:15:16.413 --> 00:15:16.696
+Benny Astria: Karena.
+
+179
+00:15:18.035 --> 00:15:18.949
+Code Bahri: Sepengalaman saya.
+
+180
+00:15:19.590 --> 00:15:26.659
+Benny Astria: Kayak misalkan saya pernah di perusahaan yang Scoop nya kecil. Ya, dia mau Hrd tuh.
+
+181
+00:15:27.931 --> 00:15:38.119
+Benny Astria: Sebagian enggak boleh tahu. Gaji Cuma Hr Manager yang mau tahu. Bo boleh tahu gaji kayak gitu dan owner biasanya kayak gitu, tapi untuk Sku, perusahaan besar,
+
+182
+00:15:39.333 --> 00:15:46.240
+Benny Astria: selapel admin saja Die Ecr itu bisa lihat gaji, Tapi hanya beberapa yang punya akses kayak gitu.
+
+183
+00:15:47.722 --> 00:15:52.219
+Code Bahri: Makanya ini kan kalau ini kan namanya Roll Roll Access lah. Jadi kita bikin.
+
+184
+00:15:52.366 --> 00:15:52.660
+Benny Astria: Uh, uh.
+
+185
+00:15:53.022 --> 00:15:55.559
+Code Bahri: Poolnya dulu. Habis itu, nanti dipasang ke
+
+186
+00:15:56.413 --> 00:16:01.010
+Code Bahri: ke user nya. Mas, Gitu dipasang ke sini. Ini kan nanti dia
+
+187
+00:16:02.821 --> 00:16:05.839
+Code Bahri: daftar karyawan ini, kan? Kalau ini kan dia seper admin gitu, kan?
+
+188
+00:16:06.720 --> 00:16:13.470
+Code Bahri: Gitu Nanti bisa nambah. Bisa diedit di sini untuk rule nya ini kan Apa gitu
+
+189
+00:16:13.955 --> 00:16:19.670
+Code Bahri: jadi dia Nanti ketika login, dia bisa lihat apa gitu. Itu pun juga nanti ngaruh ke mobile Apps nya gitu
+
+190
+00:16:22.105 --> 00:16:23.050
+Code Bahri: ini nih, Jadi
+
+191
+00:16:23.700 --> 00:16:27.790
+Code Bahri: saya kan, Bi. Saya baru bikinkan seperti ini. Contoh gitu, ya, Mas. Baru bikin seperti ini nih.
+
+192
+00:16:28.326 --> 00:16:35.230
+Code Bahri: Gitu kan? Enggak tahu ini kebanyakan Terlalu terlalu banyak. Apa ada yang kurang atau bagaimana? Gitu, kan?
+
+193
+00:16:35.400 --> 00:16:35.739
+Benny Astria: Uh, uh.
+
+194
+00:16:36.139 --> 00:16:52.900
+Code Bahri: Nah, karena semakin ke sini, kan? Kayak gini, Mas. Sejarah Jaco Flighter gitu, kan? Sudah mungkin hampir tiga tahun. Udah Tiga tahun jalan gitu dari yang kita belajar. Basic Flutter. Basic gitu, kan? Terus mulai Fullstac. Itu batch Enam Itu sekitar
+
+195
+00:16:53.594 --> 00:16:56.910
+Code Bahri: mungkin bulan bulan Februari. Dua ribu, dua, tiga.
+
+196
+00:16:57.568 --> 00:17:07.990
+Code Bahri: Ada back end nya. Ada database nya gitu, kan? Ada webnya gitu? Sebelumnya itu full aplikasi androidnya. Itu.
+
+197
+00:17:08.523 --> 00:17:08.849
+Benny Astria: Wah, bisa.
+
+198
+00:17:09.245 --> 00:17:13.989
+Code Bahri: Itu kan baru belajar. Ravel tuh. Aku pake Ravel nih. Batch. Tujuh
+
+199
+00:17:14.621 --> 00:17:32.309
+Code Bahri: rafel, terus. Akhirnya, sembilan. Itu pernah Note Cs Terus sepuluh. Itulah rafel. Terus alumni bilang, Mas. Jangan guna ganti pakai Satu aja gitu kan, biar? Enggak bingung akhirnya. Nge ruffel terus. Tuh Mas Ravel terus. Akhirnya pernah. Level sepuluh Sebelas sekarang, kan? Dua belas.
+
+200
+00:17:32.677 --> 00:17:33.180
+Benny Astria: Dua belas, Ya.
+
+201
+00:17:33.622 --> 00:17:39.370
+Code Bahri: Terus ada filamen. Pakai filamen. Terus. Sekarang pakai Talwin. Akhirnya pakai Talvin gitu.
+
+202
+00:17:39.895 --> 00:17:40.092
+Benny Astria: Nah.
+
+203
+00:17:41.360 --> 00:17:46.089
+Code Bahri: Jalannya gitu. Nah, dari yang apa itu saya.
+
+204
+00:17:46.528 --> 00:17:59.919
+Code Bahri: Kalau mau bikin event. Itu cuma ide jauh. Punya ide tak buatin Event yang mau join ayo gitu, kan? Enggak percaya yang sudah gitu, kan? Sampai setengah setengah. Sudah ada demonya sedikit. Nanti kita bahas di Course gitu. Nah, sekarang
+
+205
+00:18:00.880 --> 00:18:18.129
+Code Bahri: paling enggak ada demonya yang mereka bisa lihat gitu, kan? Bisa lihat baru apa itu? Aku bikin event gitu, kan? Kayak gitu dan. Dan sebelumnya kan paling kayak. Aku bikin pos paling Ps sederhana gitu karena masih loading manual. Terus.
+
+206
+00:18:18.659 --> 00:18:18.779
+Benny Astria: Itu.
+
+207
+00:18:19.173 --> 00:18:19.370
+Code Bahri: Waktunya.
+
+208
+00:18:19.628 --> 00:18:21.439
+Benny Astria: Kalau yang bos itu masih manual, ya?
+
+209
+00:18:22.023 --> 00:18:25.459
+Code Bahri: Masih manual, Mas. Saya baru pakai, Ai, kan? Sekitar dari
+
+210
+00:18:26.548 --> 00:18:32.539
+Code Bahri: September. Kalau nggak salah tuh. September Pa September tahun lalu gitu sebelumnya. Itu manual, Mas. Masih
+
+211
+00:18:33.687 --> 00:18:35.419
+Code Bahri: apa itu loading manual, Mas gitu.
+
+212
+00:18:36.023 --> 00:18:40.150
+Code Bahri: Makanya enggak bisa banyak. Fiturnya Enggak bisa banyak. Waktunya kan Sempit Projek
+
+213
+00:18:41.261 --> 00:18:44.310
+Code Bahri: Terus idenya juga enggak bisa lengkap gitu.
+
+214
+00:18:44.832 --> 00:18:52.719
+Code Bahri: Dan aku enggak bisa bikin event yang terlalu panjang gitu, kan? Karena kan kost yang di tempatku, Harganya juga seratus ribuan. Ratus ribu gitu. Dua ratus ribu,
+
+215
+00:18:53.254 --> 00:19:01.059
+Code Bahri: kan? Enggak bisa manjang gitu oleh kalau di pricing ku itu kalau tak naikin Tiga ratus yang join. Siapa gitu? Ibaratnya, kan?
+
+216
+00:19:02.204 --> 00:19:03.259
+Code Bahri: Nah, jadi memang harus.
+
+217
+00:19:03.602 --> 00:19:04.629
+Benny Astria: Disesuaikan juga, kan.
+
+218
+00:19:04.944 --> 00:19:10.290
+Code Bahri: Uh, huh, Kalau kalau seratus lima puluh dua ratus masa dua bulan gitu, kan? Masa ya.
+
+219
+00:19:10.645 --> 00:19:11.000
+Benny Astria: Iya.
+
+220
+00:19:11.190 --> 00:19:17.060
+Code Bahri: Nah, jadi kan harus imbang gitu. Bayanganku gitu. Makanya apa
+
+221
+00:19:18.474 --> 00:19:22.970
+Code Bahri: harus disesuaikan gitu? Cuma seratus ribu. Tapi kompleks banget kan? Saya.
+
+222
+00:19:23.969 --> 00:19:26.849
+Code Bahri: Apa namanya Men Downgrade? Sebuah value gitu, kan? Juga.
+
+223
+00:19:27.148 --> 00:19:30.730
+Benny Astria: Betul, itu juga kurang bagus dan kurang bijak sih. Kalau menurut saya.
+
+224
+00:19:31.122 --> 00:19:40.550
+Code Bahri: Kan kan Pengenku gitu. Ini kayak dolim Dolim sama sama ilmunya. Itu gitu. Istilahnya kan gitu, kan? Jadi harus proporsionallah gitu, kan? Ceritanya.
+
+225
+00:19:41.461 --> 00:19:49.840
+Benny Astria: Enggak bagus juga sih kalau kayak gitu. Jadi, karena memang secara ilmunya ini kan valuable banget nih. Sebetulnya jadi.
+
+226
+00:19:51.152 --> 00:19:52.760
+Code Bahri: Harus sesuai antara.
+
+227
+00:19:53.057 --> 00:19:56.029
+Benny Astria: Cost yang dikeluarkan dengan ilmu yang akan diberikan gitu loh.
+
+228
+00:19:57.211 --> 00:20:08.690
+Code Bahri: Itu. Makanya aku tak apa. Itu harus kayak kemarin terakhir, kan? Saya bikin yang klinik kecantikan itu, kan? Seratus lima puluh lah gigaby. Tiga ratus lima puluh gitu.
+
+229
+00:20:09.287 --> 00:20:12.140
+Code Bahri: Kenapa enggak apa? Apa karena emang
+
+230
+00:20:13.109 --> 00:20:22.150
+Code Bahri: Apa pasarnya kayak gitu? Banyak gitu, kan? Pasir kayak gitu, tanya. Tapi siapa tahu Next Time perlu gitu karena kan seperti itu, yang kadang dibutuhkan sama
+
+231
+00:20:22.552 --> 00:20:33.669
+Code Bahri: orang orang kaya gitu. Orang kaya kan biasanya Bikinnya klinik gitu, kan? Nah, siapa tahu kan begitu. Jadi aku punya aset tuh gitu. Minimal aku punya aset, kan? Dibiayai member tuh yang ini Yang mau bayar gitu.
+
+232
+00:20:34.333 --> 00:20:42.720
+Code Bahri: Nah, kalau yang ini, Itu bayanganku, kan? Pakai konsep Akademi Akademi Itu kan sekitar lima ratus ribuanku.
+
+233
+00:20:43.384 --> 00:20:47.369
+Benny Astria: Bera Berarti apa namanya? Nanti?
+
+234
+00:20:48.273 --> 00:20:51.580
+Benny Astria: Dia kayak semacam Kursnya. Agak panjang juga, ya?
+
+235
+00:20:52.583 --> 00:21:02.329
+Code Bahri: Nah, aku kan baru coba akademicalter, kan? Pertama, yang pos sas itu, kan? Yang pas akademi itu, kan? Itu kan Dari Desember, Januari,
+
+236
+00:21:03.330 --> 00:21:07.270
+Code Bahri: Maret, Ja Desember, Januari, Februari, Maret.
+
+237
+00:21:07.748 --> 00:21:16.119
+Code Bahri: Empat bulan Itu bayar gua gini. Waktu itu saya kan bikin event itu, saya punya Data gitu, kan? Saya punya data member terus.
+
+238
+00:21:17.195 --> 00:21:19.909
+Code Bahri: Saya analisis Ltv gitu, kan?
+
+239
+00:21:20.460 --> 00:21:22.260
+Code Bahri: Ltv itu apa namanya tuh
+
+240
+00:21:24.195 --> 00:21:43.330
+Code Bahri: Long Time Value jadi per member Itu sebenarnya pernah mengeluarin uang. Berapa sih di Course ku gitu, Kak. Tapi dataku nggak nggak lengkap karena aku bermigrasi ke sistem yang lumayan Bagus, datanya kan? Di dua ribu, dua, empat di Agustus lah gitu. Jadi, data dari
+
+241
+00:21:43.671 --> 00:21:47.290
+Code Bahri: dua ribu, dua, tiga sampai pertengahan Agustus pun saya Enggak dapat gitu
+
+242
+00:21:47.753 --> 00:21:50.259
+Code Bahri: gitu. Enggak bisa tak analisis lah gitu kan.
+
+243
+00:21:50.920 --> 00:21:51.240
+Benny Astria: Analisis.
+
+244
+00:21:51.547 --> 00:21:56.459
+Code Bahri: Dari Agustus. Dua ribu, dua, empat sampai akhir. Dua ribu, dua, lima, Lumayan lah gitu, Pak.
+
+245
+00:21:57.820 --> 00:22:02.159
+Code Bahri: Nah, Ltv ku. Itu Itu rata rata.
+
+246
+00:22:03.058 --> 00:22:06.700
+Code Bahri: Apa yang pernah ngeluarin uang di Joko Flata? Itu
+
+247
+00:22:07.826 --> 00:22:13.500
+Code Bahri: yang di atas. Di atas satu juta. Itu dikit, Ya, Sekitar berapa gitu.
+
+248
+00:22:13.956 --> 00:22:14.233
+Code Bahri: Nah,
+
+249
+00:22:15.290 --> 00:22:23.450
+Code Bahri: di atas delapan ratus ribu itu ada dua, dua ratusan contoh gitu. Ya, di atas lima puluh ribu. Ada sekian sekian. Nah.
+
+250
+00:22:24.063 --> 00:22:24.370
+Benny Astria: Iya.
+
+251
+00:22:24.798 --> 00:22:27.371
+Code Bahri: Nah, itu saya pakai untuk. Berarti
+
+252
+00:22:28.320 --> 00:22:34.739
+Code Bahri: Power buyer nya gitu, kan? Position Buyer Mereka Itu kemungkinan di harga sekian. Bayaran. Ini manual aja gitu. Manual.
+
+253
+00:22:34.873 --> 00:22:35.140
+Benny Astria: Uh, uh.
+
+254
+00:22:35.408 --> 00:22:40.239
+Code Bahri: Manual, Mas. Gitu kan Gitu Biasanya kan harus manual, ya. Harus segini nih. Gitu, kan? Nah,
+
+255
+00:22:41.613 --> 00:22:54.680
+Code Bahri: apa namanya kalau saya Naik gin. Semua di satu juta Itu kayaknya memberku tuh. Apa tuh, Power Bayaran itu enggak segitu gitu. Soalnya rata rata seratus ribuan gitu Satu juta, kan?
+
+256
+00:22:55.320 --> 00:22:56.040
+Code Bahri: Jumlah enggak jadi.
+
+257
+00:22:56.337 --> 00:22:58.120
+Benny Astria: Enggak jadi enggak masuk nih. Marketnya.
+
+258
+00:22:58.513 --> 00:23:00.480
+Code Bahri: Masuk nih. Marketnya gitu, makanya.
+
+259
+00:23:00.983 --> 00:23:10.320
+Code Bahri: Okelah. Berarti saya anggap harganya enam ratus enam ratus kalau. Memang dia biasanya satu setengah Sudah empat bulan gitu, kan? Tapi kan sekali bayar di awal gitu.
+
+260
+00:23:10.543 --> 00:23:10.766
+Benny Astria: Iya.
+
+261
+00:23:11.357 --> 00:23:13.560
+Code Bahri: Nah, gitu. Jadi logikaku gitu kemarin.
+
+262
+00:23:14.320 --> 00:23:16.720
+Code Bahri: Makanya yang postas itu kemarin
+
+263
+00:23:17.166 --> 00:23:23.580
+Code Bahri: di rata. Rata. Kalau di rata rata, sekitar enam Ratus ribu lah per orang gitu, kan? Ada yang bayar lima ratus. Ada yang delapan. Ratus gitu.
+
+264
+00:23:24.333 --> 00:23:40.799
+Code Bahri: Enam ratus itu terkumpul. Dua ratusan, ada Dua ratusan lah yang akhirnya join gitu Karena minimarketing juga marketing. Cuma di komunitas. Mas, apa itu di grup sama Saya belum pakai yang Kayak Ads apalah gitu. Orang marketing gitu. Enggak karena kan Dn Itu sendiri, Mas.
+
+265
+00:23:41.788 --> 00:23:46.969
+Code Bahri: Nah, yang ini pertanyaannya Yang ini kan yang ini
+
+266
+00:23:48.727 --> 00:23:52.219
+Code Bahri: kalau Lihat pasarnya, kan? Maksudnya Sr itu kan
+
+267
+00:23:53.325 --> 00:23:55.810
+Code Bahri: Harga projeknya saja lumayan mahal, kan?
+
+268
+00:23:56.490 --> 00:23:59.289
+Benny Astria: Sangat murah. Ini jujur. Jujuran aja, Mas.
+
+269
+00:23:59.570 --> 00:23:59.990
+Code Bahri: Uh, uh, uh.
+
+270
+00:24:00.995 --> 00:24:05.010
+Benny Astria: Sebelum perusahaan saya ngambil aplikasi yang dari Sigma,
+
+271
+00:24:06.851 --> 00:24:12.040
+Benny Astria: saya nggak tau tuh nama aplikasinya. Apa itu harganya? Satu milyar.
+
+272
+00:24:14.919 --> 00:24:15.849
+Benny Astria: Satu milyar Itu.
+
+273
+00:24:16.503 --> 00:24:16.696
+Code Bahri: Terus.
+
+274
+00:24:18.926 --> 00:24:20.429
+Benny Astria: Jelas kita enggak ambil
+
+275
+00:24:21.079 --> 00:24:27.730
+Benny Astria: karena karena approval nya sangat rumit, kan? Kalau perusahaan Jepang harus dapat approval dari Jepang juga kan?
+
+276
+00:24:28.393 --> 00:24:28.676
+Benny Astria: Jadi,
+
+277
+00:24:30.110 --> 00:24:39.919
+Benny Astria: kebetulan kita itu pakai aplikasi untuk Parl. Ya, khusus untuk Parl itu. Apa Spicy? Spicy apa? Ya, itu Itu
+
+278
+00:24:41.722 --> 00:24:49.749
+Benny Astria: aplikasi dari Company Spicy nya ini sudah enggak support untuk versi itu sudah enggak di upgrade lagi. Jadi mereka ngeluarin
+
+279
+00:24:50.382 --> 00:24:54.960
+Benny Astria: Spicy versi terbaru kayak gitu dan
+
+280
+00:24:55.445 --> 00:24:59.570
+Benny Astria: kosnya Sama saja nih. Kalau kita mau beli yang baru.
+
+281
+00:25:00.396 --> 00:25:09.329
+Benny Astria: Versi Spicy dengan aplikasi yang dari lain, itu sama sama satu M, Kayaknya lebih satu Satu koma. Berapa gitu
+
+282
+00:25:10.052 --> 00:25:11.700
+Benny Astria: gitu? Akhirnya kita cari.
+
+283
+00:25:12.909 --> 00:25:18.750
+Benny Astria: Cari apa pengembang inilah yang bisa nyesuaiin. Karena
+
+284
+00:25:19.675 --> 00:25:22.304
+Benny Astria: Kalau di perusahaan saya tuh benar benar
+
+285
+00:25:24.343 --> 00:25:27.169
+Benny Astria: apa Ya, dari segi gaji, segala macam itu
+
+286
+00:25:27.861 --> 00:25:34.579
+Benny Astria: adjust banget Gitu Dari dari apa? Ketentuan perusahaan umum gitu gitu? Jadi
+
+287
+00:25:35.088 --> 00:25:37.459
+Benny Astria: perusahaan mana nih yang bisa menyesuaikan dengan
+
+288
+00:25:38.077 --> 00:25:41.419
+Benny Astria: ini. Kebutuhan perusahaan saat itu kayak gitu.
+
+289
+00:25:42.149 --> 00:25:50.950
+Code Bahri: Yang bikin mahal Itu Sebenarnya apa sih gitu? Maksudnya dari mereka? Mereka kayak. Apakah formulanya itu rumit Atau algoritmanya yang Gimana
+
+290
+00:25:51.657 --> 00:25:54.839
+Code Bahri: Jujur aja sih. Saya kurang begitu tahu. Cuma.
+
+291
+00:25:55.937 --> 00:26:07.526
+Benny Astria: Karena saya enggak dilibatkan sih saat saat negosiasi. Jadi, kebetulan saya juga dekat sama teman teman It di kantor gitu, kan? Dan teman teman It di kantor pun
+
+292
+00:26:08.735 --> 00:26:12.869
+Benny Astria: sebagian besar selain manajer It nya. Ya, enggak dilibatin juga
+
+293
+00:26:13.769 --> 00:26:23.110
+Benny Astria: sampai akhirnya. Aplikasi ini deploy, dan Saya harus apa? Trial waktu itu di bulan Agustusan
+
+294
+00:26:24.560 --> 00:26:30.109
+Benny Astria: Lumayan agak kaget tuh. Saya kebetulan lagi di semarang waktu itu diminta untuk tes aplikasi
+
+295
+00:26:31.181 --> 00:26:35.030
+Benny Astria: Saya kaget pas download log in masuk loh.
+
+296
+00:26:36.707 --> 00:26:47.819
+Benny Astria: Ini jauh dari bayangan saya nih. Karena kan saya sudah pernah ambil course nya mas bari gitu, kan? Dan kalau sekarang itu kan untuk Ui Ux, itu kan lebih lebih menarik, ya?
+
+297
+00:26:48.430 --> 00:26:49.040
+Code Bahri: Lebih mudah.
+
+298
+00:26:49.318 --> 00:26:50.990
+Benny Astria: Lebih mudah dan lebih menarik gitu.
+
+299
+00:26:52.591 --> 00:26:57.080
+Benny Astria: Saya dengan dengan apa? Kemampuan saya yang
+
+300
+00:26:57.804 --> 00:27:02.450
+Benny Astria: kurang di dunia It. Sampai saya pun Komen ini kayaknya
+
+301
+00:27:03.131 --> 00:27:07.229
+Benny Astria: codingan yang kayak gini. Desain Yu Ayo, yang kayak gini nih. Kayaknya
+
+302
+00:27:07.968 --> 00:27:10.680
+Benny Astria: lulusan Sma deh. Saya bilang kayak gitu karena
+
+303
+00:27:11.173 --> 00:27:15.050
+Benny Astria: sangat Enggak menarik gitu loh. Bahkan di dalamnya pun enggak begitu menarik
+
+304
+00:27:15.680 --> 00:27:21.380
+Benny Astria: Yang buat buat. Bisa dibilang saya orang awam, Ya, di dunia It ini, Saya bilang
+
+305
+00:27:22.441 --> 00:27:41.920
+Benny Astria: kayaknya masih bisa dikembangin. Lebih bagus lagi deh. Saya bilang ini masih jauh sekali. Saya bilang ini kayaknya anak. Mungkin anak Sma Atau anak Smk yang baru belajar coding disuruh bikin apps. Saya bilang kayak gitu Ini jauh banget nih dari dari bayangan saya karena sebelumnya yang sudah kenal sama Axio.
+
+306
+00:27:42.730 --> 00:27:49.450
+Benny Astria: Terus dikasih. Lihat kayak gini ini. Kemunduran buat saya kayak gitu
+
+307
+00:27:50.598 --> 00:27:54.210
+Benny Astria: untuk seorang user yang udah pernah gunain aplikasi sebelumnya gitu ya.
+
+308
+00:27:54.382 --> 00:27:54.900
+Code Bahri: Iya, iya, iya.
+
+309
+00:27:55.165 --> 00:27:57.820
+Benny Astria: Ini. Ini jauh banget sih. Saya bilang kayak gitu karena
+
+310
+00:27:58.793 --> 00:28:02.019
+Benny Astria: Bear minimum saya di Axio lah kayak gitu. Ketika ketemu Itu
+
+311
+00:28:03.292 --> 00:28:06.000
+Benny Astria: bayangan saya. Minimal naik lah gitu.
+
+312
+00:28:06.166 --> 00:28:06.669
+Code Bahri: Uh, uh, baik, itu.
+
+313
+00:28:07.085 --> 00:28:10.819
+Benny Astria: Itu dari Ux nya otomatis. Kalau untuk user, kan?
+
+314
+00:28:11.283 --> 00:28:12.649
+Benny Astria: Karyawan khususnya kan?
+
+315
+00:28:14.071 --> 00:28:25.980
+Benny Astria: Karena user Experience itu penting. Enggak mau ribet gitu. Ketika mereka absen segala macam. Terus gimana mereka mengakses informasi gitu?
+
+316
+00:28:26.789 --> 00:28:31.550
+Benny Astria: Tapi bisa dijelaskan secara jelas dan efektif kayak gitu,
+
+317
+00:28:32.296 --> 00:28:42.340
+Benny Astria: kadang kadang kadang pula Untuk karyawan itu. Enggak mesti semuanya ditampilin kayak gitu. Kecuali untuk administrator. Ya, karena kita kan mau lihat
+
+318
+00:28:42.897 --> 00:29:01.040
+Benny Astria: analisa semua data gitu kalau Karyawan tuh enggak perlu. Kadang enggak perlu sedetail itu gitu. Tapi untuk kita mengakses log in clock out. Kita mau lihat kita. Log in Kita sudah berhasil atau belum? Clock out. Kita sudah berhasil atau belum? Kayak gitu Itu kan? Kita bisa lihat
+
+319
+00:29:02.265 --> 00:29:08.240
+Benny Astria: apa namanya semudah itu Gitu, Seintuitif itu gitu. Kita lihatnya ini.
+
+320
+00:29:08.813 --> 00:29:13.670
+Benny Astria: Jujur saja, saya masih mending saya buka course nya, Mas Fahri lagi deh. Yang kemarin
+
+321
+00:29:14.685 --> 00:29:16.760
+Benny Astria: saya gitu, saya bilang bahkan yang
+
+322
+00:29:17.504 --> 00:29:22.320
+Benny Astria: di kosnya Mas Bach, Ya, Kalau enggak salah, itu sudah pakai Face Detection, kan?
+
+323
+00:29:23.500 --> 00:29:23.960
+Code Bahri: Ada.
+
+324
+00:29:24.143 --> 00:29:24.510
+Benny Astria: Selamat malam.
+
+325
+00:29:25.082 --> 00:29:25.900
+Code Bahri: Ini belum, Mas.
+
+326
+00:29:27.629 --> 00:29:32.750
+Benny Astria: Saya bilang, apakah sulit itu naruh fitur face detection gitu.
+
+327
+00:29:33.885 --> 00:29:41.129
+Benny Astria: Jadi karyawan itu jadi penting banget, kan? Buat Eca memastikan Bahwa karyawan ini absen dengan benar gitu.
+
+328
+00:29:41.940 --> 00:29:47.949
+Benny Astria: Karena Hr. Ini kan sebetulnya apa ya? Speakernya? Owner.
+
+329
+00:29:49.367 --> 00:29:53.510
+Benny Astria: Speakernya direksi gitu. Mereka yang membahasakan ke karyawan
+
+330
+00:29:54.071 --> 00:30:07.880
+Benny Astria: Owner, kan? Pinginnya Karyawan karyawan. Kalau karyawan sepuluh? Dua puluh owner, mungkin masih bisa lihat nih. Pakai kasat mata, tapi kalau sudah seratus dua Ratus seribu, dua ribu gitu. Sudah skalanya besar.
+
+331
+00:30:08.421 --> 00:30:10.910
+Benny Astria: Itu sudah enggak bisa lagi dilihat gitu. Bahkan
+
+332
+00:30:11.669 --> 00:30:15.860
+Benny Astria: Trust ke atasannya pun itu juga perlu berhati hati. Karena
+
+333
+00:30:16.892 --> 00:30:22.310
+Benny Astria: di lapangan prakteknya, atasan juga kadang sudah gini gitu.
+
+334
+00:30:23.103 --> 00:30:26.789
+Benny Astria: Perlu ada sesuatu yang bisa memantau mereka. Nah,
+
+335
+00:30:27.526 --> 00:30:40.720
+Benny Astria: menurut saya, jawabannya lewat itu Tadi seringkali kan Di lapangan gitu. Absen finger. Atau kalau di kantor? Saya tuh pakai Rfid. Ya, di tab Gitu, kadang kan kita juga bisa titip segala macam kayak gitu.
+
+336
+00:30:41.541 --> 00:30:49.209
+Benny Astria: Kalau kita sekarang sudah canggih banget gitu. Kita sudah bisa lock Gps nya Mukanya kita bisa
+
+337
+00:30:50.270 --> 00:30:56.189
+Benny Astria: apa namanya Kita lock juga gitu. Memang ini benar orang di aplikasi saya.
+
+338
+00:30:57.218 --> 00:30:58.370
+Benny Astria: Itu sembarang saja foto.
+
+339
+00:30:59.378 --> 00:31:01.120
+Benny Astria: Dia hanya nge lock radius.
+
+340
+00:31:02.233 --> 00:31:02.720
+Code Bahri: Ya, ya.
+
+341
+00:31:04.013 --> 00:31:11.540
+Benny Astria: Saya bilang kalau kayak gitu, saya masih bisa nakal untuk seorang Echar.
+
+342
+00:31:13.070 --> 00:31:14.600
+Benny Astria: Antara apa ya?
+
+343
+00:31:15.866 --> 00:31:26.089
+Benny Astria: Antara keinginan perusahaan sama celah Celah yang terjadi di lapangan ini harus bisa di di dirangkum gitu. Di, di apa? Ya,
+
+344
+00:31:26.980 --> 00:31:27.450
+Benny Astria: Di
+
+345
+00:31:28.650 --> 00:31:37.779
+Benny Astria: tanda kutip, diselesaikan, permasalahan permasalahannya dengan apa Nih, Kira kira apakah harus dibuatkan aturan Atau kita bisa pakai dengan.
+
+346
+00:31:38.313 --> 00:31:40.440
+Benny Astria: Kalau saat ini kita bisa atur lewat
+
+347
+00:31:41.739 --> 00:31:46.589
+Benny Astria: absensi digital lewat handphone, segala macam itu kan bisa meminimalisir
+
+348
+00:31:47.262 --> 00:31:53.129
+Benny Astria: praktek. Praktek kayak gitu, kan? Sebetulnya itu jadi pas Saya buka
+
+349
+00:31:54.417 --> 00:32:02.380
+Benny Astria: Waduh, gawat juga nih. Maksudnya, walaupun saya orang awam. Setidaknya saya tahu harusnya Ini bisa di
+
+350
+00:32:03.408 --> 00:32:08.840
+Benny Astria: akomodir nih untuk fitur fitur ini gitu karena standar saya nih.
+
+351
+00:32:10.500 --> 00:32:16.089
+Benny Astria: Apa namanya ngelihat dari course nya, Mas Bari ini kan harusnya bisa masuk nih ke sini.
+
+352
+00:32:16.820 --> 00:32:23.119
+Benny Astria: Lowong. Saya bisa ikut cost. Ini berarti, kan? Setidaknya saya bisa bikin aplikasi itu. Tinggal ikuti, kan?
+
+353
+00:32:23.683 --> 00:32:27.349
+Benny Astria: Kenapa ini enggak bisa gitu? Dengan cost yang lebih mahal gitu?
+
+354
+00:32:27.562 --> 00:32:28.170
+Code Bahri: Uh, uh, uh.
+
+355
+00:32:29.885 --> 00:32:30.162
+Benny Astria: Gitu.
+
+356
+00:32:34.626 --> 00:32:35.799
+Code Bahri: Nah, mungkin.
+
+357
+00:32:36.875 --> 00:32:37.052
+Benny Astria: Gimana.
+
+358
+00:32:38.684 --> 00:32:39.900
+Code Bahri: Jelasnya mau ngomong. Wakil.
+
+359
+00:32:40.408 --> 00:32:43.971
+Benny Astria: Kalau tadinya saya tuh mau tanya sih
+
+360
+00:32:45.226 --> 00:32:52.590
+Benny Astria: apa namanya Kemarin tuh. Yang dari foto itu. Saya sempat lihat yang tadi. Mas Baril. Kasih Lihat, ada ini. Sistem gaji kayak gitu.
+
+361
+00:32:53.240 --> 00:33:02.259
+Benny Astria: Nah, apakah fiturnya itu Mau di apa? Di Grouping, Kayak gitu, Kayak karena di Ecr sendiri.
+
+362
+00:33:03.243 --> 00:33:06.980
+Benny Astria: Itu ada spesialisasinya. Biasanya kalau untuk yang
+
+363
+00:33:07.805 --> 00:33:13.210
+Benny Astria: skalanya besar, tapi secara garis besar Echr ini ada spesialisasinya. Sendiri
+
+364
+00:33:14.091 --> 00:33:15.779
+Benny Astria: jadi untuk yang Parl Tadi tuh.
+
+365
+00:33:16.555 --> 00:33:19.400
+Benny Astria: Itu tuh ada di lingkup Compensation and benefit.
+
+366
+00:33:20.924 --> 00:33:24.360
+Benny Astria: Lingkungannya tuh disi. Tidak di situ Nanti
+
+367
+00:33:25.813 --> 00:33:30.079
+Benny Astria: untuk penerimaan karyawan. Karyawan Resign tuh adanya direkrutmen tuh.
+
+368
+00:33:31.425 --> 00:33:31.939
+Code Bahri: Uh, uh.
+
+369
+00:33:32.926 --> 00:33:37.060
+Benny Astria: Nanti untuk kayak tadi tuh. Performance evaluation
+
+370
+00:33:38.234 --> 00:33:41.229
+Benny Astria: itu ada scoopnya sendiri. Tuh Training and development.
+
+371
+00:33:43.731 --> 00:33:47.160
+Benny Astria: Terus nanti kalau kita mau kasih Sp gitu. Kan?
+
+372
+00:33:47.871 --> 00:33:52.509
+Benny Astria: Kadang ada perusahaan juga yang mau tahu nih karyawan mana saja yang kasih Sp
+
+373
+00:33:53.022 --> 00:34:04.650
+Benny Astria: Ketika kenaikan gaji, mungkin poin dia akan dikurangi karena dia pernah melakukan pelanggaran. Misalkan kayak gitu itu. Jadi, kalau menurut saya bisa jadi salah satu fitur tersendiri gitu kalau di Asia sih. Waktu itu
+
+374
+00:34:05.247 --> 00:34:08.050
+Benny Astria: dia udah grouping per kategori gitu tuh.
+
+375
+00:34:08.530 --> 00:34:11.050
+Benny Astria: Makanya dia bisa menjual fitur per kategori.
+
+376
+00:34:13.437 --> 00:34:16.299
+Benny Astria: Dia cuma bisa jual hanya fitur Rekrutmennya Tok
+
+377
+00:34:16.911 --> 00:34:19.260
+Benny Astria: bisa jual fitur payroll nya sendiri.
+
+378
+00:34:20.690 --> 00:34:28.300
+Benny Astria: Nah, perusahaan saya beli hanya sekedar fitur performance evaluation kayak gitu,
+
+379
+00:34:29.692 --> 00:34:42.169
+Benny Astria: bahkan dari database yang tersedia Di aplikasi itu, dia bisa men Generate organisation Charge
+
+380
+00:34:45.860 --> 00:34:57.250
+Benny Astria: Jadi. Kita Bisa kita Sudah masukin kategorinya terse. Dulu kayak misalkan, karyawan ini departemen Hrd Dia ada levelnya. Ada
+
+381
+00:34:58.109 --> 00:35:06.500
+Benny Astria: Pertama, ada levelnya. Dulu Ada posisinya. Dia di mana? Nanti? Secara otomatis, dia akan membangun Three gitu gitu sih,
+
+382
+00:35:09.421 --> 00:35:12.190
+Benny Astria: tinggal Nanti, Mas. Bari proposesnya. Mau.
+
+383
+00:35:12.798 --> 00:35:19.380
+Benny Astria: Apakah cost nya mau kayak Tadi dikasih lihat semua. Ataukah mau fitur per Fitur kayak gitu?
+
+384
+00:35:20.160 --> 00:35:27.660
+Code Bahri: Nah, itu tuh yang di yang masih harus aku diskusikan gitu. Makanya aku kan belum berani lempar yang jauh, kan? Di grup
+
+385
+00:35:28.845 --> 00:35:32.750
+Code Bahri: atau belum berani lempar bahkan webnya. Aku belum berani Lempar juga. Nanti.
+
+386
+00:35:32.963 --> 00:35:36.949
+Benny Astria: Uh, uh, terlalu besar. Ekspektasinya gitu kan Gitu.
+
+387
+00:35:37.377 --> 00:35:40.369
+Code Bahri: Lu juga belum berani bikin semacam kayak.
+
+388
+00:35:40.872 --> 00:35:47.529
+Code Bahri: Apa itu namanya Waiting List atau apa Gitu? Karena kan harus jelas gitu Kalau bikin sesuatu, kan harus clear nih. Jelas nih.
+
+389
+00:35:47.796 --> 00:35:47.930
+Benny Astria: Mbak.
+
+390
+00:35:48.330 --> 00:35:52.730
+Code Bahri: Batasannya sampai mana, kan? Seperti Apa baru kita lempar gitu?
+
+391
+00:35:52.866 --> 00:35:53.140
+Benny Astria: Uh, uh.
+
+392
+00:35:53.343 --> 00:35:59.600
+Code Bahri: Gitu dengan cerita tadi, kan? Kayak. Nah, makanya ingat aku kayak ada dilema gitu, Mas. Ya, Dilema.
+
+393
+00:36:03.299 --> 00:36:08.879
+Code Bahri: Apa itu posisinya, Kan enggak bisa. Yang. Wah, ini Course. Harganya dua juta gitu, kan?
+
+394
+00:36:09.220 --> 00:36:09.390
+Benny Astria: Iya.
+
+395
+00:36:10.280 --> 00:36:12.517
+Code Bahri: Apa itu A?
+
+396
+00:36:13.315 --> 00:36:15.029
+Code Bahri: Komunitasku belum sampai sana gitu. Istilahnya.
+
+397
+00:36:15.294 --> 00:36:17.940
+Benny Astria: Iya, kalau marketnya enggak masuk juga kan jadi percuma gitu.
+
+398
+00:36:18.246 --> 00:36:20.700
+Code Bahri: Iya, mungkin ada. Cuma satu, Dua gitu, kan?
+
+399
+00:36:21.236 --> 00:36:21.820
+Code Bahri: Enggak, enggak, enggak masalah.
+
+400
+00:36:22.180 --> 00:36:22.900
+Benny Astria: Sayang, gitu.
+
+401
+00:36:23.299 --> 00:36:29.289
+Code Bahri: Kan, Sayang? Tetap bayanganku, sih. Bayar posit. Bayarnya masih di angka. Enam ratus tujuh ratus.
+
+402
+00:36:29.920 --> 00:36:33.700
+Code Bahri: Nah, enam belas. Tujuh ratus Tuh masuk, Enggak Menurutmu masih masuk, kan? Kalau.
+
+403
+00:36:34.855 --> 00:36:43.889
+Benny Astria: Untuk untuk fitur yang basic. Mungkin database dan payroll mungkin masih masuk. Jadi, sekedar ide, ya.
+
+404
+00:36:44.566 --> 00:36:45.919
+Code Bahri: Coba coba. Makanya coba.
+
+405
+00:36:46.286 --> 00:36:53.250
+Benny Astria: Jadi, mungkin untuk stage awal. Kalau di Hr memang paling krusial. Itu tadi database awal sudah pasti masuk. Dia
+
+406
+00:36:54.182 --> 00:36:57.269
+Benny Astria: Pembahasannya Nanti terkait di Payroll nya kayak gitu
+
+407
+00:36:58.348 --> 00:37:03.930
+Benny Astria: pembuatan perrol. Jadi nanti untuk untuk kelas selanjutnya. Kelas lanjutan lah gitu, Ya,
+
+408
+00:37:04.778 --> 00:37:10.550
+Benny Astria: Nanti bisa tuh stage Nya Untuk mendapatkan fitur kpi kayak kayak gitu. Jadi
+
+409
+00:37:12.241 --> 00:37:18.550
+Benny Astria: bisa bisa apa? Bisa memperpanjang batch nya? Mas Bachry juga gitu.
+
+410
+00:37:18.844 --> 00:37:23.000
+Code Bahri: Berarti maksudnya ini Kalau Di Asio itu tadi ada.
+
+411
+00:37:25.436 --> 00:37:25.990
+Benny Astria: Nah, ini.
+
+412
+00:37:26.403 --> 00:37:29.710
+Code Bahri: Pastor ini, ya. Masuk kepegawaian dulu, ya. Berarti
+
+413
+00:37:30.268 --> 00:37:31.700
+Code Bahri: iya, iya, Master Employee. Maksudnya ya?
+
+414
+00:37:32.268 --> 00:37:38.500
+Benny Astria: Master Employee. Master Employee. Itulah isinya Semua informasi data karyawan itu.
+
+415
+00:37:40.936 --> 00:37:45.190
+Code Bahri: Terus terus. Berarti syaratnya. Ini satu masuk sini, kan? Lanjut.
+
+416
+00:37:45.436 --> 00:37:49.349
+Benny Astria: Iya, itu masuk ke pairoll. Mungkin ya.
+
+417
+00:37:50.400 --> 00:37:51.450
+Code Bahri: Payrol, nih.
+
+418
+00:37:51.859 --> 00:37:57.759
+Benny Astria: Payroll. Karena sebetulnya nih, kalau buat saya sebagai praktisi air,
+
+419
+00:37:59.475 --> 00:38:05.359
+Benny Astria: seringkali kalau ikut subscription semacam gajian, Misalkan gajian Dot Com Atau
+
+420
+00:38:06.511 --> 00:38:11.070
+Benny Astria: Mccari gitu kan Itu kita kos kan Tiap bulan, ya?
+
+421
+00:38:13.383 --> 00:38:20.579
+Benny Astria: Jadi kalau saya jadi owner, saya better nge higher atau saya kirim karyawan saya untuk ikut pelatihan.
+
+422
+00:38:23.167 --> 00:38:33.620
+Benny Astria: Saya invest ke satu orang itu untuk belajar. Misalkan saya, Higher It tersendiri, tapi dia akan jadi Acr atau entah Jadi It di perusahaan Saya akan ikutin cost nya. Mas Barry, Misalkan kayak gitu.
+
+423
+00:38:34.528 --> 00:38:40.450
+Benny Astria: Saya keluarin uang sekali, tapi dia bisa develop untuk di Company. Dia sendiri kayak gitu
+
+424
+00:38:42.147 --> 00:38:52.689
+Benny Astria: jadi master ke parol. Dan itu juga bisa me Apa menjawab kebutuhannya? Mereka seringkali pada prakteknya, nih, Mas Baray
+
+425
+00:38:55.039 --> 00:38:57.289
+Benny Astria: Di sekelas perusahaan besar. Sekalipun.
+
+426
+00:38:57.790 --> 00:38:58.790
+Code Bahri: Itu banyak.
+
+427
+00:38:59.673 --> 00:39:04.940
+Benny Astria: Hrd yang itu. Gajinya masih pakai Xl Even. Mereka sudah pakai aplikasi
+
+428
+00:39:08.596 --> 00:39:09.210
+Benny Astria: kayak gitu.
+
+429
+00:39:10.144 --> 00:39:16.510
+Code Bahri: Di bagian mana itu yang aplikasi itu nggak bisa menggantikan Excelnya gitu untuk ngitung hedge nya. Itu.
+
+430
+00:39:19.612 --> 00:39:25.589
+Benny Astria: Saya kurang begitu tahu kalau di perusahaan lain cuma kemarin. Kebetulan saya habis ikut pelatihan Hrd nih.
+
+431
+00:39:25.682 --> 00:39:26.050
+Code Bahri: Hu, uh, hu, uh.
+
+432
+00:39:26.503 --> 00:39:41.930
+Benny Astria: Jadi sedikit banyak Sharing lah sama mereka. Jadi mereka sendirilah yang yang curhat. Masih sering pakai Excel kayak gitu. Kalau Di perusahaan, saya tuh pakai Xl itu untuk Me Record. Transaksinya saja sih
+
+433
+00:39:42.994 --> 00:39:47.780
+Benny Astria: kayak gitu. Jadi, untuk karena lagi lagi,
+
+434
+00:39:48.938 --> 00:39:53.420
+Benny Astria: mereka itu ada kekhawatiran Bahwa data itu takutnya hilang
+
+435
+00:39:54.508 --> 00:39:57.459
+Benny Astria: karena kan nggak disimpan di server sendiri gitu, ya?
+
+436
+00:39:58.082 --> 00:39:58.960
+Code Bahri: Takutnya hilang. Jadi.
+
+437
+00:40:00.136 --> 00:40:06.510
+Benny Astria: Disimpan di Share. Poinnya perusahaan kayak gitu, tapi. Jadi, mereka.
+
+438
+00:40:06.977 --> 00:40:13.520
+Code Bahri: Untuk sekarang, Parl yang pakai sistem itu sebenarnya sudah cukup. Maksudnya nggak perlu
+
+439
+00:40:13.978 --> 00:40:19.879
+Code Bahri: pakai. Excel pun harus. Sistemnya itu atau sistemnya. Itu sudah bisa.
+
+440
+00:40:21.206 --> 00:40:21.539
+Benny Astria: Sudah bisa.
+
+441
+00:40:21.820 --> 00:40:22.380
+Code Bahri: Gitu, loh.
+
+442
+00:40:22.666 --> 00:40:23.239
+Benny Astria: Sudah bisa.
+
+443
+00:40:23.730 --> 00:40:27.919
+Benny Astria: Yang paling penting ketika perol nih Ini sebetulnya satu kelemahan. Saya.
+
+444
+00:40:28.436 --> 00:40:29.370
+Code Bahri: Pairoll itu.
+
+445
+00:40:31.120 --> 00:40:33.260
+Benny Astria: Hitungannya mudah.
+
+446
+00:40:33.758 --> 00:40:40.119
+Benny Astria: Yang sulit adalah ketika hitung pajaknya, hitungannya sebetulnya mudah.
+
+447
+00:40:40.931 --> 00:40:45.049
+Benny Astria: Dia secara basic. Hitungannya adalah pendapatan, kan? Gaji pokok
+
+448
+00:40:45.708 --> 00:40:48.819
+Benny Astria: Kalau dia. Ada tunjangan tetap. Tunjangan tetapnya apa?
+
+449
+00:40:49.421 --> 00:40:56.689
+Benny Astria: Kalau dia ada tunjangan? Tidak, tetap Misalkan ada tunjangan transportasi yang dihitung berdasarkan
+
+450
+00:40:57.799 --> 00:41:05.629
+Benny Astria: kehadiran tunjangan makan Atau ada tunjangan tunjangan lain lah gitu. Seperti bisnis trip atau banyak lah gitu. Ya,
+
+451
+00:41:06.320 --> 00:41:07.600
+Benny Astria: yang sifatnya tidak tetap.
+
+452
+00:41:08.081 --> 00:41:10.249
+Benny Astria: Itu ditambah dan kurang gitu, Ya,
+
+453
+00:41:10.990 --> 00:41:13.150
+Benny Astria: Nah, hasil tambah dan kurangnya itu
+
+454
+00:41:14.152 --> 00:41:24.090
+Benny Astria: baru dipotong. Pph. Dua, satu, ter. Nah, inilah yang yang Jujur, Saya sendiri kurang begitu, paham,
+
+455
+00:41:24.611 --> 00:41:26.179
+Benny Astria: hanya tahu secara aturannya.
+
+456
+00:41:26.703 --> 00:41:38.209
+Benny Astria: Jadi, karena besaran nominalnya kan akan berbeda. Beda nih. Persentasenya dari Pt Kp nya Pt, Kp yang
+
+457
+00:41:38.845 --> 00:41:48.100
+Benny Astria: apa namanya Tk Nol yang tidak menikah. Itu yang single beda yang Married beda. Married punya anak Beda itu. Persentasenya beda kayak gitu,
+
+458
+00:41:49.174 --> 00:42:02.350
+Benny Astria: dan setiap perusahaan juga mekanisme Parrol nya. Sorry, mekanisme gajinya pun macam macam ada perusahaan yang
+
+459
+00:42:03.666 --> 00:42:05.290
+Benny Astria: pakai sistem gaji net.
+
+460
+00:42:08.066 --> 00:42:15.219
+Benny Astria: Ada juga karya perusahaan yang pakai sistem gaji gross Up. Nah, ini juga treatment nya beda.
+
+461
+00:42:19.425 --> 00:42:22.980
+Benny Astria: Nah, tinggal kalau kalau buat kos, pastinya kita
+
+462
+00:42:24.036 --> 00:42:27.610
+Benny Astria: pakai yang general, ya gitu. Tapi kalau secara
+
+463
+00:42:29.009 --> 00:42:35.662
+Benny Astria: implementasi di lapangan, yaitu adjustment nya. Di situ gitu.
+
+464
+00:42:36.444 --> 00:42:44.950
+Benny Astria: Kayak kalau kayak saya Di perusahaan gitu, kita ada Medical Reimburse Medical Reimbursement, Perusahaan bayar
+
+465
+00:42:45.506 --> 00:42:49.420
+Benny Astria: dia Itu Ada pajaknya tuh masuk sebagai
+
+466
+00:42:50.696 --> 00:43:00.539
+Benny Astria: apa namanya kalau di pajak Itu kayak semacam penerimaan lah ke karyawan. Nah, bedanya kalau kalau untuk sisi Gaji
+
+467
+00:43:01.398 --> 00:43:09.960
+Benny Astria: di saya. Pajaknya ditanggung karyawan. Tapi kalau untuk Medical pajaknya ditanggung perusahaan. Nah, itu perlu Adjustment tersendiri, kan Kayak gitu
+
+468
+00:43:10.667 --> 00:43:15.730
+Benny Astria: itu untuk perusahaan, saya. Tapi kalau perusahaan lain kan treatment nya juga akan beda Beda nih gitu.
+
+469
+00:43:16.846 --> 00:43:24.900
+Benny Astria: Tapi kalau pada umumnya, generalnya Payroll sendiri, itu dia memproses Gaji,
+
+470
+00:43:25.973 --> 00:43:33.140
+Benny Astria: gaji, pokok, gaj. Tunjangan tetap tunjangan. Tidak tetap. Kalau ada, baru dipotong apa saja.
+
+471
+00:43:34.425 --> 00:43:40.780
+Benny Astria: Bpjs Tenaga kerja Bpjs Kesehatan sama Pajak setiap bulannya, Itu
+
+472
+00:43:42.431 --> 00:43:44.420
+Benny Astria: kayak gitu itu. Itu generalnya tuh.
+
+473
+00:43:48.385 --> 00:43:51.850
+Code Bahri: Dan itu sudah di handle Sama modul Pelror. Pelror ini gitu.
+
+474
+00:43:52.833 --> 00:43:54.150
+Benny Astria: Yang. Kalau yang saya iya.
+
+475
+00:43:54.775 --> 00:43:57.300
+Code Bahri: Sudah diakomodir sama Sigma itu.
+
+476
+00:43:58.230 --> 00:43:59.850
+Code Bahri: Pakai yang Sigma ini. Sekarang. Yang.
+
+477
+00:43:59.993 --> 00:44:00.280
+Benny Astria: Iya, Mbak.
+
+478
+00:44:02.721 --> 00:44:06.950
+Code Bahri: Yang Sigma ini pakai. Yang mana berarti semuanya atau.
+
+479
+00:44:08.408 --> 00:44:16.830
+Benny Astria: Stigma, Enggak, Saya cuma pakai employe Sof Service nya. Iya, terus apa lagi?
+
+480
+00:44:17.448 --> 00:44:29.610
+Benny Astria: Sigma? Hrs Mobile, Ya, jadi karyawan untuk Absensi itu pakai yang aplikasi mobile per roll
+
+481
+00:44:30.518 --> 00:44:40.159
+Benny Astria: sudah. Nah, di perol itu sebetulnya ditambahin. Beberapa fitur lah jadi kayak fitur pengajuan cuti apa Namanya
+
+482
+00:44:42.510 --> 00:44:44.330
+Benny Astria: yang Basic. Basic terkait Terror juga, Ya.
+
+483
+00:44:44.720 --> 00:44:46.669
+Code Bahri: Parolnya mana nih? Ada perolnya.
+
+484
+00:44:52.249 --> 00:44:55.939
+Code Bahri: Modulnya enggak ada di sini. Payroll ini memang
+
+485
+00:44:56.448 --> 00:44:59.400
+Code Bahri: Core. Dia Parroll. Menurut gitu, ya. Corr. Nya Cornnya. Parrol
+
+486
+00:45:04.635 --> 00:45:06.510
+Code Bahri: ini. Ini subscribe. Semuanya berarti.
+
+487
+00:45:08.234 --> 00:45:12.160
+Benny Astria: Enggak, karena untuk performance, kita juga nggak pakai rekrutmen. Juga nggak pakai.
+
+488
+00:45:12.557 --> 00:45:15.340
+Code Bahri: Oh, berarti kalau enggak pakai dikurangi harganya.
+
+489
+00:45:16.080 --> 00:45:17.199
+Benny Astria: Nah, itu yang saya kurang tau. Tuh.
+
+490
+00:45:17.443 --> 00:45:20.850
+Code Bahri: Atau sebenarnya sama aja nggak pakai nggak pakai. Sudah dua ratus gitu.
+
+491
+00:45:21.224 --> 00:45:27.970
+Benny Astria: Tapi sepengalaman saya yang Aksio. Jadi saya sempat ngobrol lah sama Hr Manager saya yang di Holland Bakery.
+
+492
+00:45:28.176 --> 00:45:28.590
+Code Bahri: Uh, uh.
+
+493
+00:45:28.946 --> 00:45:38.340
+Benny Astria: Itu harganya kurang lebih sekitar dua ratus lima puluh jutaan, kan? Saat itu saya bisa pakai semua fitur
+
+494
+00:45:39.998 --> 00:45:46.644
+Benny Astria: dari master Database recruitment Payroll Training and development
+
+495
+00:45:47.838 --> 00:45:51.220
+Benny Astria: Industrial Relationship lah segala macam di situ. Semuanya. Aktif. Tuh,
+
+496
+00:45:52.386 --> 00:45:56.060
+Benny Astria: semuanya aktif. Saya bisa pakai. Nah, pas saya masuk di perusahaan ini,
+
+497
+00:45:57.628 --> 00:46:07.590
+Benny Astria: saya buka. Ternyata dia perusahaan ini. Pakai aksio juga pas. Saya buka loh kok. Hanya Fitur performance evaluation lah yang yang terbuka. Portalnya gitu.
+
+498
+00:46:08.635 --> 00:46:12.659
+Benny Astria: Terus sempat nanya ke saya karena saya dulunya pengguna Axio.
+
+499
+00:46:14.515 --> 00:46:20.679
+Benny Astria: Manajer baru tuh. Nanya ke? Saya bisa enggak ini dikembangin Saya tanya balik.
+
+500
+00:46:21.517 --> 00:46:27.089
+Benny Astria: Saya bukan Master Admin. Jadi saya enggak tahu di dalamnya seperti apa. Saya bilang, karena setahu saya
+
+501
+00:46:28.191 --> 00:46:34.230
+Benny Astria: master admin, ini bisa Masuk ke dalam dan ngeklik toge untuk mengaktifin kayak semacam.
+
+502
+00:46:34.718 --> 00:46:36.669
+Code Bahri: Fit gitu, Iya.
+
+503
+00:46:37.113 --> 00:46:40.219
+Benny Astria: Jadi untuk nge view, fiturnya gitu dimunculin
+
+504
+00:46:41.071 --> 00:46:48.899
+Benny Astria: gitu. Saya enggak tahu di sini apakah itu sudah ada di dalamnya atau Hanya ngasih fitur evaluation gitu. Ternyata
+
+505
+00:46:50.130 --> 00:46:52.319
+Benny Astria: sempat ditanya ke orang Aksio nya.
+
+506
+00:46:53.144 --> 00:47:02.240
+Benny Astria: Oh, enggak, ternyata hanya fitur evaluation, jadi dua ratus lima puluh juta Hanya untuk membayar satu program saja.
+
+507
+00:47:02.642 --> 00:47:05.180
+Code Bahri: Jadi, kalau mau nambahin lagi untuk Payroll.
+
+508
+00:47:05.764 --> 00:47:10.760
+Benny Astria: Employee Self Service Record Contract. Segala macam itu nambah lagi
+
+509
+00:47:13.641 --> 00:47:21.340
+Benny Astria: berarti kan? Lebih gede lagi untuk fitur yang sama. Kosnya Untuk harga yang sama.
+
+510
+00:47:22.487 --> 00:47:26.699
+Benny Astria: Cost nya tuh enggak enggak enggak sama gitu. Jadinya.
+
+511
+00:47:29.906 --> 00:47:30.400
+Code Bahri: Ngerti ya?
+
+512
+00:47:32.043 --> 00:47:36.950
+Code Bahri: Lantai Jakarta itu uangnya. Enggak mutarnya. Enggak enggak masuk akal sih. Jakarta.
+
+513
+00:47:37.845 --> 00:47:39.870
+Benny Astria: Parah sih, parah.
+
+514
+00:47:40.509 --> 00:47:44.899
+Benny Astria: Makanya makanya banjir mulu di sana, ya. Waduh, hujan terus, Mas.
+
+515
+00:47:45.065 --> 00:47:45.560
+Code Bahri: Oke, uh, uh.
+
+516
+00:47:46.330 --> 00:47:48.170
+Benny Astria: Hujan, banjir, hujan, banjir.
+
+517
+00:47:48.583 --> 00:47:52.306
+Code Bahri: Kayaknya alam itu kayak sebel gitu sama Jakarta gitu.
+
+518
+00:47:53.225 --> 00:47:54.740
+Benny Astria: Ada banjir macet.
+
+519
+00:47:57.838 --> 00:48:00.069
+Benny Astria: Apalagi saya kan Di Di kuningan. Ya.
+
+520
+00:48:00.413 --> 00:48:05.130
+Code Bahri: Jadi sudah itu parah banget deh. Itu berarti kamu rumah Tangerang.
+
+521
+00:48:05.898 --> 00:48:07.640
+Benny Astria: Cuma Di Tangerang. Di Belareja.
+
+522
+00:48:09.606 --> 00:48:10.580
+Code Bahri: Coba. Kayaknya.
+
+523
+00:48:11.759 --> 00:48:12.799
+Benny Astria: Jauh. Lumayan.
+
+524
+00:48:13.185 --> 00:48:14.340
+Code Bahri: Naik apa? Krl?
+
+525
+00:48:15.363 --> 00:48:20.000
+Benny Astria: Enggak jadi ada semacam kayak transportasi umum, tapi kayak shuttle gitu.
+
+526
+00:48:21.295 --> 00:48:22.460
+Code Bahri: Naik shuttle.
+
+527
+00:48:22.891 --> 00:48:27.640
+Benny Astria: Naik shuttle Nanti Dari sana tinggal entah naik trans. Jakarta bisa.
+
+528
+00:48:27.985 --> 00:48:30.059
+Code Bahri: Atau dari perumahannya? Maksudnya atau dari.
+
+529
+00:48:30.381 --> 00:48:32.309
+Benny Astria: Dari ketika sudah di Jakartanya.
+
+530
+00:48:32.576 --> 00:48:33.110
+Code Bahri: Oh, jaga.
+
+531
+00:48:33.438 --> 00:48:35.409
+Benny Astria: Gitu. Jadi, nanti nyambung lagi. Sekali
+
+532
+00:48:36.171 --> 00:48:39.399
+Benny Astria: bisa naik transjakarta atau naik Grab biasanya.
+
+533
+00:48:39.596 --> 00:48:39.990
+Code Bahri: Saya naik.
+
+534
+00:48:40.265 --> 00:48:40.540
+Benny Astria: Travel.
+
+535
+00:48:40.983 --> 00:48:45.719
+Code Bahri: Berarti ini kenapa sampai setengah sembilan? Itu perjalanan pulang.
+
+536
+00:48:46.082 --> 00:48:50.360
+Benny Astria: Biasanya perjalanan pulang biasanya sampai rumah tuh setengah delapanan sih.
+
+537
+00:48:50.642 --> 00:48:51.489
+Code Bahri: Pulang jam berapa?
+
+538
+00:48:52.423 --> 00:48:52.990
+Benny Astria: Jam lima.
+
+539
+00:48:53.490 --> 00:48:54.069
+Code Bahri: Jam lima.
+
+540
+00:48:54.243 --> 00:48:54.589
+Benny Astria: Tahun ini.
+
+541
+00:48:55.140 --> 00:49:00.900
+Code Bahri: Berapa itu? Dua jam, Dua jam sampai dua jam. Setengah lah. Kalau berangkat, berangkat jam berapa?
+
+542
+00:49:01.888 --> 00:49:04.679
+Benny Astria: Berangkat. Kadang jam setengah enam. Kadang jam enam.
+
+543
+00:49:05.259 --> 00:49:05.839
+Code Bahri: Sampai sana.
+
+544
+00:49:06.109 --> 00:49:08.800
+Benny Astria: Berangkat kalau berangkat sih. Lebih cepat sih. Ke pagi, katanya.
+
+545
+00:49:10.456 --> 00:49:10.773
+Benny Astria: Yes.
+
+546
+00:49:12.044 --> 00:49:13.990
+Code Bahri: Tiap hari ngantor berarti di kantor.
+
+547
+00:49:15.116 --> 00:49:19.329
+Benny Astria: Kebetulan enggak jadi kantor. Saya masih nerapin. Hybrid.
+
+548
+00:49:20.086 --> 00:49:20.640
+Code Bahri: Oh, jadi.
+
+549
+00:49:20.766 --> 00:49:21.019
+Benny Astria: Jadi, ini.
+
+550
+00:49:21.240 --> 00:49:21.679
+Code Bahri: Dua hari.
+
+551
+00:49:22.068 --> 00:49:25.179
+Benny Astria: Hari Ngantor. Satu hari di rumah kayak gitu
+
+552
+00:49:26.190 --> 00:49:28.590
+Benny Astria: dulu. Malah masih full. Tuh. Sampai dua ribu.
+
+553
+00:49:29.767 --> 00:49:33.283
+Benny Astria: Dua, dua, tiga. Itu. Kita masih Wfh.
+
+554
+00:49:34.360 --> 00:49:36.009
+Code Bahri: Di gedung apa? Di Kuningan?
+
+555
+00:49:37.197 --> 00:49:38.479
+Benny Astria: Di Trinity Tower.
+
+556
+00:49:39.240 --> 00:49:39.880
+Code Bahri: Three, nity.
+
+557
+00:49:40.100 --> 00:49:40.539
+Benny Astria: Uh, uh.
+
+558
+00:49:40.991 --> 00:49:42.639
+Code Bahri: Ada gedung baru di.
+
+559
+00:49:43.095 --> 00:49:46.279
+Benny Astria: Daerah kuningan situ. Dekat Mall Kota Casablanca.
+
+560
+00:49:47.523 --> 00:49:49.970
+Code Bahri: Iya, di kokas itu, ya.
+
+561
+00:49:50.645 --> 00:49:54.359
+Benny Astria: Nah, itu pas. Di perempatan itu. Ada satu gedung di situ.
+
+562
+00:49:56.568 --> 00:49:59.921
+Code Bahri: Itu. Itu jalur jalur tengkorak. Itu.
+
+563
+00:50:00.839 --> 00:50:04.429
+Benny Astria: Parah, Mas. Kalau sudah jam empat itu sudah ngekor tuh.
+
+564
+00:50:05.666 --> 00:50:08.449
+Code Bahri: Kan? Yang lewat terowongan sampai sana. Itu kan sudah sudah.
+
+565
+00:50:09.278 --> 00:50:10.520
+Benny Astria: Itu merah. Ya.
+
+566
+00:50:10.892 --> 00:50:12.009
+Code Bahri: Sadis itu, kan.
+
+567
+00:50:12.255 --> 00:50:13.479
+Benny Astria: Udah parah, tuh. Merah tuh.
+
+568
+00:50:14.423 --> 00:50:18.669
+Code Bahri: Makanya kan jalur ke Jakarta Timur lah. Apa semua.
+
+569
+00:50:19.114 --> 00:50:22.669
+Benny Astria: Iya, itu kalau udah lewat underpass Itu udah.
+
+570
+00:50:23.446 --> 00:50:24.060
+Code Bahri: Iya, saya.
+
+571
+00:50:24.282 --> 00:50:24.949
+Benny Astria: Motor aja. Entar.
+
+572
+00:50:25.276 --> 00:50:34.099
+Code Bahri: Maka kadang dulu tuh sebulan sekali ke sana. Kadang dua bulan sekali. Ada acara paling sehari dua hari gitu, kan? Diundang Ajar atau apa gitu, kan? Makanya.
+
+573
+00:50:34.365 --> 00:50:35.959
+Benny Astria: Dari Jakarta Selatan juga dari situ.
+
+574
+00:50:36.668 --> 00:50:42.690
+Code Bahri: Aku kemarin. Itu sempat tiga kali, kan? Diundang di Jakarta. Pusat yang bendungan hilir itu ada Ppkd.
+
+575
+00:50:43.252 --> 00:50:44.180
+Benny Astria: Oh, di media, ya.
+
+576
+00:50:44.450 --> 00:50:45.259
+Code Bahri: Uh, uh, terus
+
+577
+00:50:45.840 --> 00:50:52.480
+Code Bahri: ada satu Klienku tuh. Dia kantornya di itu di di kokas. Itu yang pakuon itu loh. Pakuon.
+
+578
+00:50:52.870 --> 00:50:54.039
+Benny Astria: Oh iya, iya.
+
+579
+00:50:55.147 --> 00:50:58.470
+Code Bahri: Ada Ada Office Tower nya, kan?
+
+580
+00:50:59.233 --> 00:51:04.449
+Code Bahri: Pakuan Tower, kan? Itu kan? Nah, itu ada di situ. Jadi aku sempat ke sana juga tuh
+
+581
+00:51:05.152 --> 00:51:06.240
+Code Bahri: ke sana. Terus
+
+582
+00:51:06.896 --> 00:51:15.099
+Code Bahri: sempat pas habis ngajar gitu sore sore. Ayo ngobrol di kokas gitu, kan? Apa itu makan di kan Kulinernya banyak di bawah. Itu.
+
+583
+00:51:15.230 --> 00:51:15.490
+Benny Astria: Uh, uh.
+
+584
+00:51:15.843 --> 00:51:20.790
+Code Bahri: Benar, Benar, Itu jadi murid banget gini Di sini gitu, kan? Gitu
+
+585
+00:51:22.663 --> 00:51:26.100
+Code Bahri: Itu kayaknya. Nah, sarannya nih, Mas. Ya, sarannya Ini
+
+586
+00:51:26.940 --> 00:51:34.729
+Code Bahri: mending aku bahas modul mana Nih gitu untuk untuk ini nih. Untuk ini lah untuk event ini gitu. Dan
+
+587
+00:51:36.446 --> 00:51:42.440
+Code Bahri: apa itu portal mobile App apa gitu kira kira yang nendang gitu lah. Kira Kira yang nendang yang.
+
+588
+00:51:43.066 --> 00:51:47.499
+Code Bahri: Wah, ini Mas Fahri. Event nya ini saya. Jangan sampai lewat nih gitu.
+
+589
+00:51:49.190 --> 00:51:56.969
+Benny Astria: Sebetulnya apa yang di Delivery sama Mas Bach ini? Udah, menurut saya. Ya sudah pas sih.
+
+590
+00:51:57.535 --> 00:52:04.589
+Benny Astria: Cuma terserah dari Mas Bari mungkin boleh Boleh kasih. Lihat yang tadi? Enggak, Mas Bari yang ada fitur. Fiturnya itu. Nah,
+
+591
+00:52:05.246 --> 00:52:15.330
+Benny Astria: tinggal dari Mas. Bar ini mau sorry, Boleh yang lihat yang laporan boleh di.
+
+592
+00:52:16.520 --> 00:52:19.619
+Benny Astria: Oh, ini, ini. Ininya report nya. Ya.
+
+593
+00:52:20.990 --> 00:52:21.620
+Code Bahri: Kayaknya dekat.
+
+594
+00:52:24.569 --> 00:52:25.049
+Benny Astria: Oke, oke,
+
+595
+00:52:26.543 --> 00:52:33.260
+Benny Astria: tinggal. Kalau menurut saya yang terkait tadi tuh yang apa namanya penilaian karyawan? Mau di take Out dulu
+
+596
+00:52:34.130 --> 00:52:38.440
+Benny Astria: Atau enggak kayak gitu kalau untuk fokus. Kalau untuk fokus.
+
+597
+00:52:39.605 --> 00:52:43.719
+Benny Astria: Payroll sih yang fitur itu bisa di Take Out dulu gitu. Nanti.
+
+598
+00:52:44.269 --> 00:52:47.290
+Code Bahri: Kita ngomongin parall lah. Pokoknya kita ngomongin keuangan ini. Istilahnya.
+
+599
+00:52:47.646 --> 00:52:51.210
+Benny Astria: Uh, uh, kayak gitu. Karena ini. Ini lumayan lengkap nih.
+
+600
+00:52:52.440 --> 00:52:58.140
+Benny Astria: Bahkan Mas Bari sudah masukin fitur pinjaman yang enggak semua Perusahaan Itu Ada fitur. Itunya.
+
+601
+00:52:59.772 --> 00:53:05.570
+Code Bahri: Nah, makanya ini perlu nggak sih. Ini juga karena kan Lihat di gaji hub. Terus di.
+
+602
+00:53:05.690 --> 00:53:05.930
+Benny Astria: Nah, itu.
+
+603
+00:53:06.286 --> 00:53:09.489
+Code Bahri: Talenta itu katanya ada gitu, kan? Makanya reimburse. Makanya.
+
+604
+00:53:09.706 --> 00:53:09.923
+Benny Astria: Ada.
+
+605
+00:53:10.778 --> 00:53:18.349
+Benny Astria: Jadi memang beberapa perusahaan itu. Mereka juga kasih kasih pinjaman yang dia potong setiap bulan dari gaji karyawan gitu.
+
+606
+00:53:19.910 --> 00:53:21.350
+Code Bahri: Ini, Ini fitur ini.
+
+607
+00:53:22.180 --> 00:53:23.830
+Code Bahri: Oke juga nih. Berarti maksudnya atau.
+
+608
+00:53:24.432 --> 00:53:28.160
+Benny Astria: Bisa masuk kalau Sorry kalau kelas kecil ini terkait apa?
+
+609
+00:53:28.843 --> 00:53:33.949
+Benny Astria: Kurang tahu nih? Ini apa, ya? Aku kan cuma ke Ea kan kerja kan? Kerja kan gitu kan.
+
+610
+00:53:35.071 --> 00:53:37.870
+Code Bahri: Tas kecil ini. Kayaknya dia ini deh. Apa itu.
+
+611
+00:53:38.942 --> 00:53:39.880
+Benny Astria: Ini kalau kalau.
+
+612
+00:53:40.279 --> 00:53:40.479
+Code Bahri: Ini.
+
+613
+00:53:40.776 --> 00:53:45.230
+Benny Astria: Kan Kayak Patty Cash, Ya, kalau Pt Cash itu sebetulnya masuknya lebih ke Finance, sih.
+
+614
+00:53:48.448 --> 00:53:51.040
+Code Bahri: Ini kayaknya. Ini P Tiga sudah. Ini kelas kecil. Ini.
+
+615
+00:53:51.880 --> 00:53:58.810
+Benny Astria: Masuknya ke mungkin yang pas. Itu yang parol. Pinjaman pajak Bpjs. Laporan tuh Itu udah oke.
+
+616
+00:53:59.742 --> 00:54:07.620
+Code Bahri: Nah, kalau pajak Bpjs nih. Ini, Ini ribetnya. Dimana sih Kayaknya ribet disini gitu itu Oke.
+
+617
+00:54:08.425 --> 00:54:11.790
+Benny Astria: Nah, ini. Nah, yang yang ribet. Sebetulnya yang ter ini nih.
+
+618
+00:54:12.456 --> 00:54:13.129
+Code Bahri: Ini kalau.
+
+619
+00:54:13.385 --> 00:54:21.899
+Benny Astria: Population nya tuh Tarif progresif, kan? Kalau tarif progresif, dia hitung langsung besar. Itu dia Kalau Ter itu.
+
+620
+00:54:23.152 --> 00:54:25.870
+Benny Astria: Jadi dia Ada ada kategorinya, Mas?
+
+621
+00:54:26.472 --> 00:54:28.469
+Benny Astria: Secara aturan, pajak tuh ada kategorinya.
+
+622
+00:54:28.959 --> 00:54:31.160
+Code Bahri: Nih, tanggung tanggung ini, ya. Tanggung siapa gitu ya?
+
+623
+00:54:31.746 --> 00:54:41.270
+Benny Astria: Nah, ditanggung karyawan ditanggung. Nah, ini maksudnya ditanggung karyawan. Itu dia untuk sistem gaji Gross.
+
+624
+00:54:42.800 --> 00:54:46.710
+Benny Astria: Kalau untuk yang ditanggung perusahaan Itu yang disebut gaji net.
+
+625
+00:54:48.716 --> 00:54:53.349
+Benny Astria: Jadi, pajaknya itu ditanggung karyawan. Jadi, misalkan gaji karyawan itu Lima juta.
+
+626
+00:54:53.590 --> 00:54:54.070
+Code Bahri: Uh, uh.
+
+627
+00:54:56.322 --> 00:54:58.990
+Benny Astria: Karyawan akan terima bersih lima juta. Padahal
+
+628
+00:54:59.795 --> 00:55:07.639
+Benny Astria: harusnya dari lima juta itu ada potongan Bpjs. Ada potongan kayak Bpjs, kesehatan Ketenagakerjaan pajak gitu, kan?
+
+629
+00:55:08.051 --> 00:55:11.039
+Benny Astria: Artinya kan Harusnya kurang dari lima juta dong. Dia terima bersihnya.
+
+630
+00:55:11.302 --> 00:55:12.880
+Code Bahri: Berarti pakainya Yang ini. Cruise, ini.
+
+631
+00:55:13.552 --> 00:55:17.999
+Benny Astria: Kalau kalau itu yang Nett tuh sebetulnya, makanya dia sistemnya Gross up.
+
+632
+00:55:18.531 --> 00:55:20.579
+Code Bahri: Ntar karyawannya dapatnya net gitu, kan.
+
+633
+00:55:20.883 --> 00:55:21.490
+Benny Astria: Dapatnya net.
+
+634
+00:55:22.205 --> 00:55:30.290
+Benny Astria: Jadi ditambahin dulu tuh. Secara pemrosesan di belakangnya gitu ditambahin dulu supaya karyawan itu tetap dapat misalkan lima juta kayak gitu.
+
+635
+00:55:31.293 --> 00:55:34.819
+Code Bahri: Ini cuma pengaturan, ya? Terus ini apa? Inisiatif Ptkp ini? Apa ini.
+
+636
+00:55:35.351 --> 00:55:43.750
+Benny Astria: Inisi inisialisasi Pt Kpa ini. Ini inisialisasi Pt Kp. Mungkin jenis jenisnya nih. Nah,
+
+637
+00:55:50.140 --> 00:55:54.239
+Benny Astria: a nol lima lap.
+
+638
+00:55:55.798 --> 00:56:02.970
+Benny Astria: Ini kategori Baru ini sebetulnya se dua ribu, dua, enam, Ya,
+
+639
+00:56:03.837 --> 00:56:17.250
+Benny Astria: Kalau yang lalu itu dia. Kategorinya banyak banget tuh, Mas. Jadi, Da jadi untuk misalkan Contoh Tk nol, ya? Tidak kawin nol anak. Dia tuh akan ada kategorinya. Jadi,
+
+640
+00:56:18.238 --> 00:56:26.369
+Benny Astria: misalkan rentang gaji dari sekian sampai sekian potongannya, berapa persen Rentang gaji dari sekian Sam, itu ada banyak tuh.
+
+641
+00:56:33.725 --> 00:56:37.400
+Benny Astria: Jadi kategori potongannya pun untuk ter ini
+
+642
+00:56:38.259 --> 00:56:42.879
+Benny Astria: benar benar banyak. Makanya waktu itu kalau saya Sempat ada meeting nya juga tuh
+
+643
+00:56:45.988 --> 00:56:51.629
+Benny Astria: nge nge Look up untuk ngerumusin lu, Kapo. Waktu itu saya bantu bantu ngerumusin lu kapok waktu itu.
+
+644
+00:56:52.140 --> 00:56:52.650
+Code Bahri: Uh, uh, uh.
+
+645
+00:56:53.021 --> 00:56:56.360
+Benny Astria: Karena kalau harus ngecekin satu satu lumayan repot juga.
+
+646
+00:56:56.843 --> 00:57:00.749
+Benny Astria: Karena kan gaji karyawan di saya tuh fluktuatif naik
+
+647
+00:57:01.545 --> 00:57:03.619
+Benny Astria: karena pajaknya kan enggak ditanggung perusahaan.
+
+648
+00:57:04.473 --> 00:57:06.040
+Code Bahri: Karyawannya berapa, Mas? Di tempatku.
+
+649
+00:57:07.564 --> 00:57:10.219
+Benny Astria: Total ada delapan. Ratus.
+
+650
+00:57:10.820 --> 00:57:12.170
+Code Bahri: Yang diurus delapan ratus itu.
+
+651
+00:57:12.545 --> 00:57:18.389
+Benny Astria: Delapan ratus lokal. Karyawan lokalnya? Ya, expart nya. Sekitar
+
+652
+00:57:18.969 --> 00:57:21.839
+Benny Astria: dua ratus lah. Dua ratus dua ratus sampai dua ratus lima puluh.
+
+653
+00:57:22.367 --> 00:57:23.320
+Code Bahri: Banyak juga, ya.
+
+654
+00:57:24.385 --> 00:57:26.610
+Benny Astria: Ngapain aja expatnya di Indonesia.
+
+655
+00:57:28.137 --> 00:57:33.989
+Benny Astria: Expat nya macam macam engineer. Tenaga tenaga ahli kayak gitu. Project Manager.
+
+656
+00:57:34.303 --> 00:57:34.930
+Code Bahri: Jepang. Gitu.
+
+657
+00:57:36.342 --> 00:57:38.100
+Benny Astria: Macam macam kebanyakan. Memang Jepang.
+
+658
+00:57:38.440 --> 00:57:38.610
+Code Bahri: Iya.
+
+659
+00:57:39.876 --> 00:57:40.509
+Benny Astria: Singapura.
+
+660
+00:57:41.040 --> 00:57:41.270
+Code Bahri: Iya.
+
+661
+00:57:41.900 --> 00:57:44.419
+Benny Astria: Pipin Thailand kayak gitu.
+
+662
+00:57:45.060 --> 00:57:47.519
+Benny Astria: Karena kan perusahaan saya ini
+
+663
+00:57:48.861 --> 00:57:54.579
+Benny Astria: ada di beberapa regional. Ya, kayak misalkan di Malaysia, ada di Singapura. Ada kayak gitu.
+
+664
+00:57:55.442 --> 00:58:03.509
+Code Bahri: Nah, kalau S Park gitu. S. Park itu. Apa itu pajaknya? Gimana itu, Mas? Itu penggajiannya. Ikut di sini atau Ikut ikut luar atau gimana?
+
+665
+00:58:04.077 --> 00:58:06.020
+Benny Astria: Ikut sini. Kebetulan kalau saya ikut sini,
+
+666
+00:58:07.345 --> 00:58:10.430
+Benny Astria: ikut sini. Nanti ada Pph. Berapa dia
+
+667
+00:58:13.736 --> 00:58:17.770
+Benny Astria: masuknya? Apa Pp, dua, satu. Apa Dia ada hitungannya tersendiri. Itu
+
+668
+00:58:18.357 --> 00:58:20.379
+Benny Astria: untuk X part kayak gitu. Karena
+
+669
+00:58:21.028 --> 00:58:31.389
+Benny Astria: mereka itu, gajinya harus dikursin dulu. Tuh setiap bulan gitu, kadang ada yang Dari Usd. Ada yang dari Ien juga gitu, jadi harus di Convert dulu.
+
+670
+00:58:32.967 --> 00:58:37.790
+Code Bahri: Nah, kalau ini apa nih? Bpjs Ketenagakerjaan apa ini saya buat? Tapi saya belum paham loh. Saya pokoknya,
+
+671
+00:58:38.506 --> 00:58:46.350
+Code Bahri: eh, eh, Buatin lengkap. Pokoknya gitu, kan? Dan belum belum cek ini. Aku baru cek. Ini. Sudah jadi aja nih. Gitu, kan?
+
+672
+00:58:47.299 --> 00:58:53.820
+Benny Astria: Nah, ini kesehatan sendiri. Dia ada, ada formulasinya.
+
+673
+00:58:54.378 --> 00:58:56.610
+Code Bahri: Ini, ini ketenagakerjaan. Ya.
+
+674
+00:58:57.126 --> 00:59:05.899
+Benny Astria: Ketenagakerjaan ini. Kurang lebihnya ada lima jaminan yang dibayarkan. Tapi enggak tahu. Ya, Jk. Jkp, itu dia.
+
+675
+00:59:07.416 --> 00:59:10.600
+Benny Astria: Ini yang ini Yang Oke, empat.
+
+676
+00:59:11.248 --> 00:59:12.480
+Benny Astria: Jadi, J, H, T.
+
+677
+00:59:13.370 --> 00:59:14.419
+Benny Astria: Ini potongannya, ya?
+
+678
+00:59:15.180 --> 00:59:24.250
+Benny Astria: Kalau Jht, dia benar benar dari nominal gaji itu dua persen dipotong dari karyawan.
+
+679
+00:59:25.210 --> 00:59:25.870
+Code Bahri: Ini berarti.
+
+680
+00:59:26.617 --> 00:59:33.670
+Benny Astria: Dua persen dari karyawan tiga koma tujuh persennya. Perusahaan harus bayarkan yang akan dibayarkan ke
+
+681
+00:59:34.631 --> 00:59:41.489
+Benny Astria: Bpjs kayak gitu. Dua persennya. Misalkan gajinya lima persen. Nah, dia si karyawan itu dipotong nih. Dua persen.
+
+682
+00:59:41.730 --> 00:59:42.210
+Code Bahri: Uh, uh.
+
+683
+00:59:42.705 --> 00:59:43.154
+Benny Astria: Kayak gitu.
+
+684
+00:59:47.127 --> 00:59:57.180
+Benny Astria: Terus, Jkk. Nah, kalau Jkk karyawan enggak dipotong murni dibayarkan sepenuhnya sama Perusahaan Jkm juga sama
+
+685
+00:59:59.543 --> 01:00:06.089
+Benny Astria: Jp. Karyawan Dipotong satu persen dari gaji karyawan. Tapi dia ada batas maksimum
+
+686
+01:00:07.696 --> 01:00:17.229
+Benny Astria: setiap tahun. Biasanya Bpjs mengeluarkan apa namanya. Ketentuan Batas maksimumnya berapa kayak gitu, Jadi, misalkan
+
+687
+01:00:17.727 --> 01:00:19.810
+Benny Astria: batas maksimumnya berapa nih? Sepuluh juta.
+
+688
+01:00:20.836 --> 01:00:33.440
+Benny Astria: Kalau dia gajinya sepuluh juta ke bawah, mengikuti persentase. Tapi kalau gajinya ke atas, sudah melewati Pelapon mentok di plafon sepuluh juta. Itu satu persennya.
+
+689
+01:00:35.403 --> 01:00:35.930
+Benny Astria: Cuman ini.
+
+690
+01:00:36.367 --> 01:00:39.430
+Code Bahri: Yang ngatur. Undang undang Gitu Batas maksimumnya.
+
+691
+01:00:39.857 --> 01:00:44.989
+Benny Astria: Biasanya ada pengumuman resmi dari Bpjs setiap tahun, Setiap awal tahun. Biasanya.
+
+692
+01:00:46.980 --> 01:00:52.440
+Code Bahri: Makanya ini ada kalkulator. Pokoknya berapa? Nanti klik dia, Jht. Sekian
+
+693
+01:00:56.261 --> 01:00:59.630
+Code Bahri: ini perusahaan nih. Karyawan ini. Perusahaan ini karyawan.
+
+694
+01:01:00.156 --> 01:01:00.383
+Benny Astria: Iya.
+
+695
+01:01:02.273 --> 01:01:06.129
+Code Bahri: Oke, terus Bpjs. Kesehatan nih.
+
+696
+01:01:08.871 --> 01:01:15.790
+Benny Astria: Bpjs Kesehatan. Nah, Bpjs. Kesehatan si empat persennya. Ini cost nya. Perusahaan yang bayar
+
+697
+01:01:17.990 --> 01:01:23.059
+Benny Astria: satu persennya dari gaji karyawan dan Dia ada pelaponnya. Pelaponnya dua belas juta.
+
+698
+01:01:23.531 --> 01:01:30.759
+Benny Astria: Jadi, buat karyawan yang gajinya di dua belas juta ke bawah sama kayak tadi tuh yang jaminan pensiun, ya?
+
+699
+01:01:31.629 --> 01:01:37.219
+Benny Astria: Dia mentok di dua belas juta. Kalau gajinya? Dua puluh empat juta yang dihitung sih. Dua belas juta saja.
+
+700
+01:01:37.814 --> 01:01:38.249
+Code Bahri: Oke, oke.
+
+701
+01:01:38.482 --> 01:01:44.169
+Benny Astria: Kayak gitu biasanya paling gede itu enam ratus ribu lah.
+
+702
+01:01:44.684 --> 01:01:46.260
+Benny Astria: Perusahaan sama karyawan bayar.
+
+703
+01:01:47.949 --> 01:01:51.359
+Code Bahri: Kayak gitu. Karyawan berarti sekitar seratus delapan puluhan lah.
+
+704
+01:01:53.466 --> 01:01:55.890
+Code Bahri: Terus ini apa yang tanggungan keluarga tambahan?
+
+705
+01:01:56.882 --> 01:01:58.489
+Benny Astria: Ini. Ini masih kesehatan, ya?
+
+706
+01:01:58.700 --> 01:01:59.120
+Code Bahri: Uh, uh.
+
+707
+01:02:00.008 --> 01:02:03.060
+Benny Astria: Jadi kalau di Bpjs, kesehatan itu
+
+708
+01:02:04.923 --> 01:02:11.469
+Benny Astria: secara praktek nih, saya jelasin secara prakteknya. Dulu ada perusahaan yang mau daftarin keluarga Tambahan ada juga enggak
+
+709
+01:02:12.755 --> 01:02:18.490
+Benny Astria: jadi secara regulasi di Bpjs, kesehatan seperti ini.
+
+710
+01:02:19.103 --> 01:02:29.079
+Benny Astria: Jadi, untuk karyawan tadi, kan dipotong satu persen dari sisi karyawan empat persen disubsidi sama perusahaan iuran ini
+
+711
+01:02:29.945 --> 01:02:32.019
+Benny Astria: yang pertama meng cover si karyawan.
+
+712
+01:02:33.903 --> 01:02:40.490
+Benny Astria: Selain itu, bagi pasangan, karyawan bisa didaftarkan sebagai tanggungan tanpa perlu menambah iuran
+
+713
+01:02:40.958 --> 01:02:43.940
+Benny Astria: karena sudah di cover dari si Lima Persen total. Ya,
+
+714
+01:02:45.015 --> 01:02:48.989
+Benny Astria: dan Ju. Dia juga meng cover maksimal tiga anak.
+
+715
+01:02:50.590 --> 01:02:57.600
+Benny Astria: Tiga anak dengan ketentuan Anak ini belum menikah, Belum bekerja
+
+716
+01:02:58.432 --> 01:03:00.429
+Benny Astria: maksimal. Usia dua puluh satu tahun
+
+717
+01:03:02.040 --> 01:03:07.320
+Benny Astria: bisa di cover sampai usia dua puluh lima tahun. Kalau anaknya
+
+718
+01:03:08.340 --> 01:03:12.450
+Benny Astria: kuliah Kayak gitu, ya, Kuliah. Jadi nanti siapain duluan nih?
+
+719
+01:03:13.156 --> 01:03:17.079
+Benny Astria: Kalau dia sudah lulus sebelum dua, lima. Itu enggak di cover
+
+720
+01:03:17.667 --> 01:03:22.535
+Benny Astria: kalau dia sudah dua, Lima, tapi belum lulus mentok sampai dua, lima kayak gitu.
+
+721
+01:03:23.396 --> 01:03:29.700
+Benny Astria: Tapi misalkan dia enggak kuliah, tapi dia sudah kerja. Ah, dia secara otomatis akan keluar,
+
+722
+01:03:31.791 --> 01:03:45.180
+Benny Astria: dan dia juga sama. Dia enggak kuliah. Dia enggak kerja, tapi dia menikah gitu dan dia juga akan keluar sebagai dar, dia akan Keluar dari tanggungan si karyawan kayak gitu. Terus gimana, Mas? Kalau misalkan anaknya
+
+723
+01:03:45.862 --> 01:03:51.159
+Benny Astria: Li empat gitu yang dewasa sudah keluar nih, enggak jadi tanggungan
+
+724
+01:03:51.952 --> 01:03:56.670
+Benny Astria: Anak yang bontok. Bisa kita daftarin dengan cara si karyawan lapor ke Hrd.
+
+725
+01:03:57.696 --> 01:04:05.789
+Benny Astria: Dia enggak perlu ada iuran tambahan. Nah, sekarang masuk ke pertanyaannya, Ini terkait tanggungan keluarga tambahan seperti apa? Nah,
+
+726
+01:04:06.765 --> 01:04:10.160
+Benny Astria: biasanya ada juga perusahaan yang mengkover Seperti
+
+727
+01:04:10.911 --> 01:04:14.139
+Benny Astria: melayani Lion Servis karyawan sampai keluarga tambahan
+
+728
+01:04:15.170 --> 01:04:20.380
+Benny Astria: untuk mengakomodir, apa? Nah, ini ada juga karyawan yang anaknya lebih dari tiga
+
+729
+01:04:21.529 --> 01:04:25.440
+Benny Astria: dan masih usia anak anak di bawah. Dua puluh satu tahun kayak gitu,
+
+730
+01:04:26.109 --> 01:04:34.939
+Benny Astria: Dia mau anak keempatnya juga di cover gitu. Nah, itu bisa kita daftarin dengan cara itu? Ada tambahan iuran satu persen dari gaji si karyawan tersebut.
+
+731
+01:04:35.715 --> 01:04:35.900
+Code Bahri: Orang.
+
+732
+01:04:36.673 --> 01:04:37.359
+Benny Astria: Per orang.
+
+733
+01:04:37.819 --> 01:04:41.500
+Code Bahri: Itu Kalau kalau tambahannya tiga, berarti dia tiga persen.
+
+734
+01:04:41.830 --> 01:04:42.490
+Benny Astria: Tiga persen.
+
+735
+01:04:42.913 --> 01:04:43.220
+Code Bahri: Uh, uh.
+
+736
+01:04:43.602 --> 01:04:57.000
+Benny Astria: Ini juga bisa. Bukan cuma anak, tapi misalkan orang tuanya bareng sama anak ini sama si karyawan ini. Mau didaftarin deh. Bayarnya biar sekalian gitu. Soalnya repot mandiri. Kadang suka lupa bayarnya. Bisa,
+
+737
+01:04:57.591 --> 01:05:00.419
+Benny Astria: tapi secara praktek, ada perusahaan yang
+
+738
+01:05:00.861 --> 01:05:02.610
+Benny Astria: men servis itu. Ada yang enggak.
+
+739
+01:05:02.956 --> 01:05:03.650
+Code Bahri: Uh, uh.
+
+740
+01:05:04.276 --> 01:05:10.199
+Benny Astria: Perusahaan saya yang enggak meng cover atau enggak menservis karyawan untuk yang satu persen. Ini karena.
+
+741
+01:05:10.713 --> 01:05:11.740
+Code Bahri: Soalnya, gimana?
+
+742
+01:05:12.313 --> 01:05:13.039
+Benny Astria: Satu ribet.
+
+743
+01:05:13.413 --> 01:05:14.160
+Code Bahri: Ke dua.
+
+744
+01:05:15.345 --> 01:05:17.939
+Benny Astria: Agak sayang, Mas. Kalau menurut saya
+
+745
+01:05:18.771 --> 01:05:21.839
+Benny Astria: untuk gaji gaji yang lumayan besar.
+
+746
+01:05:22.536 --> 01:05:25.319
+Code Bahri: Gaji tinggi Nanti satu persennya kan tinggi, ya?
+
+747
+01:05:26.027 --> 01:05:29.700
+Benny Astria: Kita Satu persennya tinggi, Misalkan Anggaplah gajinya sepuluh Juta.
+
+748
+01:05:29.866 --> 01:05:30.199
+Code Bahri: Uh, uh.
+
+749
+01:05:30.495 --> 01:05:31.679
+Benny Astria: Tambahannya, kan? Seratus ribu.
+
+750
+01:05:32.250 --> 01:05:32.480
+Code Bahri: Gitu.
+
+751
+01:05:34.038 --> 01:05:38.429
+Benny Astria: Kayaknya mereka hanya butuh untuk di kelas tiga. Kayak gitu. Bisa.
+
+752
+01:05:38.560 --> 01:05:38.820
+Code Bahri: Iya, iya.
+
+753
+01:05:39.107 --> 01:05:43.419
+Benny Astria: Bayar Tiga puluh lima ribu saja. Gitu kan? Bisa bayar buat tiga orang? Malah gitu.
+
+754
+01:05:43.965 --> 01:05:45.329
+Code Bahri: Biar bayar mandiri saja. Daripada.
+
+755
+01:05:45.682 --> 01:05:54.150
+Benny Astria: Bayar mandiri, aja gitu. Kadang saya lebih saranin ke sana kayak gitu. Jadi kita saranin mana yang lebih menguntungkan ke Karyawan lah kayak gitu.
+
+756
+01:05:55.798 --> 01:06:00.389
+Benny Astria: Jadi kita kasih suggestion. Yang secara hitungannya itu kita kasih suggestion ke mereka.
+
+757
+01:06:01.012 --> 01:06:01.799
+Code Bahri: Oke, oke, berarti.
+
+758
+01:06:02.015 --> 01:06:02.230
+Benny Astria: Orang orang.
+
+759
+01:06:02.803 --> 01:06:03.090
+Code Bahri: Ini.
+
+760
+01:06:03.535 --> 01:06:03.790
+Benny Astria: Oke, oke.
+
+761
+01:06:04.220 --> 01:06:05.939
+Code Bahri: Efektif terus. Ini motor.
+
+762
+01:06:07.043 --> 01:06:09.229
+Benny Astria: Tapi hitungan ini. Ini untuk yang per orang. Ya.
+
+763
+01:06:10.770 --> 01:06:13.200
+Code Bahri: Ini, kan? Ini kan pengaturan dari pengaturan, Bu.
+
+764
+01:06:13.500 --> 01:06:14.400
+Benny Astria: Oh, oke, oke.
+
+765
+01:06:14.752 --> 01:06:17.220
+Code Bahri: Nah, ini upah minimum Maksimum. Ini maksudnya.
+
+766
+01:06:19.410 --> 01:06:29.057
+Benny Astria: Bentar upah minimum. Kalau upah minimum otomatis ngikutin umr. Masing masing daerah nih kayak gitu.
+
+767
+01:06:30.850 --> 01:06:40.290
+Benny Astria: Masing masing daerah kan beda Beda tuh, Jakarta. Berapa Jogja berapa? Misalkan Jawa Barat? Berapa kayak gitu? Setiap daerah upah minumnya beda beda.
+
+768
+01:06:41.131 --> 01:06:47.189
+Benny Astria: Karena itu yang akan berkorelasi satu ke Bpjs kesehatan.
+
+769
+01:06:49.085 --> 01:06:49.910
+Code Bahri: Contohnya, gimana maksudnya?
+
+770
+01:06:51.296 --> 01:06:53.399
+Benny Astria: Bpjs Kesehatan di Jakarta.
+
+771
+01:06:54.183 --> 01:07:00.480
+Benny Astria: Minimumnya, Minimum iurannya. Itu dihitung berdasarkan Umr Jakarta,
+
+772
+01:07:03.261 --> 01:07:09.590
+Benny Astria: ini Ak. Kalkulasinya akan berbeda kalau upah minimumnya Di setting nya. Misalkan daerah Jawa Barat.
+
+773
+01:07:09.973 --> 01:07:10.279
+Code Bahri: Uh, uh.
+
+774
+01:07:10.567 --> 01:07:13.440
+Benny Astria: Atau Jawa Tengah. Jawa timur Itu kan beda beda tuh.
+
+775
+01:07:14.117 --> 01:07:14.652
+Benny Astria: Kayak gitu.
+
+776
+01:07:15.948 --> 01:07:17.739
+Benny Astria: Kalkulasinya akan akan berbeda. Tuh.
+
+777
+01:07:19.900 --> 01:07:21.080
+Benny Astria: Upah maksimum
+
+778
+01:07:24.380 --> 01:07:25.130
+Benny Astria: Ini.
+
+779
+01:07:26.090 --> 01:07:26.690
+Code Bahri: Maksudnya gini.
+
+780
+01:07:27.370 --> 01:07:28.050
+Benny Astria: Ini kali.
+
+781
+01:07:29.556 --> 01:07:32.940
+Code Bahri: Seumpama uang minimum minimum Power provinsi itu lima juta.
+
+782
+01:07:33.476 --> 01:07:33.809
+Benny Astria: Uh, huh.
+
+783
+01:07:34.165 --> 01:07:38.070
+Code Bahri: Gaji dia empat juta. Dia hitungnya ikut yang lima juta gitu.
+
+784
+01:07:38.495 --> 01:07:38.707
+Benny Astria: Betul.
+
+785
+01:07:39.205 --> 01:07:40.059
+Code Bahri: Oh, uh, uh.
+
+786
+01:07:40.670 --> 01:07:48.159
+Benny Astria: Ikutnya ke situ Karena ketentuan ketenagakerjaan. Karyawan itu enggak boleh digaji di bawah upah minimum.
+
+787
+01:07:49.476 --> 01:07:49.950
+Code Bahri: Uh, uh.
+
+788
+01:07:51.055 --> 01:07:53.129
+Benny Astria: Gitu. Jadi, ada mekanismenya tersendiri tuh.
+
+789
+01:07:54.077 --> 01:08:00.559
+Code Bahri: Oh, ya, berarti di sini kayak ngakalin setengah kalim, ya?
+
+790
+01:08:01.565 --> 01:08:02.060
+Code Bahri: Biar
+
+791
+01:08:03.380 --> 01:08:10.210
+Code Bahri: Apa di Soalnya kan? Aturan itu ngaruhnya ngaruh ke Bpjs juga. Biar hitungan Bpjs itu normal gitu. Mungkin sih.
+
+792
+01:08:11.365 --> 01:08:13.710
+Code Bahri: Walaupun upah aslinya enggak segitu gitu, ya.
+
+793
+01:08:14.100 --> 01:08:19.350
+Benny Astria: Iya, ada juga yang Kalau perusahaannya Sistem Parroll nya di.
+
+794
+01:08:19.895 --> 01:08:27.420
+Benny Astria: Jadi, ada sistem Parrol yang dia enggak membedakan. Mana gaji Pokok mana tunjangan tetap kayak gitu?
+
+795
+01:08:27.793 --> 01:08:28.240
+Code Bahri: Uh, uh.
+
+796
+01:08:29.365 --> 01:08:40.039
+Benny Astria: Semuanya dijadikan satu kayak kayak perusahaan. Saya tuh enggak ada tunjangan tetap. Tunjang. Cuma ada allowance. Ya, tunjangan tidak tetap Jadi, antara gaji pokok sama tunjangan tetap tuh dijadiin satu.
+
+797
+01:08:42.363 --> 01:08:42.650
+Code Bahri: Rapat.
+
+798
+01:08:44.683 --> 01:08:48.479
+Benny Astria: Lebih. Ini lebih. Jadi kalau Thr Nominalnya lebih besar.
+
+799
+01:08:49.487 --> 01:08:50.320
+Code Bahri: Uh, huh, misalkan.
+
+800
+01:08:51.189 --> 01:08:55.500
+Benny Astria: Misalkan gini, umr. Lima juta.
+
+801
+01:08:57.571 --> 01:08:59.679
+Benny Astria: Eh, Umr. Jakartanya, misalnya. Lima juta.
+
+802
+01:08:59.819 --> 01:09:00.079
+Code Bahri: Uh, uh.
+
+803
+01:09:00.502 --> 01:09:01.770
+Benny Astria: Gaji pokok dia.
+
+804
+01:09:02.694 --> 01:09:05.299
+Benny Astria: Lima juta Tunjangan tetapnya dua juta.
+
+805
+01:09:05.985 --> 01:09:09.629
+Benny Astria: Kalau dia pakai sistem gajinya yang dipisah antara
+
+806
+01:09:10.820 --> 01:09:15.470
+Benny Astria: sama tunjangan, Tidak, Tetap Ya, dia akan menghitung gaji pokok
+
+807
+01:09:17.380 --> 01:09:22.090
+Benny Astria: Tok untuk untuk apa namanya? Untuk thr kayak gitu.
+
+808
+01:09:23.082 --> 01:09:24.990
+Benny Astria: Itu calculation nya. Jadi beda lagi tuh.
+
+809
+01:09:26.888 --> 01:09:30.939
+Code Bahri: Nih, kita ke thr ntar. Kok tak terlihat bentar, ya?
+
+810
+01:11:14.994 --> 01:11:16.260
+Code Bahri: Oke, lanjut nih.
+
+811
+01:11:16.789 --> 01:11:17.089
+Benny Astria: Oke, Mbak.
+
+812
+01:11:17.448 --> 01:11:20.320
+Code Bahri: Jangan hari raya. Ini maksudnya apa nih? Pengaturan?
+
+813
+01:11:21.735 --> 01:11:22.589
+Code Bahri: Nah, ini coba.
+
+814
+01:11:25.131 --> 01:11:28.620
+Benny Astria: Nah, mekanisme tunjangan hari raya. Ya,
+
+815
+01:11:33.675 --> 01:11:38.500
+Benny Astria: dia ada satu bulan Gaji ada pro rata. Nah, T, H, R ini
+
+816
+01:11:39.272 --> 01:11:42.589
+Benny Astria: secara Regulasi diberikan untuk karyawan yang
+
+817
+01:11:43.453 --> 01:11:51.329
+Benny Astria: sudah bekerja Dua belas tahun. Dua belas tahun, dua belas bulan secara berturut, turut atau satu tahun gitu, ya,
+
+818
+01:11:52.240 --> 01:11:58.910
+Benny Astria: Dengan menerima imbalan sebesar satu atau setara, satu bulan Gaji
+
+819
+01:11:59.960 --> 01:12:06.259
+Benny Astria: terus. Bagaimana? Untuk karyawan yang bekerja kurang dari dua belas bulan kayak gitu,
+
+820
+01:12:07.167 --> 01:12:13.870
+Benny Astria: dia akan dapat pro rata. Dihitungnya Bagaimana gaji dibagi dua belas dikali
+
+821
+01:12:14.432 --> 01:12:17.509
+Benny Astria: selama bulan? Dia bekerja kayak gitu. Itu hitungan peratanya.
+
+822
+01:12:23.277 --> 01:12:25.520
+Code Bahri: Bulan kerja, oke?
+
+823
+01:12:26.040 --> 01:12:26.759
+Code Bahri: Nah, ini pokoknya.
+
+824
+01:12:27.090 --> 01:12:36.379
+Benny Astria: Takutnya tetap Ini Sertakan tunjangan tetap. Nah, ini. Ini. Dia akan menghitung gaji pokok. Plus tunjangan tetap
+
+825
+01:12:39.580 --> 01:12:46.729
+Benny Astria: oke? Nah, nah, ini. Oke nih. Dia sudah ada option hari raya karena
+
+826
+01:12:50.210 --> 01:12:55.789
+Benny Astria: biasanya sih Commonnya thr itu keluarnya Idul Fitri.
+
+827
+01:12:56.866 --> 01:13:00.789
+Benny Astria: Tapi di beberapa perusahaan, mereka ada Yang nge Split juga tuh.
+
+828
+01:13:01.252 --> 01:13:02.520
+Code Bahri: Jadi, ada Tim.
+
+829
+01:13:03.480 --> 01:13:10.019
+Benny Astria: Lebaran. Ada tim Natal kayak gitu, Tapi memang secara regulasi.
+
+830
+01:13:11.413 --> 01:13:17.440
+Benny Astria: Thr ini diberikan saat perayaan hari raya bagi masing masing Umat kayak gitu
+
+831
+01:13:19.001 --> 01:13:23.329
+Benny Astria: gitu. Tapi secara common biasanya keluarnya pas Idulfitri
+
+832
+01:13:24.919 --> 01:13:27.109
+Benny Astria: gitu ini. Ini udah oke sih. Udah ada option nya.
+
+833
+01:13:30.718 --> 01:13:36.999
+Code Bahri: Soalnya ini ga mungkin gaya di satu perusahaan. Karena dia Non. Dia dapatnya di Natal.
+
+834
+01:13:37.362 --> 01:13:37.940
+Benny Astria: Iya, uh, uh.
+
+835
+01:13:38.960 --> 01:13:45.570
+Code Bahri: Bisa gitu atau enggak lah kalau kalau desert nya Idul Fitri, Semua Idul Fitri. Kalau Natal Natal, semua gitu gimana?
+
+836
+01:13:47.469 --> 01:13:50.379
+Benny Astria: Sepengalaman saya di Holland Bakery itu.
+
+837
+01:13:51.266 --> 01:13:52.379
+Benny Astria: Kita setting.
+
+838
+01:13:53.206 --> 01:13:54.830
+Benny Astria: Jadi yang non Muslim.
+
+839
+01:13:55.581 --> 01:14:01.360
+Benny Astria: Oh, biasanya kita tanya mau ikut tim lebaran Apa tim Natal
+
+840
+01:14:01.865 --> 01:14:06.589
+Benny Astria: yang Non Muslim? Ya, biasanya karena ada juga yang non Muslim Pengennya dapat pas. Lebaran.
+
+841
+01:14:07.080 --> 01:14:08.059
+Code Bahri: Uh, uh.
+
+842
+01:14:09.199 --> 01:14:14.129
+Benny Astria: Mengingat hypenya ramai, banyak promo kayak gitu, jadi mereka mau dikeluarin pas lebaran.
+
+843
+01:14:14.871 --> 01:14:19.690
+Code Bahri: Oh, berarti memang. Thr. Ini semua Madiah Non. Emang dapatnya?
+
+844
+01:14:20.246 --> 01:14:21.979
+Code Bahri: Ini pas Desember gitu, ya?
+
+845
+01:14:22.610 --> 01:14:30.800
+Benny Astria: Iya, sebelum dan. Tapi balik lagi. Tergantung penerapan dari masing masing perusahaan.
+
+846
+01:14:31.100 --> 01:14:31.700
+Code Bahri: Perusahaan, kan?
+
+847
+01:14:31.903 --> 01:14:36.260
+Benny Astria: Iya, iya, bisa dikeluarin. Semuanya mau Muslim Non Muslim.
+
+848
+01:14:36.720 --> 01:14:43.530
+Benny Astria: Semuanya di Idul Fitri kayak gitu. Dan itu ada. Ada mekanismenya Jadi, paling lambat.
+
+849
+01:14:44.145 --> 01:14:47.339
+Benny Astria: Thr itu harus keluar tujuh hari sebelum hari raya.
+
+850
+01:14:49.460 --> 01:14:53.639
+Benny Astria: Itu sudah harus diterima sama karyawan.
+
+851
+01:14:55.905 --> 01:14:58.469
+Code Bahri: Memang kalau kayak gini gini. Ini kan aturan, ya.
+
+852
+01:14:58.650 --> 01:14:58.830
+Benny Astria: Iya.
+
+853
+01:14:59.364 --> 01:15:06.449
+Code Bahri: Nah, kalau ada yang melanggar itu memang ketahuan. Terus disangsi gitu. Kayaknya tuh enggak deh. Maksudnya kayak nggak kelihatan gitu.
+
+854
+01:15:07.043 --> 01:15:15.349
+Benny Astria: Secara prakteknya, sih sebetulnya agak sulit diawasi. Memang, tapi kalau di
+
+855
+01:15:15.952 --> 01:15:22.560
+Benny Astria: Jakarta sendiri di kantor saya biasanya tuh orang dinas Itu sudah Woro. Woro Gitu ke kita.
+
+856
+01:15:22.946 --> 01:15:23.200
+Code Bahri: Uh, uh.
+
+857
+01:15:23.679 --> 01:15:28.950
+Benny Astria: Nanti, setiap perusahaan yang sudah melakukan pembayaran Thr, lapor ke dinas.
+
+858
+01:15:31.358 --> 01:15:35.050
+Benny Astria: Jadi, kita melakukan pelaporan Karena biasanya.
+
+859
+01:15:35.183 --> 01:15:35.450
+Code Bahri: Uh, uh.
+
+860
+01:15:35.870 --> 01:15:42.780
+Benny Astria: Karena biasanya yang paling kita malas itu setiap tahun itu ada apa?
+
+861
+01:15:44.255 --> 01:15:53.330
+Benny Astria: Semacam petugas? Ya, petugas tersendiri, nih. Auditor dari Dinas Ketenagakerjaan dan dia akan periksa kita
+
+862
+01:15:55.012 --> 01:15:59.789
+Benny Astria: semua bukti bahwa terkait ke ketenagakerjaan
+
+863
+01:16:00.469 --> 01:16:05.920
+Benny Astria: terkait pembayaran Thr. Kapan kita transfer Lihat transaksinya, kapan itu benar Benar, dilihat itu.
+
+864
+01:16:08.072 --> 01:16:16.630
+Benny Astria: Jadi, catatan transaksinya diterima karyawan. Kapan diprosesnya? Kapan itu benar benar di dicek kayak gitu.
+
+865
+01:16:16.887 --> 01:16:19.199
+Code Bahri: Emang itu nggak bisa dimanipulasi juga, kan? Bisa juga.
+
+866
+01:16:20.980 --> 01:16:22.869
+Benny Astria: Bukti Payment Bank kan enggak bisa.
+
+867
+01:16:23.835 --> 01:16:26.100
+Code Bahri: Minta minta bukti transfer itu. Ya?
+
+868
+01:16:26.725 --> 01:16:32.590
+Benny Astria: Uh, huh, gitu. Kita bener bener dilihat tuh. Transaksinya
+
+869
+01:16:33.197 --> 01:16:37.369
+Benny Astria: itu. Itu kalau kita lagi apes Ya, saya. Nyebutnya Apes.
+
+870
+01:16:37.985 --> 01:16:40.370
+Code Bahri: Oke, berarti Thr ini, No benar, Mas. Ya.
+
+871
+01:16:40.760 --> 01:16:41.100
+Benny Astria: Sudah benar.
+
+872
+01:16:42.911 --> 01:16:48.920
+Code Bahri: Oke, oke, keren juga. Ini kiranya sama eanya, kan?
+
+873
+01:16:51.161 --> 01:16:54.819
+Benny Astria: Dan dia. Nah, dia sudah jelasin juga. Tuh. Aturannya tuh yang terbaru pulang.
+
+874
+01:16:55.555 --> 01:17:00.810
+Benny Astria: Dia sesuai dengan terkait pengupahan. Tiga, enam tahun. Dua ribu, dua, satu.
+
+875
+01:17:02.538 --> 01:17:04.950
+Code Bahri: Nah, kita ke pelaporan nih. Laporannya. Apa ini maksudnya
+
+876
+01:17:06.016 --> 01:17:12.019
+Code Bahri: laporan karyawan? Ini maksudnya keti Dipakai ketika apa sih gitu? Kalian Sr tuh perlu ini. Ngapain ke depan gitu?
+
+877
+01:17:13.760 --> 01:17:21.199
+Benny Astria: Kalau Hr itu kadang kita. Kalau tadi kan itu memproses ke masing masing karyawan, Ya.
+
+878
+01:17:22.212 --> 01:17:23.540
+Code Bahri: Kadang tuh, chr, tuh.
+
+879
+01:17:24.447 --> 01:17:27.590
+Benny Astria: Butuh laporan laporan tuh? Contohnya, kalau saya
+
+880
+01:17:31.328 --> 01:17:40.800
+Benny Astria: transaksi pembayaran Bpjs gitu, Kesehatan sudah sesuai. Belum secara nominal. Antara tagihan dari mana
+
+881
+01:17:41.954 --> 01:17:46.849
+Benny Astria: dari Bpjs sama catatan kita? Karena kita tuh sebelum
+
+882
+01:17:47.656 --> 01:17:52.299
+Benny Astria: sebelum Bpjs ngeluarin tagihan, kita bisa ngekalkulasiin pembayarannya berapa
+
+883
+01:17:53.002 --> 01:17:55.889
+Benny Astria: sesuai dengan yang apa yang Kita sudah pernah daftarin kayak gitu.
+
+884
+01:17:57.376 --> 01:18:04.756
+Benny Astria: Terus kalau terkait perolnya, misalkan kalau dia ada
+
+885
+01:18:06.302 --> 01:18:14.440
+Benny Astria: apa? Pengajuan Medical gitu itu sudah sesuai. Enggak Nominalnya kayak Gitu siapa saja kadang manajemen suka iseng tuh
+
+886
+01:18:15.608 --> 01:18:18.470
+Benny Astria: jadi kayak dari Director Finance nya. Kadang pengen lihat
+
+887
+01:18:19.568 --> 01:18:22.759
+Benny Astria: siapa saja yang ngajuin medical di bulan Ini kayak gitu.
+
+888
+01:18:24.455 --> 01:18:28.912
+Benny Astria: Terus kayak laporan absensi gitu.
+
+889
+01:18:29.584 --> 01:18:33.329
+Benny Astria: Mau Mau tahu tuh Secara yang
+
+890
+01:18:34.002 --> 01:18:41.240
+Benny Astria: absennya masuk Berapa bolong? Berapa kayak gitu Sakit Berapa banyak
+
+891
+01:18:42.167 --> 01:18:46.310
+Benny Astria: Kalau untuk semacam monitoring gitu, Ya, three cap nya gitu.
+
+892
+01:18:49.218 --> 01:18:51.699
+Code Bahri: Ini berarti kurang laporan. Apa? Laporan Bpjs.
+
+893
+01:18:53.747 --> 01:18:56.081
+Benny Astria: Kalau Bpjs itu sebetulnya ini sih
+
+894
+01:18:57.006 --> 01:18:58.869
+Benny Astria: lebih ke kebutuhan masing masing aja sih.
+
+895
+01:18:59.157 --> 01:19:00.879
+Code Bahri: Jadi, cukup, Tig. Empat. Ini cukup.
+
+896
+01:19:02.264 --> 01:19:05.110
+Benny Astria: Coba boleh lihat kalau laporan karyawan dia seperti apa sih?
+
+897
+01:19:07.881 --> 01:19:08.850
+Benny Astria: Uh, uh, uh, uh, uh, uh,
+
+898
+01:19:10.259 --> 01:19:12.929
+Benny Astria: oke. Ini semacam dashboard nya, Ya,
+
+899
+01:19:13.845 --> 01:19:16.129
+Benny Astria: Total dua puluh lima artis. Dua puluh lima.
+
+900
+01:19:17.037 --> 01:19:21.060
+Benny Astria: Oke, Nah, ini nice sih. Jadi, ada delapan karyawan
+
+901
+01:19:21.543 --> 01:19:25.450
+Benny Astria: permanen, tujuh karyawan kontrak kayak gitu, ya, sepuluh Provision.
+
+902
+01:19:25.792 --> 01:19:26.790
+Code Bahri: Ini Oke, sih.
+
+903
+01:19:27.584 --> 01:19:31.529
+Benny Astria: Jadi sudah ketahuan. Sudah kebaca kalau
+
+904
+01:19:32.135 --> 01:19:34.270
+Benny Astria: bawanya, kan? Untuk lihat detailnya. Ya
+
+905
+01:19:38.835 --> 01:19:40.310
+Benny Astria: udah bisa filter juga, ya?
+
+906
+01:19:40.716 --> 01:19:41.249
+Benny Astria: Oke, nih.
+
+907
+01:19:47.115 --> 01:19:51.280
+Benny Astria: Oh, Ini statusnya terkait aktif. Enggak aktif, Ya, ini oke, sih.
+
+908
+01:19:52.618 --> 01:19:56.739
+Benny Astria: Dan ini bisa diekspor ke Excel juga. Ya, ini penting banget, sih.
+
+909
+01:20:02.047 --> 01:20:03.029
+Code Bahri: Bisa. Harusnya bisa
+
+910
+01:20:06.363 --> 01:20:07.330
+Code Bahri: ukuran karyawan.
+
+911
+01:20:08.952 --> 01:20:10.770
+Benny Astria: Ini udah oke. Ini oke sih.
+
+912
+01:20:14.078 --> 01:20:16.710
+Code Bahri: Terus apa lagi laporan ini? Kehadiran.
+
+913
+01:20:17.091 --> 01:20:26.230
+Benny Astria: Porang Kehadiran ini terkait absensinya. Ya, Total record tepat waktu. Terlambat, Tidak ada,
+
+914
+01:20:31.325 --> 01:20:34.730
+Benny Astria: itu terlambat. Pulang. Cepat. Mungkin Mas bisa ditambahkan
+
+915
+01:20:37.351 --> 01:20:41.410
+Benny Astria: karena seringkali misalkan masuk jam delapan. Pulang jam lima.
+
+916
+01:20:42.262 --> 01:20:46.389
+Benny Astria: Ada karyawan yang dia pulang cepat,
+
+917
+01:20:46.853 --> 01:20:50.859
+Benny Astria: Itu juga bisa. Kalau kalau bisa terbaca gitu, itu lebih nice sih.
+
+918
+01:20:51.208 --> 01:20:55.469
+Code Bahri: Ini ada yang bisa dikurangi. Nggak? Atau ini perlu semua
+
+919
+01:20:56.161 --> 01:20:58.899
+Code Bahri: total lembur. Ini perlu nggak perlu terlambat.
+
+920
+01:20:59.679 --> 01:21:03.169
+Code Bahri: Ini terlambat sama Ini, Apa ini, ini orangnya yang mungkin. Atau gimana nih?
+
+921
+01:21:04.432 --> 01:21:05.699
+Code Bahri: Kalau jam terlambat.
+
+922
+01:21:06.528 --> 01:21:07.989
+Benny Astria: Karena ini belum ada record nya. Ya.
+
+923
+01:21:08.233 --> 01:21:08.720
+Code Bahri: Uh, uh.
+
+924
+01:21:12.026 --> 01:21:18.090
+Benny Astria: Tidak khawatir total terlambat. Ini kalau total terlambat, kan? Dia ngitung jam total lembur.
+
+925
+01:21:21.212 --> 01:21:25.149
+Benny Astria: Ini semua departemen semua karyawan.
+
+926
+01:21:29.990 --> 01:21:31.557
+Benny Astria: Tapi Itu enggak,
+
+927
+01:21:32.653 --> 01:21:43.499
+Benny Astria: itu hanya ini aja, Ya, biar lebih nice. Jadi, sebetulnya mau ditambahin, Oke, Ditambahin sebenarnya enggak masalah, karena yang paling penting, biasanya Perusahaan lebih fokus ke
+
+928
+01:21:43.932 --> 01:21:44.839
+Benny Astria: siapa yang terlambat.
+
+929
+01:21:46.083 --> 01:21:49.240
+Code Bahri: Uh, uh, pulang cepat, Ya.
+
+930
+01:21:49.540 --> 01:21:51.040
+Benny Astria: Tidak, Ha sama tidak hadir.
+
+931
+01:21:51.465 --> 01:21:52.049
+Code Bahri: Oh, ini ya.
+
+932
+01:21:52.270 --> 01:21:53.370
+Benny Astria: Mau ke tepat waktu tuh.
+
+933
+01:21:53.909 --> 01:22:03.150
+Benny Astria: Bagi perusahaan yang concern dengan apa namanya loyalitas. Mereka akan lihat ke tepat waktu. Kadang Ada Employee of Demon. Segala macam kayak gitu.
+
+934
+01:22:03.883 --> 01:22:13.959
+Benny Astria: Tapi bagi Hr, kita akan lihat yang ketidakhadirannya, karena nanti itu ada kaitannya terkait dengan mangkir,
+
+935
+01:22:15.394 --> 01:22:20.879
+Benny Astria: Kita mau mau lihat kalau dia sudah sampai dua hari. Tiga hari enggak masuk. Biasanya kita bidik tuh.
+
+936
+01:22:21.813 --> 01:22:22.300
+Code Bahri: Uh, uh.
+
+937
+01:22:22.795 --> 01:22:25.269
+Benny Astria: Untuk kita. Proses secara indisipliner.
+
+938
+01:22:25.663 --> 01:22:25.970
+Code Bahri: Uh, uh.
+
+939
+01:22:26.445 --> 01:22:30.720
+Benny Astria: Karena ada regulasi terkait industrial relationship nya itu.
+
+940
+01:22:31.297 --> 01:22:35.290
+Benny Astria: Jadi, apakah orang ini mau mengundurkan diri atau kita akan terminate kayak gitu?
+
+941
+01:22:35.938 --> 01:22:39.879
+Code Bahri: Uh, uh, uh, uh, oke, oke,
+
+942
+01:22:45.724 --> 01:22:48.149
+Code Bahri: oke, lanjut. Ini. Ya, Laporanjuti.
+
+943
+01:22:48.972 --> 01:22:50.097
+Benny Astria: Laporan cuti.
+
+944
+01:22:51.266 --> 01:22:52.410
+Code Bahri: Isinya apa yang dilihat.
+
+945
+01:22:58.668 --> 01:23:04.569
+Benny Astria: Laporan cuti ini sendiri. Dia mekanismenya seperti apa dia? Apakah ada three nya?
+
+946
+01:23:05.590 --> 01:23:09.990
+Benny Astria: Ada approval. Berjenjangnya gitu Atau acara yang approve?
+
+947
+01:23:11.150 --> 01:23:19.260
+Code Bahri: Ini cuti. Dia ada pengajuan cuti. Nanti ada approval di sini. Ya, Saldo, cuti. Jenis cuti.
+
+948
+01:23:20.709 --> 01:23:25.649
+Code Bahri: Kalau enggak salah, itu Di pengaturan itu, ada alur persetujuan nih.
+
+949
+01:23:28.330 --> 01:23:30.489
+Benny Astria: Ada ininya. Ada level approval nya gitu. Ya.
+
+950
+01:23:31.478 --> 01:23:34.940
+Code Bahri: Ini pengajuan. Ini nama pengajuan kantor? Ya.
+
+951
+01:23:35.086 --> 01:23:35.379
+Benny Astria: Uh, uh.
+
+952
+01:23:35.953 --> 01:23:37.667
+Code Bahri: Lurus kalau persetujuan.
+
+953
+01:23:39.330 --> 01:23:46.920
+Code Bahri: Halo, bukti contoh. Kita buat terus kelola
+
+954
+01:23:50.021 --> 01:23:51.880
+Code Bahri: ini, Pak, ya? Oh, ini namanya, nih.
+
+955
+01:23:52.662 --> 01:23:56.100
+Code Bahri: Berdasarkan role pengguna tertentu. Kepala departemen
+
+956
+01:23:59.385 --> 01:24:02.539
+Code Bahri: tidak bisa berjenjang. Ya, bisa nih atau bertujuan nih.
+
+957
+01:24:05.202 --> 01:24:10.499
+Code Bahri: Pengguna jadi rule nya. Rule nya Apa Rule nya Hr gitu? Ya,
+
+958
+01:24:14.475 --> 01:24:14.830
+Code Bahri: tambah.
+
+959
+01:24:15.672 --> 01:24:25.569
+Benny Astria: Jadi, karena setiap perusahaan nih terkait approval nih. Beda, beda, nih. Ada yang kalau di saya, itu harus.
+
+960
+01:24:26.118 --> 01:24:30.500
+Benny Astria: Pertama approval User nya sendiri. Jadi atasannya langsung dulu. Baru
+
+961
+01:24:31.531 --> 01:24:34.409
+Benny Astria: setelah beres, baru masuk Ecer. Jadi, Ecer itu nggak ada approval,
+
+962
+01:24:34.848 --> 01:24:37.729
+Benny Astria: Dia hanya terima data yang Sudah di Approved sama atasannya.
+
+963
+01:24:38.236 --> 01:24:49.580
+Benny Astria: Ada juga pengajuannya. Itu approval Atasan Approval Acr kayak gitu. Nah, itu beda beda tuh. Setiap perusahaan.
+
+964
+01:24:52.340 --> 01:24:53.900
+Code Bahri: Ya, ya, tapi Ka.
+
+965
+01:24:54.294 --> 01:24:58.235
+Benny Astria: Kalau Untuk sebetulnya kalau untuk contoh sih. Ga masalah sih.
+
+966
+01:24:59.183 --> 01:24:59.970
+Benny Astria: Apa namanya?
+
+967
+01:25:02.617 --> 01:25:04.410
+Benny Astria: Propolnya dari salah satu gitu?
+
+968
+01:25:05.162 --> 01:25:12.540
+Code Bahri: Ini untuk kelas lima. Ratus ribu, kok, kan? Jadi, yang penting sudah ada penggambaran. Karena.
+
+969
+01:25:12.977 --> 01:25:20.420
+Benny Astria: Karena saya pun contohnya deh. Ketika kemarin saya ngambil kelas pos. Itu. Pos itu. Ya.
+
+970
+01:25:20.562 --> 01:25:21.129
+Code Bahri: Uh, huh, uh, huh.
+
+971
+01:25:21.491 --> 01:25:29.450
+Benny Astria: Sebetulnya enggak relate untuk dunia Hr. Tapi saya menggambarkan tuh kayak mungkin salah satu fiturnya. Nanti saya bisa kembangkan untuk Apa gitu?
+
+972
+01:25:31.097 --> 01:25:31.869
+Benny Astria: Lebih ke situ?
+
+973
+01:25:33.346 --> 01:25:38.700
+Code Bahri: Oke, nah, kalau laporan laporan nih. Laporan cuti itu
+
+974
+01:25:39.093 --> 01:25:44.290
+Code Bahri: yang dilihat apanya? Kayak kok banyak yang cuti nih. Kok. Banyak Yang ditolak nih. Gitu atau gimana?
+
+975
+01:25:45.284 --> 01:25:51.549
+Benny Astria: Iya, apa namanya kalau cuti? Nah, cuti sendiri nih. Cuti Cuti apa nih?
+
+976
+01:25:52.790 --> 01:25:55.790
+Benny Astria: Cuti tahunankah atau cuti khusus?
+
+977
+01:25:56.387 --> 01:26:00.640
+Code Bahri: Ada macam macam sih di sini, kan? Ada ini kan sejenis cuti, kan? Kita bisa nambahin tuh, kan?
+
+978
+01:26:01.873 --> 01:26:02.166
+Benny Astria: Nah,
+
+979
+01:26:08.000 --> 01:26:11.560
+Benny Astria: oke, ini pengaturan cutinya, Ya.
+
+980
+01:26:11.906 --> 01:26:15.370
+Code Bahri: Iya, btw nih. Tadi kan kita fokus ke parol, ya?
+
+981
+01:26:15.556 --> 01:26:15.929
+Benny Astria: Selamat malam.
+
+982
+01:26:17.246 --> 01:26:22.450
+Code Bahri: Kalau kehadiran sama cuti ini sepaket nggak sih atau gimana?
+
+983
+01:26:23.194 --> 01:26:26.700
+Benny Astria: Karena Perol bisa terproses berdasarkan kehadirannya.
+
+984
+01:26:27.723 --> 01:26:28.549
+Code Bahri: Oke, disergen.
+
+985
+01:26:28.955 --> 01:26:33.010
+Benny Astria: Dan cuti itu, kan? Yang mengurangi dan menambahkan kehadiran.
+
+986
+01:26:38.937 --> 01:26:44.650
+Code Bahri: Jadi memang flow nya. Data, karyawan, data, kehadiran data cuti baru masuk ke pairoll gitu, ya?
+
+987
+01:26:44.992 --> 01:26:48.259
+Benny Astria: Separe roll. Jadi, parol adalah prosesnya.
+
+988
+01:26:50.870 --> 01:26:54.709
+Benny Astria: Proses si karyawan bekerja masuk atau tidak masuk
+
+989
+01:26:55.206 --> 01:26:58.519
+Benny Astria: dan dia menerima imbalan. Nah, itu Lewat proses payroll nya. Tuh.
+
+990
+01:27:00.746 --> 01:27:10.160
+Code Bahri: Saya. Ini pertanyaan nih. Di payron itu, kan tadi kan kayak ada dipotong Pajak dipotong Bpjs ketenagakerjaan. Nah,
+
+991
+01:27:11.086 --> 01:27:17.649
+Code Bahri: kalau saya sebagai karyawan, kan? Cuma tahunya di kertas gitu. Ya, tahunya dipotong. Nah,
+
+992
+01:27:18.185 --> 01:27:24.179
+Code Bahri: kalau di Hr atau proses di belakangnya, itu aslinya gimana sih kayak Uangnya Gimana sih cara mecahnya itu?
+
+993
+01:27:25.148 --> 01:27:31.499
+Code Bahri: Terus bagaimana bisa match gitu gitu? Nantinya Di akhir gitu itu. Apakah
+
+994
+01:27:32.124 --> 01:27:36.020
+Code Bahri: tiap tanggal? Cuma nih, parolku. Soalnya Aku parol tanggal dua, lima gitu.
+
+995
+01:27:36.620 --> 01:27:50.420
+Code Bahri: Apakah tanggal dua, enam? Itu pajak Langsung dikirimkan ke pajak. Pakai cortex, mungkin? Ya, terus bayar ke nomor Rekening mana gitu, kan? Atau ke Bpjs itu? Nanti bayar rekening atau gimana sih? Mekanismenya di belakang Kita nggak paham. Coba gimana sih itu?
+
+996
+01:27:51.510 --> 01:27:59.690
+Benny Astria: Beda, beda, Jadi, se. Itu pertama terkait pembayarannya dulu, Ya.
+
+997
+01:27:59.835 --> 01:28:00.419
+Code Bahri: Hu, uh, hu, uh.
+
+998
+01:28:01.462 --> 01:28:08.800
+Benny Astria: Jadi setiap perusahaan punya saya nyebutnya. Cut off cut of absen.
+
+999
+01:28:10.428 --> 01:28:11.620
+Code Bahri: Oh, kalau di sini gimana?
+
+1000
+01:28:16.326 --> 01:28:22.690
+Benny Astria: Di sini jatuhnya di. Ini. Kali di schedule.
+
+1001
+01:28:23.188 --> 01:28:29.070
+Benny Astria: Schedule? Kehadiran kali, ya. Schedule. Absen kali, ya. Ada nggak fiturnya setting annya. Itu.
+
+1002
+01:28:29.958 --> 01:28:31.049
+Code Bahri: Atau ini enggak ya?
+
+1003
+01:28:33.358 --> 01:28:34.510
+Code Bahri: Di mana, di apa.
+
+1004
+01:28:36.540 --> 01:28:43.939
+Benny Astria: Kalau tadi jadwal, dia tuh harusnya ada di setting an paroll sih. Coba di di perol.
+
+1005
+01:28:45.266 --> 01:28:45.680
+Code Bahri: Eror.
+
+1006
+01:28:46.320 --> 01:28:47.340
+Code Bahri: Pengaturan gaji,
+
+1007
+01:28:51.344 --> 01:28:51.830
+Code Bahri: pengaturan.
+
+1008
+01:28:56.133 --> 01:28:58.199
+Benny Astria: Kalau pengarah
+
+1009
+01:29:03.996 --> 01:29:08.830
+Benny Astria: kurang gaji di ini?
+
+1010
+01:29:12.126 --> 01:29:15.989
+Benny Astria: Kalau ini lebih ke input data gajinya, ya.
+
+1011
+01:29:17.086 --> 01:29:20.440
+Code Bahri: Kok pernah lihat deh? Di mana Ya, peraturan.
+
+1012
+01:29:25.431 --> 01:29:28.790
+Code Bahri: Dia harusnya ada di Pa. Ada di penggajian. Terus di
+
+1013
+01:29:30.586 --> 01:29:37.260
+Code Bahri: ini kayak Dia salah, Bu. Salah salah, Link, Bu. Harusnya ada kayak cut off gitu.
+
+1014
+01:29:44.250 --> 01:29:44.550
+Code Bahri: Halo,
+
+1015
+01:30:30.478 --> 01:30:32.810
+Code Bahri: lalu halo. Suaranya belum masuk Suaranya.
+
+1016
+01:30:34.112 --> 01:30:36.440
+Benny Astria: Oke, sorry. Tadi jaringan saya kayaknya putus.
+
+1017
+01:30:36.746 --> 01:30:43.180
+Code Bahri: Oke, oke, lanjut. Berarti kan? Kita baru ke pajak. Ya, kita coba masuk ke parol. Tuh, Anggap, Saja parolnya itu.
+
+1018
+01:30:44.141 --> 01:30:47.390
+Code Bahri: Dua lima lah gitu atau atau gimana Kalau di tempatmu deh? Coba.
+
+1019
+01:30:47.685 --> 01:30:48.570
+Benny Astria: Di Saya Du.
+
+1020
+01:30:48.990 --> 01:30:50.880
+Benny Astria: Tanggal dua, lima. Itu sudah terima gaji.
+
+1021
+01:30:51.154 --> 01:30:55.269
+Code Bahri: Nah, berarti kalau dua, lima, trebal gaji card off nya di dua, empat atau gimana?
+
+1022
+01:30:56.542 --> 01:30:58.310
+Benny Astria: Di tanggal lima belas.
+
+1023
+01:30:58.832 --> 01:31:00.120
+Code Bahri: Oh, malah lima belas.
+
+1024
+01:31:00.367 --> 01:31:09.050
+Benny Astria: Lima belas jadi tang dari tanggal lima belas sampai dengan tanggal dua puluh.
+
+1025
+01:31:09.998 --> 01:31:17.610
+Benny Astria: Itu proses input. Segala macam hal baik. Itu penambahan maupun potongan. Jadi, kayak misalkan kalau ada karyawan
+
+1026
+01:31:18.259 --> 01:31:29.049
+Benny Astria: masukin reimbursement, ada karyawan dapat allowance. Apalah bisnis trip segala macam gitu itu dimasukkinnya diproses. Itu lima belas
+
+1027
+01:31:29.825 --> 01:31:32.186
+Benny Astria: sampai dua puluh nanti.
+
+1028
+01:31:34.005 --> 01:31:39.240
+Benny Astria: Apa namanya dari dua puluh sampai tanggal dua, empat.
+
+1029
+01:31:40.125 --> 01:31:44.980
+Benny Astria: Itu proses approval Berjenjang tuh sampai ke Direksi kayak gitu
+
+1030
+01:31:46.740 --> 01:31:50.740
+Benny Astria: sampai ke bank. Jadi direksi, ngeklik, ngeklik, ngeklikin
+
+1031
+01:31:51.480 --> 01:31:56.409
+Benny Astria: ke kode, ya ke bank untuk dibukain. Aksesnya kayak gitu untuk proses.
+
+1032
+01:31:58.852 --> 01:32:01.929
+Code Bahri: Nah, ini coba. Kalau. Kalau proses di tempatku ini,
+
+1033
+01:32:02.763 --> 01:32:07.140
+Code Bahri: ini yang kurang. Apa yang perlu Yang udah? Apa gitu? Coba yang mana.
+
+1034
+01:32:07.386 --> 01:32:11.160
+Benny Astria: Dua yang yang proses. Gaji dulu deh. Coba lihat. Kita lihat.
+
+1035
+01:32:17.265 --> 01:32:18.300
+Code Bahri: Nih, ini coba
+
+1036
+01:32:21.823 --> 01:32:27.310
+Code Bahri: Januari. Dua ribu, dua, enam bulan Januari.
+
+1037
+01:32:28.380 --> 01:32:33.050
+Code Bahri: Nah, ini tanggal mulainya. Ini berarti yang ini, Ya, Kayak Tadi Umpama
+
+1038
+01:32:34.141 --> 01:32:36.789
+Code Bahri: januari Berarti Dari tanggal lima Belas
+
+1039
+01:32:37.574 --> 01:32:40.129
+Code Bahri: dua. Belas gitu ya, kalau? Di tempatmu ya, mamak?
+
+1040
+01:32:40.614 --> 01:32:40.897
+Benny Astria: Uh, uh.
+
+1041
+01:32:41.330 --> 01:32:42.780
+Code Bahri: Dua ribu, dua, lima gini.
+
+1042
+01:32:42.983 --> 01:32:43.186
+Benny Astria: Iya.
+
+1043
+01:32:44.808 --> 01:32:47.380
+Code Bahri: Sampai empat belas apa? Lima belas.
+
+1044
+01:32:47.820 --> 01:32:52.170
+Benny Astria: Sampai berarti tanggal mulainya. Tanggal enam belas.
+
+1045
+01:32:52.860 --> 01:32:57.730
+Code Bahri: Enam belas sini. Lima belas kosong. Satu gini.
+
+1046
+01:32:57.943 --> 01:32:58.156
+Benny Astria: Iya.
+
+1047
+01:32:59.350 --> 01:33:00.800
+Code Bahri: Catatan, Catatan apa? Catatan biasanya.
+
+1048
+01:33:02.566 --> 01:33:04.180
+Benny Astria: Nggak ada sih.
+
+1049
+01:33:05.460 --> 01:33:08.279
+Code Bahri: Oke, terus lihat.
+
+1050
+01:33:10.334 --> 01:33:13.410
+Code Bahri: Nah, kan Januari ini bentuk, kan? Tadi Januari
+
+1051
+01:33:14.343 --> 01:33:19.020
+Code Bahri: karyawan tetap mendapatan. Nah, terus proses gaji. Kalau di Sini gitu gitu Nggak atau gimana?
+
+1052
+01:33:19.883 --> 01:33:20.236
+Code Bahri: Contoh.
+
+1053
+01:33:21.344 --> 01:33:21.650
+Benny Astria: Coba.
+
+1054
+01:33:22.271 --> 01:33:26.580
+Code Bahri: Proses sistem akan menghitung gaji semua karya berdasarkan data, gaji, kehadiran dan lanjutan.
+
+1055
+01:33:29.116 --> 01:33:35.599
+Code Bahri: Nah, ini karena kan tiada karyawan. Ada Geji pokok. Tapi kan ininya enggak belum di setting, kan?
+
+1056
+01:33:35.890 --> 01:33:36.180
+Benny Astria: Uh, uh.
+
+1057
+01:33:37.257 --> 01:33:39.390
+Code Bahri: Nah, terus ini, oke.
+
+1058
+01:33:40.423 --> 01:33:42.040
+Code Bahri: Nah, ini yang menyetujui siapa.
+
+1059
+01:33:43.826 --> 01:33:45.760
+Benny Astria: Itu kalau di saya berjenjang.
+
+1060
+01:33:46.540 --> 01:33:52.420
+Benny Astria: Jadi Hr Manager. Jadi kalau di saya kan
+
+1061
+01:33:52.925 --> 01:33:55.179
+Benny Astria: ada tim tersendiri tuh. Ada tim.
+
+1062
+01:33:56.440 --> 01:33:59.880
+Benny Astria: Singkatnya, Parrol lah, Ya, Ada compensation and benefit.
+
+1063
+01:34:00.295 --> 01:34:01.540
+Code Bahri: Dia ngeproses payroll.
+
+1064
+01:34:01.929 --> 01:34:04.889
+Benny Astria: Dia akan proses tuh. Tadi yang hitungan yang tadi.
+
+1065
+01:34:05.510 --> 01:34:05.690
+Code Bahri: Tetap.
+
+1066
+01:34:06.034 --> 01:34:14.719
+Benny Astria: Setelah hitungannya sudah selesai, dia akan follow up ke atas acar. Manajer akan ngeklik terus.
+
+1067
+01:34:15.880 --> 01:34:17.469
+Benny Astria: Gmhr akan ngeklik.
+
+1068
+01:34:18.775 --> 01:34:31.050
+Benny Astria: Baru masuk Ke mana ke ini, ke? Saya lupa ke Manager Finance atau ke? Ini Gm Finance gitu.
+
+1069
+01:34:31.203 --> 01:34:31.510
+Code Bahri: Uh, uh.
+
+1070
+01:34:31.737 --> 01:34:32.420
+Benny Astria: Dia akan klik
+
+1071
+01:34:33.054 --> 01:34:41.149
+Benny Astria: setelah itu. Sudah ke klik. Semua bank yang yang kita pakai sebagai penampung uang itu akan ngeproses sesuai tanggalannya.
+
+1072
+01:34:41.730 --> 01:34:43.730
+Code Bahri: Berarti ini selama ini sudah disetujui, kan?
+
+1073
+01:34:45.238 --> 01:34:48.730
+Code Bahri: Seumpama kita ini belum terhubung sama Bank Seumpama, ya?
+
+1074
+01:34:48.990 --> 01:34:49.120
+Benny Astria: Iya.
+
+1075
+01:34:49.367 --> 01:34:52.590
+Code Bahri: Masih manual lah. Pakai Excel gitu. Ada enggak nih. Model kayak gitu, ya?
+
+1076
+01:34:54.065 --> 01:35:03.580
+Benny Astria: Iya, Excelnya dikirim buat yang manual nih. Jadi Excelnya dimasukin ke Bca. Klik terus. Kita ngeklik deh.
+
+1077
+01:35:04.047 --> 01:35:06.269
+Code Bahri: Ya, berarti kan? Ini di sini berarti kurang.
+
+1078
+01:35:07.275 --> 01:35:09.150
+Code Bahri: Ini apa, ekspor gitu? Ekspor.
+
+1079
+01:35:11.130 --> 01:35:13.330
+Benny Astria: Ekspor Excelnya, Ya, Jadi.
+
+1080
+01:35:14.230 --> 01:35:20.270
+Code Bahri: Dompet gitu tahu namanya? Istilahnya, ya. Eksport Spot Spot Excel.
+
+1081
+01:35:20.828 --> 01:35:22.370
+Benny Astria: Kalau ekspor payroll kaya gitu.
+
+1082
+01:35:22.625 --> 01:35:22.880
+Code Bahri: Isinya.
+
+1083
+01:35:23.246 --> 01:35:29.600
+Benny Astria: Ya, biasanya nama sesuai nama nama karyawan. Sesuai nama yang tertera di bank
+
+1084
+01:35:30.889 --> 01:35:36.639
+Benny Astria: sama. Nomor apa namanya? Nomor banknya? Nomor Rekeningnya kayak gitu.
+
+1085
+01:35:38.004 --> 01:35:40.849
+Benny Astria: Itu untuk yang satu bank sama.
+
+1086
+01:35:41.820 --> 01:35:43.979
+Benny Astria: Kalau untuk yang bank berbeda, juga treatment nya
+
+1087
+01:35:44.927 --> 01:35:50.030
+Benny Astria: berbeda. Kita anggaplah ini kita pakainya sama Semua deh. Kalau Bca, Bca, semua kayak gitu.
+
+1088
+01:35:50.253 --> 01:35:50.700
+Code Bahri: Uh, uh.
+
+1089
+01:35:51.066 --> 01:35:56.310
+Benny Astria: Mandiri. Semua jadi hanya nama sesuai dengan nama rekening. Nomor rekening.
+
+1090
+01:35:56.897 --> 01:36:00.030
+Benny Astria: Gaji yang dibayarkan. Gaji yang dibayarkan Itu
+
+1091
+01:36:00.747 --> 01:36:02.709
+Benny Astria: gaji yang Sudah dikalkulasi semua. Ya
+
+1092
+01:36:03.263 --> 01:36:06.170
+Benny Astria: udah dipotong. Bpjs. Segala macam itu. Gaji yang dibayarkan.
+
+1093
+01:36:08.725 --> 01:36:11.570
+Code Bahri: Ini berarti sudah sudah benar. Ini ya.
+
+1094
+01:36:12.230 --> 01:36:12.799
+Benny Astria: Nggak apa apa?
+
+1095
+01:36:13.526 --> 01:36:19.590
+Benny Astria: Tapi, mungkin, Mas. Kalau menurut saya kalau untuk, untuk apa namanya? Untuk
+
+1096
+01:36:20.917 --> 01:36:29.859
+Benny Astria: akademi gitu? Untuk pelatihan Course gitu. Calculation Tarrol nya. Biar mudah, Better. Gajiannya tanggal satu.
+
+1097
+01:36:33.160 --> 01:36:33.740
+Code Bahri: Misalkan.
+
+1098
+01:36:35.124 --> 01:36:39.879
+Benny Astria: Jadi ngitung gajinya. Itu dari tanggal satu Januari sampai tiga, satu
+
+1099
+01:36:40.705 --> 01:36:44.169
+Benny Astria: Januari untuk Gajan di tanggal satu Februari.
+
+1100
+01:36:47.392 --> 01:36:50.069
+Code Bahri: Kalau ini Feb ini. Kalau Februari, dia.
+
+1101
+01:36:50.732 --> 01:36:56.230
+Benny Astria: Karena praktek di perusahaan saya benar benar berbeda nih. Jadi saya gajian Januari.
+
+1102
+01:36:57.170 --> 01:37:05.999
+Benny Astria: Absen yang digunakan adalah absen Desember. Satu Desember sampai dengan tiga puluh satu Desember Gajian Februari
+
+1103
+01:37:06.849 --> 01:37:12.650
+Benny Astria: yang dipakai adalah absen. Apa Januari kayak gitu?
+
+1104
+01:37:13.105 --> 01:37:16.029
+Code Bahri: Nah, itu settingnya. Gimana Contoh di sini, kan? Parrolnya.
+
+1105
+01:37:16.675 --> 01:37:24.560
+Code Bahri: Semua menit tadi. Ini Airoll nya. Itu dari apa? Tanggalnya mana Tadi tanggal
+
+1106
+01:37:24.992 --> 01:37:26.930
+Code Bahri: enam belas sampai lima belas gitu.
+
+1107
+01:37:27.600 --> 01:37:30.509
+Benny Astria: Absensinya yang dipakai itu sama. Enam belas sampai lima belas.
+
+1108
+01:37:31.309 --> 01:37:36.610
+Benny Astria: Enggak kalau di perusahaan saya pakainya tanggal satu sampai akhir Bulan bulan sebelumnya.
+
+1109
+01:37:38.082 --> 01:37:39.680
+Benny Astria: Oh, Desember. Satu.
+
+1110
+01:37:40.280 --> 01:37:40.720
+Code Bahri: Berarti desa.
+
+1111
+01:37:40.990 --> 01:37:41.800
+Benny Astria: Cek, pak. Iya.
+
+1112
+01:37:42.417 --> 01:37:48.499
+Code Bahri: Lah summamat di sini. Ternyata dia ada Apa itu enggak berangkat lima kali gitu, kan? Mengurangi? Nah, itu.
+
+1113
+01:37:48.730 --> 01:37:49.879
+Benny Astria: Yang di Desember, kan? Kalau.
+
+1114
+01:37:50.026 --> 01:37:50.320
+Code Bahri: Uh, uh.
+
+1115
+01:37:50.733 --> 01:37:54.450
+Benny Astria: Misalkan Desember. Dia ada enggak masuk lima hari.
+
+1116
+01:37:54.587 --> 01:37:54.999
+Code Bahri: Uh, uh, harusnya.
+
+1117
+01:37:55.222 --> 01:37:56.109
+Benny Astria: Kan dipotong tuh. Gajinya.
+
+1118
+01:37:56.721 --> 01:38:00.699
+Code Bahri: Potong yang Apa Itu yang tidak tetap tadi, kan Berkurang. Apa itu.
+
+1119
+01:38:01.143 --> 01:38:02.030
+Benny Astria: Iya, nah.
+
+1120
+01:38:02.327 --> 01:38:03.220
+Code Bahri: Tunjangan Tidak, tetap.
+
+1121
+01:38:05.022 --> 01:38:10.159
+Benny Astria: Potongan itu nanti keluarnya di Januari, Bukan di gajian Desember. Kalau di saya.
+
+1122
+01:38:11.690 --> 01:38:18.599
+Benny Astria: Tapi sepengalaman saya nih. Kalau di Holland Bakery beda lagi tuh. Treatment. Treatment nya.
+
+1123
+01:38:19.430 --> 01:38:21.070
+Benny Astria: Dia gajian akhir bulan.
+
+1124
+01:38:21.336 --> 01:38:21.869
+Code Bahri: Uh, uh.
+
+1125
+01:38:22.921 --> 01:38:26.789
+Benny Astria: Tanggal akhir bulan lah, Ya, tanggal tiga puluh. Misalkan gitu.
+
+1126
+01:38:28.266 --> 01:38:36.769
+Benny Astria: Absen yang digunakan adalah tanggal dua puluh satu sampai tanggal. Dua puluh gitu, ya.
+
+1127
+01:38:39.483 --> 01:38:45.840
+Benny Astria: Dari tanggal dua puluh satu bulan berjalan sampai tanggal dua, lima. Itu. Saya pakai untuk proses gaji
+
+1128
+01:38:46.922 --> 01:38:57.910
+Benny Astria: kalau ada potongan yang ngikutin sesuai periode tanggal itu. Jadi, memang setiap perusahaan punya treatment nya masing masing nih. Biasanya yang bisa membahasakan mereka, jadi biar lebih mudah.
+
+1129
+01:38:58.755 --> 01:39:01.190
+Benny Astria: Better. Pakai gajiannya yang tanggal satu.
+
+1130
+01:39:02.002 --> 01:39:09.840
+Benny Astria: Karena kita pakai absensinya dari tanggal satu sampai akhir bulan jadi lebih gampang. Kalkulasinya.
+
+1131
+01:39:10.165 --> 01:39:13.420
+Code Bahri: Berarti kalau kalau Februari nih, berarti satu sampai dua delapan.
+
+1132
+01:39:13.983 --> 01:39:14.216
+Benny Astria: Iya.
+
+1133
+01:39:14.835 --> 01:39:15.990
+Code Bahri: Gajiannya Satu Maret.
+
+1134
+01:39:16.290 --> 01:39:16.890
+Benny Astria: Satu Maret.
+
+1135
+01:39:17.267 --> 01:39:19.909
+Code Bahri: Yang dipakai absensinya. Satu sampai dua, delapan.
+
+1136
+01:39:20.480 --> 01:39:20.840
+Benny Astria: Februari.
+
+1137
+01:39:21.105 --> 01:39:21.634
+Code Bahri: Dua hari.
+
+1138
+01:39:22.224 --> 01:39:23.520
+Benny Astria: Iya, itu lebih gampang.
+
+1139
+01:39:23.990 --> 01:39:25.399
+Code Bahri: Karena ini asumsinya.
+
+1140
+01:39:26.883 --> 01:39:32.310
+Code Bahri: Apa proses proses parrol ini cepat karena calculate calculate ini, kan?
+
+1141
+01:39:32.636 --> 01:39:33.290
+Benny Astria: Iya, tapi.
+
+1142
+01:39:33.751 --> 01:39:36.639
+Code Bahri: Enggak perlu lama. Kayak sampai lima hari gitu, kan?
+
+1143
+01:39:36.879 --> 01:39:39.029
+Benny Astria: Karena sudah By System, jadi bisa lebih cepat gitu.
+
+1144
+01:39:40.043 --> 01:39:44.340
+Code Bahri: Cuma kan dia nge generate nya, kan? Di tanggal dua, delapan. Apa Tanggal satu?
+
+1145
+01:39:45.413 --> 01:39:49.849
+Benny Astria: Nge Generate apanya nih? Proses di internal Atau sudah ke bank.
+
+1146
+01:39:51.048 --> 01:39:55.690
+Code Bahri: Di internal, kan? Contoh nih. Penggajian Februari selama nih. Februari.
+
+1147
+01:39:57.836 --> 01:40:06.959
+Code Bahri: Februari kan? Berarti satu Februari sampai dua delapan Februari Nah Nge Generate ku. Ini di tanggal dua, delapan
+
+1148
+01:40:07.914 --> 01:40:14.510
+Code Bahri: atau tanggal satu, kan? Nanti ngaruhnya ke absensinya. Toh, kalau aku ngejine rate nya di tanggal Dua delapan, absensi. Dua. Delapan, kan? Belum masuk.
+
+1149
+01:40:15.385 --> 01:40:18.235
+Benny Astria: Betul. Kalau Kalau di saya itu
+
+1150
+01:40:19.459 --> 01:40:25.690
+Benny Astria: dua hari sebelum gajian, itu sudah datanya sudah final. Makanya ada waktu lima jeda lima hari.
+
+1151
+01:40:26.507 --> 01:40:31.870
+Benny Astria: Makanya kalau kalau actualnya dia enggak sampai Ak sampai akhir bulan,
+
+1152
+01:40:32.880 --> 01:40:38.630
+Benny Astria: makanya ada periode card office. Itu yang dia enggak bisa ngikutin Full Satu bulan.
+
+1153
+01:40:39.398 --> 01:40:41.390
+Benny Astria: Pasti agak geser Polanya.
+
+1154
+01:40:43.136 --> 01:40:45.430
+Code Bahri: Nah, ini contoh. Di sini, kan? Ada pengaturan.
+
+1155
+01:40:46.925 --> 01:40:48.600
+Code Bahri: Apa itu hari kerja nih?
+
+1156
+01:40:48.932 --> 01:40:49.930
+Benny Astria: Kalau mau gaji.
+
+1157
+01:40:50.255 --> 01:40:52.529
+Code Bahri: Itu. Apa hubungannya nanti dari kerja ini?
+
+1158
+01:40:55.010 --> 01:40:56.150
+Code Bahri: Sedangkan untuk perhitungan.
+
+1159
+01:40:56.503 --> 01:40:58.270
+Benny Astria: Iya, hari kerja itu gini.
+
+1160
+01:40:59.414 --> 01:41:08.790
+Benny Astria: Kalau hari kerja secara aturan untuk yang hari kerjanya lima hari.
+
+1161
+01:41:09.405 --> 01:41:09.840
+Code Bahri: Uh, uh, uh.
+
+1162
+01:41:10.140 --> 01:41:15.210
+Benny Astria: Senin sampai Jumat itu. Kalau ditotal secara bulan, Itu dua puluh dua hari kerja.
+
+1163
+01:41:16.130 --> 01:41:16.750
+Code Bahri: Uh, uh.
+
+1164
+01:41:17.136 --> 01:41:30.260
+Benny Astria: Tapi kalau untuk dua, satu, dua puluh dua, satu, dua, dua hari lah setiap bulannya. Kalau untuk yang enam hari kerja, kan? Ada beberapa industri yang kerja sampai Sabtu setengah hari Itu.
+
+1165
+01:41:30.433 --> 01:41:30.780
+Code Bahri: Uh, uh.
+
+1166
+01:41:31.171 --> 01:41:33.129
+Benny Astria: Dia Dua puluh lima hari.
+
+1167
+01:41:33.850 --> 01:41:36.190
+Code Bahri: Oh, hitungannya dua hari sampai Sabtu.
+
+1168
+01:41:37.056 --> 01:41:38.429
+Code Bahri: Kaitannya kaitannya.
+
+1169
+01:41:39.016 --> 01:41:43.980
+Benny Astria: Itu untuk hitung apa namanya?
+
+1170
+01:41:46.830 --> 01:41:54.040
+Benny Astria: Misalkan U. Ini upah prorep upah proret
+
+1171
+01:41:54.612 --> 01:41:56.800
+Benny Astria: untuk karyawan karyawan baru. Misalkan tuh yang
+
+1172
+01:41:57.885 --> 01:42:01.130
+Benny Astria: gajian tanggal satu. Tapi dia baru masuk. Tanggal lima belas tuh.
+
+1173
+01:42:02.138 --> 01:42:03.990
+Benny Astria: Dia kan tetap harus gajian, kan?
+
+1174
+01:42:04.393 --> 01:42:04.760
+Code Bahri: Uh, uh.
+
+1175
+01:42:05.035 --> 01:42:07.240
+Benny Astria: Jadi, tetap harus dihitung Berdasarkan pro rate nya.
+
+1176
+01:42:09.406 --> 01:42:09.739
+Code Bahri: Gitu.
+
+1177
+01:42:12.270 --> 01:42:17.400
+Code Bahri: Ini cuma mengurus Prorate, ya? Soalnya kan Contohnya, Februari kan enggak sampai dua Dulu gitu, kan? Nggak sih.
+
+1178
+01:42:18.210 --> 01:42:24.620
+Benny Astria: Iya, secara secara jumlah enggak akan enggak akan total dua puluh dua hari, kan?
+
+1179
+01:42:25.437 --> 01:42:31.570
+Code Bahri: Heeh, makanya kan Jadi cuma untuk untuk atasan. Untuk perhitungan tadi. Kayak cuma menu.
+
+1180
+01:42:31.856 --> 01:42:33.860
+Benny Astria: Dia ada cuti dua hari. Berarti, kan.
+
+1181
+01:42:34.761 --> 01:42:38.520
+Code Bahri: Dihitung Dibaginya kedua dua gitu atau apa gitu? Istilahnya.
+
+1182
+01:42:39.053 --> 01:42:39.360
+Benny Astria: Uh, uh.
+
+1183
+01:42:39.835 --> 01:42:41.260
+Code Bahri: Persentasenya gitu, ya?
+
+1184
+01:42:41.912 --> 01:42:47.579
+Benny Astria: Nah, ada juga perusahaan yang misalkan cuti yang nggak digunakan. Itu dibayarkan.
+
+1185
+01:42:48.076 --> 01:42:49.339
+Code Bahri: Uh, uh, nah, itu.
+
+1186
+01:42:49.731 --> 01:42:57.199
+Benny Astria: Nah, itu berdasarkan hitungan tadi. Nih. Hitungan upah harian. Upah hariannya itu didapat dari hari kerja.
+
+1187
+01:42:59.599 --> 01:43:05.999
+Benny Astria: Tergantung perusahaannya. Dia lima Hari kerja atau enam hari kerja. Jadi, gaji gajinya dia, ya.
+
+1188
+01:43:07.370 --> 01:43:09.769
+Benny Astria: Gaji pokok plus tunjangan dibagi.
+
+1189
+01:43:10.804 --> 01:43:15.794
+Benny Astria: Apakah pakai yang dua, dua atau yang dua, lima kayak gitu?
+
+1190
+01:43:16.992 --> 01:43:18.139
+Code Bahri: Tergantung hari kerjanya.
+
+1191
+01:43:20.328 --> 01:43:26.870
+Code Bahri: Soalnya aku kayak yang aku cerita dengan temanku di Pakuan Tower itu. Kalau enggak salah
+
+1192
+01:43:27.644 --> 01:43:30.020
+Code Bahri: card off nya. Itu tanggal dua puluh gitu, kan?
+
+1193
+01:43:30.772 --> 01:43:32.710
+Code Bahri: Nah, nanti kerjanya dua lima gitu.
+
+1194
+01:43:33.815 --> 01:43:38.850
+Code Bahri: Tapi ada juga angka dan tanggal dua, dua, empat. Itu sudah Sudah dapat gaji loh itu?
+
+1195
+01:43:40.730 --> 01:43:42.680
+Code Bahri: Sudah sudah cair gitu. Maksudnya.
+
+1196
+01:43:43.565 --> 01:43:49.440
+Benny Astria: Kayak di saya juga sama secara aturan Di perusahaan tuh tanggal dua puluh lima.
+
+1197
+01:43:50.640 --> 01:43:54.400
+Benny Astria: Tapi kalau tanggal dua puluh lima, Itu hari,
+
+1198
+01:43:54.951 --> 01:43:59.049
+Benny Astria: eh, tanggal merah atau hari Sabtu atau Minggu itu maju ke depan.
+
+1199
+01:44:00.803 --> 01:44:02.570
+Benny Astria: Anggaplah. Tanggal dua limanya itu.
+
+1200
+01:44:03.566 --> 01:44:10.000
+Benny Astria: Hari minggu Hari. Gajiannya itu Maju ke hari Jumat. Tanggal dua, tiga.
+
+1201
+01:44:10.542 --> 01:44:13.890
+Code Bahri: Itu gimana? Pros? Kenapa bisa begitu, Kenapa, karena apa?
+
+1202
+01:44:15.995 --> 01:44:21.140
+Code Bahri: Karena cut off nya? Tadi? Dua puluh itu jadi enggak ada Masalah atau gimana? Lima belas itu?
+
+1203
+01:44:21.478 --> 01:44:23.510
+Benny Astria: Justru proses, Kak. Topnya maju lagi.
+
+1204
+01:44:24.833 --> 01:44:26.649
+Benny Astria: Lebih maju lagi kayak gitu.
+
+1205
+01:44:27.380 --> 01:44:33.620
+Benny Astria: Biasanya dalam perhitungan parl tuh ada asumsi enggak ada Asumsi untuk yang
+
+1206
+01:44:34.245 --> 01:44:37.940
+Benny Astria: absensi. Absensi yang belum terisi. Kita Anggap dia sebagai hadir dulu
+
+1207
+01:44:39.706 --> 01:44:47.009
+Benny Astria: sebagai hadir dulu untuk memproses gaji potongan ketidakhadirannya dia, kita akan lakukan di bulan depan.
+
+1208
+01:44:47.342 --> 01:44:48.340
+Code Bahri: Bukan, ya. Oh.
+
+1209
+01:44:48.603 --> 01:44:49.130
+Benny Astria: Nah, itu.
+
+1210
+01:44:49.575 --> 01:44:56.699
+Code Bahri: Kalau kan ada juga perusahaan yang. Kalau tanggal dua, lima, tanggal merah mundur, itu gimana? Kenapa.
+
+1211
+01:44:59.617 --> 01:45:03.199
+Benny Astria: Ini juga balik lagi ke habitnya. Perusahaan.
+
+1212
+01:45:03.868 --> 01:45:05.340
+Code Bahri: Apakah mereka akan saklek.
+
+1213
+01:45:05.916 --> 01:45:09.089
+Benny Astria: Melakukan proses gaji di tanggal merah gitu, kan?
+
+1214
+01:45:10.096 --> 01:45:17.099
+Benny Astria: Ataukah mereka enggak mau mengadopsi seperti itu? Jadi, kalau tanggal merah atau hari libur. Dia maju
+
+1215
+01:45:18.536 --> 01:45:21.830
+Benny Astria: kayak gitu. Prosesnya akan lebih maju lagi kayak gitu.
+
+1216
+01:45:22.918 --> 01:45:28.529
+Code Bahri: Aslinya. Itu Gaji itu ditransfer tanggal merah atau hari Minggu Tuh bisa nggak sih bisa kan?
+
+1217
+01:45:28.920 --> 01:45:33.039
+Benny Astria: Bisa bisa bisa. Yang penting tepat waktu.
+
+1218
+01:45:33.935 --> 01:45:38.670
+Code Bahri: Nah, kenapa perusahaan menghindari itu? Apa karena karena libur? Jadi, nanti kalau ada masalah,
+
+1219
+01:45:39.926 --> 01:45:45.643
+Code Bahri: ribet atau gimana atau kenapa dimajuin Atau dimundurin gitu? Kalau dipandang Sr.
+
+1220
+01:45:46.559 --> 01:45:48.760
+Benny Astria: Kalau kalau dimundurin enggak boleh.
+
+1221
+01:45:50.796 --> 01:45:54.389
+Benny Astria: Misalkan gajinya. Tanggal dua, lima. Mundur nih. Tanggal dua, enam. Itu enggak boleh.
+
+1222
+01:45:55.420 --> 01:45:56.859
+Code Bahri: Tapi banyak kok kejadian.
+
+1223
+01:45:57.259 --> 01:46:02.459
+Benny Astria: Nah, itu dia karena secara aturan, ketika gaji mundur itu ada konsekuensi hukumnya.
+
+1224
+01:46:03.224 --> 01:46:05.649
+Code Bahri: Oh, aturan. Ya, tapi kan.
+
+1225
+01:46:05.963 --> 01:46:11.430
+Benny Astria: Di Pp Tiga, lima Itu makanya banyak ke kebanyakan perusahaan itu.
+
+1226
+01:46:12.388 --> 01:46:18.059
+Benny Astria: Kalau tanggal dua, limanya merah, dia maju ke depan gitu
+
+1227
+01:46:18.815 --> 01:46:24.450
+Benny Astria: Supaya kadang kan, ketika proses gaji itu suka, ada sajalah kendalanya. Misalkan
+
+1228
+01:46:27.150 --> 01:46:31.910
+Benny Astria: di saya pun sering kayak gini. Dari sekian ratus orang tuh adalah satu.
+
+1229
+01:46:32.526 --> 01:46:45.610
+Benny Astria: Ada tolakan bahasa kita. Tuh tolakan. Jadi dia enggak berhasil tertransfer kayak gitu. Nah, otomatis kita harus gerak cepat untuk ngeproses itu Koordinasi sama pihak bank untuk memproses kendalanya di mana gitu?
+
+1230
+01:46:46.910 --> 01:46:48.109
+Benny Astria: Untuk segera transfer.
+
+1231
+01:46:48.780 --> 01:46:52.619
+Benny Astria: Karena tadi parol itu, kan? Bank itu ada sistem parol Terus.
+
+1232
+01:46:52.966 --> 01:46:56.330
+Code Bahri: Kita untuk menggunakan itu. Ada yang di upload gitu. Ya.
+
+1233
+01:46:56.540 --> 01:46:56.750
+Benny Astria: Iya.
+
+1234
+01:46:57.398 --> 01:47:07.050
+Code Bahri: Nah, upload annya bisa. Jadi entah data kita yang di Xl salah atau sistem mereka baching mereka ngebag gitu atau gimana? Gitu.
+
+1235
+01:47:07.458 --> 01:47:16.859
+Benny Astria: Betul, karena kalau kalau di Excel itu salah. Kayak misalkan namanya salah. Atau nomor rekeningnya salah, Itu langsung tertolak. Itu prosesnya.
+
+1236
+01:47:16.947 --> 01:47:17.209
+Code Bahri: Uh, uh, uh.
+
+1237
+01:47:18.155 --> 01:47:19.099
+Benny Astria: Transfer banknya.
+
+1238
+01:47:19.696 --> 01:47:22.179
+Code Bahri: Iya, iya, soalnya aku dulu kan pernah kerja di
+
+1239
+01:47:23.040 --> 01:47:25.830
+Code Bahri: Ini Avendor bank, kan? Di simp niaga itu, kan?
+
+1240
+01:47:26.714 --> 01:47:41.820
+Code Bahri: Terus ada Tim yang dia itu masuk ke bikin pairoll nya untuk Maybank gitu lah. Maybank pernah. Kantorku? Akhirnya semuanya bikin akun Maybank karena bikin produknya Pairoll nya Di situ gitu kan.
+
+1241
+01:47:42.828 --> 01:47:48.439
+Benny Astria: Nah, sebetulnya kalau kalau Bang ada kan perusahaan tuh yang nerapin
+
+1242
+01:47:49.074 --> 01:47:55.160
+Benny Astria: bank, prornya tuh harus sama. Walaupun perusahaannya itu enggak Kerja sama sama apa namanya?
+
+1243
+01:47:56.122 --> 01:47:57.630
+Benny Astria: Biasanya dia kerja sama sih.
+
+1244
+01:47:57.885 --> 01:47:58.650
+Code Bahri: Uh, uh, uh.
+
+1245
+01:47:58.947 --> 01:48:04.760
+Benny Astria: Biasanya kerja sama dia nerapin. Hanya satu bank saja tuh. Ada yang kayak gitu.
+
+1246
+01:48:05.490 --> 01:48:08.780
+Benny Astria: Dan kebanyakannya seperti itu untuk mempermudah Proses
+
+1247
+01:48:10.368 --> 01:48:17.889
+Benny Astria: transaksi gaji, ya? Nah, kalau di saya, itu boleh bebas. Banknya apa?
+
+1248
+01:48:18.990 --> 01:48:19.440
+Code Bahri: Gitu.
+
+1249
+01:48:20.176 --> 01:48:25.439
+Benny Astria: Iya, jadi mau pakai Sea bank? Mau pakai macam macam.
+
+1250
+01:48:25.968 --> 01:48:28.610
+Code Bahri: Berarti transfernya manual atau gimana?
+
+1251
+01:48:29.327 --> 01:48:33.260
+Benny Astria: Transfernya dari pihak bank langsung. Jadi kita hanya kirim nominal.
+
+1252
+01:48:33.518 --> 01:48:36.619
+Code Bahri: Nanti banknya dia yang ngirim ke bank bank lain. Lain itu gitu.
+
+1253
+01:48:37.397 --> 01:48:40.119
+Benny Astria: Yang split ke semua rekening. Rekening itu.
+
+1254
+01:48:41.100 --> 01:48:42.920
+Code Bahri: Jadi diurus sama bank. Rekanan kita gitu.
+
+1255
+01:48:43.110 --> 01:48:43.489
+Benny Astria: Iya, iya.
+
+1256
+01:48:43.861 --> 01:48:46.830
+Code Bahri: Kanan. Dia nanti ke mandiri. Ke Bca. Ke
+
+1257
+01:48:47.296 --> 01:48:50.559
+Code Bahri: si Ke. Itu ke jago yang lain gitu, ya?
+
+1258
+01:48:50.978 --> 01:48:53.069
+Benny Astria: Kalau dilihat dari perusahaan sebelumnya,
+
+1259
+01:48:54.370 --> 01:49:02.770
+Benny Astria: kalau kayak saya dulu di Holland Bakery itu pakai Bca. Ya, Kalau Bca itu cuma Kayak nge upload. Upload nge, Upload klik gitu kan?
+
+1260
+01:49:03.753 --> 01:49:07.860
+Benny Astria: Kalau yang kita berhadapannya sama sistem gitu kalau itu
+
+1261
+01:49:08.571 --> 01:49:17.439
+Benny Astria: kalau yang di perusahaan saya ini Kan pakai banknya. Bank apa? M Web. G pakai Mufi.
+
+1262
+01:49:18.052 --> 01:49:18.860
+Code Bahri: Itu Bang, Apa itu.
+
+1263
+01:49:19.516 --> 01:49:20.289
+Benny Astria: Bank, Jepang.
+
+1264
+01:49:20.930 --> 01:49:22.790
+Code Bahri: Mitsubishi. Apalah gitu.
+
+1265
+01:49:23.375 --> 01:49:25.750
+Benny Astria: Bank Jepang. Jadi, kita tuh ada
+
+1266
+01:49:26.420 --> 01:49:28.590
+Benny Astria: agreement tersendiri karena Jepang ke Jepang, Ya.
+
+1267
+01:49:28.850 --> 01:49:29.530
+Code Bahri: Uh, huh, uh, huh.
+
+1268
+01:49:29.866 --> 01:49:34.240
+Benny Astria: Jadi ketika proses payroll, biasanya kita kontak kontakan sama pic dari bank tuh.
+
+1269
+01:49:36.141 --> 01:49:42.049
+Code Bahri: Nah, ada juga nih dulu, kan? Kita tahunya gaji tanggal dua, lima. Itu tanggal dua, lima jam. Nol, nol itu.
+
+1270
+01:49:42.719 --> 01:49:45.239
+Code Bahri: Ini ya. Dikirim gitu, ya. Jaman dulu lah ya.
+
+1271
+01:49:45.639 --> 01:49:45.839
+Benny Astria: Iya.
+
+1272
+01:49:46.250 --> 01:49:47.070
+Code Bahri: Ditunggu kok.
+
+1273
+01:49:47.552 --> 01:49:54.409
+Benny Astria: Jam satu enggak masuk gitu. Kadang bahkan baru masuk jam lima sore gitu, kan? Kayak Ada teh. Sering kayak gitu.
+
+1274
+01:49:54.683 --> 01:49:56.600
+Code Bahri: Kayak kayak Harap harap cemas gitu. Ya
+
+1275
+01:49:57.517 --> 01:49:59.020
+Code Bahri: udah, jam lima nih. Kok enggak masuk. Biar
+
+1276
+01:49:59.696 --> 01:50:01.420
+Code Bahri: aduh. Ketolak dingin gitu. Enggak sih.
+
+1277
+01:50:02.014 --> 01:50:06.589
+Benny Astria: Benar, kalau kalau sepengalaman saya tuh. Kalau Bca tuh
+
+1278
+01:50:07.220 --> 01:50:08.840
+Benny Astria: jam nol nol tuh masuk deh.
+
+1279
+01:50:09.934 --> 01:50:11.260
+Code Bahri: Gitu bisa bisa.
+
+1280
+01:50:11.918 --> 01:50:15.270
+Benny Astria: Nah, kalau yang mu Fg ini.
+
+1281
+01:50:15.725 --> 01:50:16.180
+Code Bahri: Dulu.
+
+1282
+01:50:17.156 --> 01:50:18.460
+Benny Astria: Masuknya beda, Beda tuh.
+
+1283
+01:50:18.965 --> 01:50:20.679
+Benny Astria: Ada yang jam dua belas. Ada yang.
+
+1284
+01:50:21.443 --> 01:50:24.879
+Code Bahri: Benar, aku sudah masuk. Sudah masuk dulu ya.
+
+1285
+01:50:25.522 --> 01:50:30.839
+Benny Astria: Login. Kalau sekarang mereka sudah rada rutin tuh jadi.
+
+1286
+01:50:31.853 --> 01:50:32.359
+Code Bahri: Siap.
+
+1287
+01:50:32.626 --> 01:50:35.019
+Benny Astria: Orang dari jam delapan itu sudah pada masuk semua.
+
+1288
+01:50:36.491 --> 01:50:40.699
+Code Bahri: Oke, oke, itu kan Tenang, berangkatnya sudah cerah gitu.
+
+1289
+01:50:41.510 --> 01:50:43.460
+Benny Astria: Sampe kantor. Udah dapet, notif.
+
+1290
+01:50:43.795 --> 01:50:45.809
+Code Bahri: Ha Money gitu kan? Tapi kalau
+
+1291
+01:50:46.409 --> 01:50:52.190
+Code Bahri: sudah makan siang, Kok belum masuk gitu, kan? Nah, dulu tuh sering kayak gitu. Dua ribu sembilan. Belasan lah. Itu.
+
+1292
+01:50:52.412 --> 01:50:54.640
+Benny Astria: Sering kayak gitu. Sudah jam dua belas. Kok. Enggak ada.
+
+1293
+01:50:54.856 --> 01:50:55.289
+Code Bahri: Sudah kayak.
+
+1294
+01:50:55.755 --> 01:50:55.987
+Benny Astria: Sup.
+
+1295
+01:50:56.543 --> 01:51:01.396
+Code Bahri: Udah apa namanya? Udah feeling nya. Enggak enak Gitu ini. Apa mau bangkrutku gitu?
+
+1296
+01:51:02.062 --> 01:51:11.660
+Benny Astria: Yang Takutnya tuh. Karena saya orang ecer. Ya, yang itu Kok. Ini belum dapat notif. Takutnya pas Proses payroll. Ada Tolakan di bank. Saya kadang suka tangan gitu.
+
+1297
+01:51:11.896 --> 01:51:16.149
+Code Bahri: Pasti mungkin kalau Sr tuh. Kalau. Waduh, bentar lagi. Ada yang lap. Ada yang nanya nih. Pasti kan.
+
+1298
+01:51:16.519 --> 01:51:17.629
+Benny Astria: Pasti itu pasti.
+
+1299
+01:51:17.857 --> 01:51:21.039
+Code Bahri: Pasti kan jam jam dua belas enggak terkirim. Pasti ada yang nanya, kan? Gitu.
+
+1300
+01:51:21.533 --> 01:51:25.970
+Benny Astria: Pasti karena paling ditakutin sama orang Terol, Ya.
+
+1301
+01:51:26.163 --> 01:51:26.550
+Code Bahri: Uh, uh.
+
+1302
+01:51:27.100 --> 01:51:30.950
+Benny Astria: Itu ketika proses hari H. Gajian
+
+1303
+01:51:31.536 --> 01:51:38.199
+Benny Astria: mereka itu sebetulnya secara kerjaan. Itu sudah lagi. Cooling down tuh. Tapi mode siaga.
+
+1304
+01:51:38.772 --> 01:51:39.619
+Code Bahri: Uh, uh, uh, uh.
+
+1305
+01:51:40.049 --> 01:51:47.779
+Benny Astria: Modusnya agak. Jadi, kerjaannya sudah stop dulu. Break dulu gitu. Ya, tapi mereka modusnya agak sampai karyawan itu
+
+1306
+01:51:49.023 --> 01:51:50.199
+Benny Astria: sampai sore lah.
+
+1307
+01:51:51.282 --> 01:51:52.280
+Benny Astria: Enggak Ada pertanyaan.
+
+1308
+01:51:52.976 --> 01:51:54.370
+Code Bahri: Aman, Aman gitu ya.
+
+1309
+01:51:54.665 --> 01:51:59.400
+Benny Astria: Kalau sudah sampai sore, enggak ada. Enggak ada tolakan kayak gitu. Berarti proses gaji ini selesai.
+
+1310
+01:51:59.814 --> 01:52:00.670
+Code Bahri: Uh, uh, uh, uh.
+
+1311
+01:52:01.074 --> 01:52:01.277
+Benny Astria: Gitu.
+
+1312
+01:52:02.696 --> 01:52:09.379
+Code Bahri: Terusin yang tadi itu. Itu kan baru proses yang transfer, ya? Nah, yang ke Bpjs Ke pajak itu. Gimana sih? Itu.
+
+1313
+01:52:09.500 --> 01:52:09.860
+Benny Astria: Uh, huh, betul.
+
+1314
+01:52:10.225 --> 01:52:10.590
+Code Bahri: Iya.
+
+1315
+01:52:11.691 --> 01:52:18.660
+Benny Astria: Bpjs kesehatan. Kalau Bpjs kesehatan ini, Dia mekanisme pendaftarannya dulu, ya?
+
+1316
+01:52:19.969 --> 01:52:25.999
+Benny Astria: Jadi, misalkan karyawan bergabung tanggal bergabung di bulan Januari
+
+1317
+01:52:27.073 --> 01:52:31.840
+Benny Astria: Itu dari bulan Desember. Harus dida didaftarin supaya tagihannya keluar. Januari.
+
+1318
+01:52:32.848 --> 01:52:36.589
+Benny Astria: Kebanyakan perusahaan enggak mau melakukan itu.
+
+1319
+01:52:37.923 --> 01:52:39.839
+Benny Astria: Biasanya perusahaan melakukan seperti ini.
+
+1320
+01:52:40.815 --> 01:52:43.550
+Benny Astria: Karyawan join, Misalkan tanggal lima Januari.
+
+1321
+01:52:45.033 --> 01:52:50.479
+Benny Astria: Dia akan daftarin di bulan Januari setelah karyawan itu benar benar efektif. Masuk secara fisikal,
+
+1322
+01:52:51.954 --> 01:53:01.200
+Benny Astria: tagihannya munculnya kapan munculnya di Februari Jadi, diproses. Gajian Februar itulah muncul potongannya.
+
+1323
+01:53:02.434 --> 01:53:10.366
+Benny Astria: Kalau gajian Januari, dia belum dipotong kayak gitu terus untuk yang ketenagakerjaan ini,
+
+1324
+01:53:11.455 --> 01:53:14.489
+Benny Astria: idealnya hampir sama Kayak Bpjs kesehatan.
+
+1325
+01:53:15.260 --> 01:53:22.140
+Benny Astria: Tapi ada juga yang praktiknya seperti ini dia lakukan dulu. Potongan laporannya bulan depan.
+
+1326
+01:53:23.507 --> 01:53:28.470
+Benny Astria: Misalkan, uh, uh, karyawan ini join dari Tanggal satu Januari.
+
+1327
+01:53:30.698 --> 01:53:37.119
+Benny Astria: Gajian Gajinya langsung dipotong. Tuh. Bpjs nya. Akhir bulannya mereka bayar ke Bpjs.
+
+1328
+01:53:37.643 --> 01:53:45.799
+Benny Astria: Masih di bulan. Berjalan bulan yang sama, tapi Ada juga perusahaan yang lakuin. Pemotongan bayarnya bulan depan
+
+1329
+01:53:46.969 --> 01:53:51.250
+Benny Astria: kayak gitu. Tapi kita berbicara yang normatifnya lah. Yang idealnya itu.
+
+1330
+01:53:53.730 --> 01:53:58.280
+Code Bahri: Itu ada tagihan baru. Kita transfer gitu, ya?
+
+1331
+01:54:01.113 --> 01:54:01.580
+Code Bahri: Kalau seandainya.
+
+1332
+01:54:02.150 --> 01:54:07.860
+Benny Astria: Cara prosedur pendaftaran kita registrasi dulu ke bpjs Masukkin. Gajinya.
+
+1333
+01:54:08.284 --> 01:54:09.899
+Code Bahri: Nanti kita akan Calculation.
+
+1334
+01:54:10.339 --> 01:54:12.979
+Benny Astria: Di di sistemnya. Bpjs di Sipp.
+
+1335
+01:54:13.786 --> 01:54:14.970
+Benny Astria: Nanti akan muncul tuh
+
+1336
+01:54:16.013 --> 01:54:26.150
+Benny Astria: rincian nama karyawannya. Gaji terus potongan potongannya. Kayak gitu. Nanti Baru tuh muncul tagihannya. Nah, tagihan ini
+
+1337
+01:54:26.715 --> 01:54:30.370
+Benny Astria: secara hitungan harus sama dengan potongan Bpjs nih. In total.
+
+1338
+01:54:37.089 --> 01:54:39.289
+Code Bahri: Suaranya. Ini Suaranya enggak masuk.
+
+1339
+01:54:40.025 --> 01:54:40.760
+Benny Astria: Nggak masuk.
+
+1340
+01:54:41.430 --> 01:54:46.629
+Code Bahri: Barusan mahkamah sudah. Itu sudah sudah masuk. Sudah masuk.
+
+1341
+01:54:47.163 --> 01:54:47.769
+Benny Astria: Jadi Ka.
+
+1342
+01:55:13.960 --> 01:55:16.159
+Benny Astria: Sorry, sorry. Jaringannya agak kangen.
+
+1343
+01:55:21.010 --> 01:55:23.690
+Benny Astria: Halo, udah kedengaran Jelas Belum.
+
+1344
+01:55:27.010 --> 01:55:29.210
+Code Bahri: Oke, sebentar, Plus lima juta.
+
+1345
+01:55:53.946 --> 01:55:56.780
+Code Bahri: Oke, oke, uh, huh, sudah sudah jelas.
+
+1346
+01:55:58.760 --> 01:56:01.299
+Benny Astria: Jadi kalau berbicara ideal, ya.
+
+1347
+01:56:02.548 --> 01:56:08.950
+Benny Astria: Karyawan ini di bulan yang sama lah. Oke, potongan akhir bulannya bayar.
+
+1348
+01:56:09.500 --> 01:56:10.310
+Code Bahri: Berarti aslinya perusahaan.
+
+1349
+01:56:10.660 --> 01:56:12.060
+Benny Astria: Kalau Bpjs harus didatangi.
+
+1350
+01:56:12.342 --> 01:56:16.020
+Code Bahri: Perusahaan itu. Dia sudah motong, tapi uangnya itu masih di perusahaan gitu. Ya?
+
+1351
+01:56:18.460 --> 01:56:19.420
+Code Bahri: Nggak langsung.
+
+1352
+01:56:20.555 --> 01:56:22.760
+Code Bahri: Apa itu ke transfer gitu, ya?
+
+1353
+01:56:26.495 --> 01:56:27.165
+Code Bahri: Halo, halo.
+
+1354
+01:56:28.724 --> 01:56:32.369
+Benny Astria: Iya, jadi kalau untuk ketenagakerjaan, Motong dulu baru bayar.
+
+1355
+01:56:34.590 --> 01:56:34.890
+Benny Astria: Halo.
+
+1356
+01:56:35.405 --> 01:56:36.050
+Code Bahri: Kalau kalau Pancas.
+
+1357
+01:56:36.242 --> 01:56:37.010
+Benny Astria: Jelas. Ya. Sorry, tadi.
+
+1358
+01:56:38.147 --> 01:56:40.989
+Code Bahri: Agak agak. Kalau pajak gimana?
+
+1359
+01:56:41.462 --> 01:56:47.600
+Benny Astria: Sorry kalau ketenag. Kalau ketenagakerjaan, Potong ketenagakerjaan, ya? Potong dulu, baru bayar.
+
+1360
+01:56:48.093 --> 01:56:48.460
+Code Bahri: Uh, uh.
+
+1361
+01:56:48.892 --> 01:56:50.190
+Benny Astria: Kalau Bpjs kesehatan
+
+1362
+01:56:54.305 --> 01:56:54.810
+Benny Astria: di Ya,
+
+1363
+01:56:57.976 --> 01:56:58.810
+Benny Astria: jatuhnya apa?
+
+1364
+01:56:59.324 --> 01:57:00.580
+Benny Astria: Bayar dulu, baru potong.
+
+1365
+01:57:03.174 --> 01:57:04.029
+Code Bahri: Bayar berapa?
+
+1366
+01:57:06.784 --> 01:57:12.550
+Benny Astria: Misal gini kita, kan dia. Dia Join di bulan Januari.
+
+1367
+01:57:15.490 --> 01:57:16.729
+Benny Astria: Si karyawan baru ini.
+
+1368
+01:57:17.638 --> 01:57:20.569
+Benny Astria: Kita, daftarin Bpjs di Januari.
+
+1369
+01:57:21.338 --> 01:57:25.320
+Benny Astria: Tagihannya Enggak akan muncul. Tagihannya akan muncul di tagihan Februari.
+
+1370
+01:57:25.555 --> 01:57:25.790
+Code Bahri: Februari.
+
+1371
+01:57:26.121 --> 01:57:29.770
+Benny Astria: Otomatis di gajian Januari ini, kan? Dia enggak boleh dipotong dulu.
+
+1372
+01:57:30.508 --> 01:57:31.480
+Code Bahri: Berarti enggak memang enggak dipotong.
+
+1373
+01:57:31.815 --> 01:57:36.180
+Benny Astria: Kemudian enggak dipotong. Nanti baru di gajian Februari.
+
+1374
+01:57:37.726 --> 01:57:44.150
+Benny Astria: Tapi di awal bulan itu, kita harus lakuin pembayaran dulu. Tuh, Makanya Dia bayar dulu, baru potong gitu.
+
+1375
+01:57:45.316 --> 01:57:46.870
+Benny Astria: Ketenagakerjaan kebalikannya.
+
+1376
+01:57:47.453 --> 01:57:54.580
+Benny Astria: Potong dulu, baru bayar. Nah, kalau berbicara pajak, itu potong dulu, baru bayar.
+
+1377
+01:57:56.536 --> 01:57:57.680
+Benny Astria: Jadi kita potong dulu.
+
+1378
+01:57:58.925 --> 01:58:07.049
+Benny Astria: Misalkan gajian Februari. Nah, kita potong dulu tuh. Berdasarkan calculation tadi, baru kita lapor dan bayar ke pajak
+
+1379
+01:58:08.155 --> 01:58:13.429
+Benny Astria: gitu nanti untuk proses pelaporannya Tuh biasanya berbeda tuh.
+
+1380
+01:58:14.106 --> 01:58:17.899
+Benny Astria: Entah itu Tim Finance atau kalau di saya ada tim pajaknya sendiri.
+
+1381
+01:58:18.786 --> 01:58:21.070
+Benny Astria: Dia Dia lapor, termasuk pembayaran.
+
+1382
+01:58:23.395 --> 01:58:23.632
+Code Bahri: Gitu.
+
+1383
+01:58:24.783 --> 01:58:29.509
+Code Bahri: Nah, apa beberapa kali kasus itu? Aku kan lihat di setaraf, yaitu yang
+
+1384
+01:58:30.588 --> 01:58:34.069
+Code Bahri: pada yang ini. Yang secara itu Karyawannya itu ngeluh gitu.
+
+1385
+01:58:34.640 --> 01:58:36.860
+Code Bahri: Ini Bpjs. Saya dipotong. Tapi kok.
+
+1386
+01:58:37.814 --> 01:58:47.149
+Benny Astria: Ini apa enggak dibayarkan gitu? Nah, itu sebetulnya perusahaannya yang nakal.
+
+1387
+01:58:47.872 --> 01:58:48.630
+Code Bahri: Perusahaannya. Uh, uh.
+
+1388
+01:58:49.166 --> 01:58:56.670
+Benny Astria: Perusahaan yang nakal. Jadi, sebetulnya karyawan bisa mengantisipasi dengan cara melihat aplikasi Jmo.
+
+1389
+01:58:57.100 --> 01:58:58.800
+Code Bahri: Jadi dia di situ? Kelihatan.
+
+1390
+01:59:00.355 --> 01:59:07.250
+Benny Astria: Bahwa karyawan ini iuran per bulannya. Itu sudah dibayar atau belum kayak gitu. Jadi ada tuh rinciannya.
+
+1391
+01:59:08.123 --> 01:59:09.939
+Benny Astria: Iuran bulan apa? Kayak gitu?
+
+1392
+01:59:10.246 --> 01:59:10.400
+Code Bahri: Kita.
+
+1393
+01:59:10.671 --> 01:59:12.029
+Benny Astria: Kan? Kelihatan juga nambah nambah.
+
+1394
+01:59:12.282 --> 01:59:15.810
+Code Bahri: Enggak sering lihat itu. Biasanya telat sebulan gitu. Kayaknya itu kayak ini baru.
+
+1395
+01:59:16.260 --> 01:59:18.959
+Benny Astria: Bulan depannya tuh baru nambah, kan.
+
+1396
+01:59:19.170 --> 01:59:19.800
+Code Bahri: Iya, baru naik.
+
+1397
+01:59:20.141 --> 01:59:23.899
+Benny Astria: Makanya dia tuh potong dulu, baru bayar kebanyakan perusahaan kayak gitu.
+
+1398
+01:59:24.273 --> 01:59:27.639
+Code Bahri: Ini Apa namanya Jht? Ya, biasanya ngecek Jht, Ya.
+
+1399
+01:59:28.081 --> 01:59:32.049
+Benny Astria: Nah, yang muncul di karyawan hanya Jht saja. Tuh.
+
+1400
+01:59:32.430 --> 01:59:32.600
+Code Bahri: Tapi.
+
+1401
+01:59:33.133 --> 01:59:41.129
+Benny Astria: Secara secara proses, di balik layarnya itu. Itu pembayaran Jht. Jp, Jkm, Jkk itu sekaligus.
+
+1402
+01:59:41.521 --> 01:59:43.869
+Code Bahri: Nominalnya langsung di wrap, jadi satu.
+
+1403
+01:59:45.120 --> 01:59:46.799
+Benny Astria: Gitu. Perusahaan nggak bayar itu semua
+
+1404
+01:59:47.591 --> 01:59:49.519
+Benny Astria: gitu. Dia ada rinciannya juga tuh
+
+1405
+01:59:50.235 --> 01:59:57.299
+Benny Astria: berdasarkan. Nah, berdasarkan hitungan Bpjs dan hitungan, kita Tuh harus match dulu tuh. Kalau kalau enggak match,
+
+1406
+01:59:57.922 --> 01:59:59.010
+Benny Astria: kenapa nih gitu?
+
+1407
+02:00:00.327 --> 02:00:02.039
+Code Bahri: Nah, itu berarti kayak
+
+1408
+02:00:03.082 --> 02:00:09.670
+Code Bahri: apa yang bakal dikirim ke sana ke sana. Itu kalau di sistem ini, apakah perlu ada Data. Rincian
+
+1409
+02:00:10.610 --> 02:00:15.649
+Code Bahri: rincian Bpjs. Rincian pajak ini perlu nggak sih. Atau enggak sah atau gimana Itu.
+
+1410
+02:00:17.525 --> 02:00:19.550
+Benny Astria: Kalau berbicara ideal,
+
+1411
+02:00:20.332 --> 02:00:29.730
+Benny Astria: boleh bisa ditambahin kayak rincian. Rincian, potongan pajak. Rincian Potongan Bpjs gitu. Rincian potongan ketenagakerjaan Itu boleh.
+
+1412
+02:00:30.009 --> 02:00:32.249
+Code Bahri: Total kan? Totalnya berapa kan? Ketahuan, kan? Kayak.
+
+1413
+02:00:32.794 --> 02:00:34.425
+Benny Astria: Uh, uh, atau.
+
+1414
+02:00:35.183 --> 02:00:35.610
+Code Bahri: Di mana.
+
+1415
+02:00:36.007 --> 02:00:45.329
+Benny Astria: Kayak tagihan itu, Dia rincian bawahnya. Total kayak gitu. Karena biasanya orang Finance itu juga pengin ngecek gitu.
+
+1416
+02:00:46.386 --> 02:00:49.719
+Benny Astria: Cara secara Laporannya seperti apa? Kayak gitu
+
+1417
+02:00:50.878 --> 02:01:01.580
+Benny Astria: Potongannya berapa? Si? Misalkan karyawan A. Potongannya Berapa karyawan B? Potongan berapa? Totalnya Sama tuh sama tagihan karena kan yang melakukan pembayaran itu. Orang Finance.
+
+1418
+02:01:02.434 --> 02:01:06.200
+Code Bahri: Uh, uh, uh, uh, uh, iya. Nah,
+
+1419
+02:01:07.074 --> 02:01:17.420
+Code Bahri: berarti ini kesi ini. Apa itu kesimpulan? Ya, kesimpulan malam ini. Ya, dari Sisi manajemen ini Karir. Enggak usah jadi dari karyawan. Kehadiran cuti itu udah cukup lah. Ibaratnya.
+
+1420
+02:01:17.930 --> 02:01:23.040
+Benny Astria: Cukup Itu fokusnya. Kita masuk ke Payroll Tadi tuh.
+
+1421
+02:01:23.609 --> 02:01:27.309
+Code Bahri: Ke sini terus. Payroll nya. Ini berarti sudah benar, Ya, nanti ada pengaturan.
+
+1422
+02:01:27.980 --> 02:01:28.169
+Benny Astria: Iya.
+
+1423
+02:01:28.867 --> 02:01:33.169
+Code Bahri: Card off tadi. Perlu nggak sih. Card off. Nanti coba aku cek ke Eaya itu. Nah, berarti kan
+
+1424
+02:01:33.877 --> 02:01:38.789
+Code Bahri: pengaturan gaji ini Kalau enggak salah, itu gaji per orangnya. Ya, Gaji, gaji. Pokok lah gitu, ya.
+
+1425
+02:01:39.293 --> 02:01:41.809
+Benny Astria: Pokok komponen gaji Ini yang.
+
+1426
+02:01:42.230 --> 02:01:48.960
+Code Bahri: Kayak dia masuknya ke penambahan atau pengurangan Itu kan tetap apa? Variabel apa tunjangan itu kan
+
+1427
+02:01:49.900 --> 02:01:54.810
+Code Bahri: Persentase jadi kaya kalkulator. Apa namanya Formulanya Lah gitu.
+
+1428
+02:01:55.016 --> 02:01:55.223
+Benny Astria: Iya.
+
+1429
+02:01:55.794 --> 02:02:04.900
+Code Bahri: Slip gaji ini yang sudah disetujui. Istilahnya gitu, kan? Ini proses Ini yang kalkulasi otomatis. Nah, kalkulasi ini kemungkinan pakai formula formula. Ini, kan?
+
+1430
+02:02:05.346 --> 02:02:05.600
+Benny Astria: Betul betul.
+
+1431
+02:02:05.763 --> 02:02:06.089
+Code Bahri: Pp, hi.
+
+1432
+02:02:06.496 --> 02:02:10.970
+Benny Astria: Sebagai pengurangnya tuh pengurangnya, makanya kurang dan penambah tuh. Karena Thr.
+
+1433
+02:02:11.318 --> 02:02:14.450
+Code Bahri: Flow nya. Komponen harus diisi dulu. Semua, kan?
+
+1434
+02:02:14.740 --> 02:02:15.030
+Benny Astria: Uh, uh.
+
+1435
+02:02:15.575 --> 02:02:17.210
+Code Bahri: Komponensi. Semua terus.
+
+1436
+02:02:17.982 --> 02:02:19.750
+Code Bahri: Komponen ini melekat ke.
+
+1437
+02:02:20.750 --> 02:02:21.220
+Code Bahri: Ke?
+
+1438
+02:02:22.367 --> 02:02:25.940
+Code Bahri: Apa namanya, posisi? Atau mungkin ke orangnya. Di mana dia
+
+1439
+02:02:27.425 --> 02:02:31.069
+Code Bahri: atau atau Pasti melekat ke ke karyawan ya.
+
+1440
+02:02:31.682 --> 02:02:32.740
+Code Bahri: Gaji gitu ya.
+
+1441
+02:02:33.861 --> 02:02:36.530
+Benny Astria: Nah, ini komponennya. Apa aja nominal? Tetap.
+
+1442
+02:02:37.607 --> 02:02:40.449
+Code Bahri: Yang komponen ini ada potongan.
+
+1443
+02:02:43.717 --> 02:02:47.349
+Benny Astria: Ini Ini setting an. Setting an komponen gaji, Ya.
+
+1444
+02:02:48.076 --> 02:02:54.739
+Code Bahri: Uh, uh, entaso persen dari geji pokok. Geji kotor.
+
+1445
+02:02:56.240 --> 02:02:56.799
+Code Bahri: Urutan taman.
+
+1446
+02:02:57.154 --> 02:03:03.530
+Benny Astria: Ini Semac. Kalau kom yang ini tuh semacam. Kita bikin tambahan allowance gitu ya? Tunjangan kayak gitu, ya.
+
+1447
+02:03:04.240 --> 02:03:10.629
+Code Bahri: Berarti harus tetap di di enable per orang gitu. Ya, ini dapatin dapat dapet ini gitu. Enggak sih.
+
+1448
+02:03:10.953 --> 02:03:13.219
+Benny Astria: Iya, kayak gitu. Karena ada beberapa yang
+
+1449
+02:03:14.026 --> 02:03:19.520
+Benny Astria: orang ini dapat tunjangan. Ada yang enggak jadi ada tunjangan yang sifatnya melekat ke jabatan.
+
+1450
+02:03:20.036 --> 02:03:26.060
+Benny Astria: Ada yang tunjangan melekat ke masing masing orang gitu.
+
+1451
+02:03:26.993 --> 02:03:27.319
+Code Bahri: Uh, uh.
+
+1452
+02:03:27.610 --> 02:03:35.610
+Benny Astria: Tunjangan Tidak, tetap nih. Misalkan ada tunjangan transportasi. Nah, itu General tuh. Semua orang bisa dapat tuh Berdasarkan abisensi,
+
+1453
+02:03:36.684 --> 02:03:40.239
+Benny Astria: ada Tunjangan Jabatan. Misalkan untuk supervisor dapat tambahan.
+
+1454
+02:03:40.564 --> 02:03:42.510
+Code Bahri: Setengahnya dimana biasanya setting setting gitu.
+
+1455
+02:03:47.032 --> 02:03:49.839
+Benny Astria: Di Di. Harusnya sih di per orang itu. Ya.
+
+1456
+02:03:50.792 --> 02:03:54.069
+Code Bahri: Di sini Mungkin di gaj. Pengaturan gaji ini mungkin. Ya, nanti.
+
+1457
+02:03:55.795 --> 02:03:57.719
+Benny Astria: Ini. Ini kan detail per orangnya. Ya.
+
+1458
+02:03:58.036 --> 02:04:03.779
+Code Bahri: Iya, berarti masih ada yang kurang lah di perol. Ini tentang.
+
+1459
+02:04:04.370 --> 02:04:07.070
+Benny Astria: Jadi dia dapat apa kayak gitu? Itu bisa ditambahin.
+
+1460
+02:04:07.608 --> 02:04:17.310
+Code Bahri: Komponen komponen. Nah, terus kas kecil enggak perlu pinjaman. Ini perlu perlu nggak pinjaman. Apa terlalu berlebihan atau reimbursement aja? Reimburse kan? Reimbus masuk, ya?
+
+1461
+02:04:19.407 --> 02:04:20.179
+Code Bahri: Atau nggak perlu.
+
+1462
+02:04:20.961 --> 02:04:28.540
+Benny Astria: Kalau mau dihilangin pun sebetulnya enggak masalah sih. Tapi kalau mau, jadi fitur tambahan,
+
+1463
+02:04:30.020 --> 02:04:44.279
+Benny Astria: itu lebih menarik karena ada beberapa Perusahaan yang punya koperasi, kan? Jadi, mereka Sistemnya pinjam ke koperasi. Potong lewat gaji kayak gitu. Jadi itu bisa jadi fitur tambahan tersendiri tuh.
+
+1464
+02:04:48.522 --> 02:04:52.510
+Code Bahri: Aturan nanti. Pinjaman maksimum maksimum. Berapa
+
+1465
+02:04:56.963 --> 02:05:01.690
+Code Bahri: perhitungannya lah? Jadi nanti masuk ke slip Gaji untuk pengurangan gitu, ya?
+
+1466
+02:05:02.203 --> 02:05:04.769
+Benny Astria: Iya, ini kan related ke.
+
+1467
+02:05:05.510 --> 02:05:09.420
+Code Bahri: Kan? Nanti di laporan laporan pinjaman atau laporan, Apa namanya?
+
+1468
+02:05:10.125 --> 02:05:12.199
+Code Bahri: Pembayaran gitu, ya? Kalau pinjaman, ya?
+
+1469
+02:05:15.164 --> 02:05:19.019
+Benny Astria: Kalau kalau mau ada laporan pinjaman, berarti kan
+
+1470
+02:05:20.142 --> 02:05:28.429
+Benny Astria: laporannya. Isinya siapa saja yang meminjam terus kayak semacam si orang ini.
+
+1471
+02:05:29.885 --> 02:05:31.550
+Benny Astria: Sisanya berapa? Kayak gitu kali ya?
+
+1472
+02:05:32.121 --> 02:05:37.839
+Code Bahri: Soalnya kan ini kalau pinjaman. Terus laporannya dimana maksudnya? Kayak kita lihat report nya. Ini report pinjamannya. Itu kan.
+
+1473
+02:05:38.245 --> 02:05:40.680
+Benny Astria: Misalkan dia sisa beberapa pembayaran lagi.
+
+1474
+02:05:41.200 --> 02:05:44.060
+Code Bahri: Orang ini masih siapa tahu dia mau resign, kan?
+
+1475
+02:05:44.360 --> 02:05:44.660
+Benny Astria: Awalnya.
+
+1476
+02:05:45.533 --> 02:05:45.980
+Code Bahri: Masih punya.
+
+1477
+02:05:46.277 --> 02:05:47.469
+Benny Astria: Bungkapan kayak gitu. Iya.
+
+1478
+02:05:48.148 --> 02:05:51.010
+Code Bahri: Kalau Reimburse sama kategori Reimburse ini, gimana perlu nggak.
+
+1479
+02:05:52.380 --> 02:05:54.649
+Benny Astria: Reimburse Atau Ribet.
+
+1480
+02:05:55.100 --> 02:05:55.550
+Code Bahri: Enggak perlu.
+
+1481
+02:05:57.594 --> 02:06:01.630
+Benny Astria: Reimburse. Itu sih sebetulnya kebanyakan untuk perusahaan perusahaan
+
+1482
+02:06:03.625 --> 02:06:07.227
+Benny Astria: ini yang ada sales nya tuh kayak gitu.
+
+1483
+02:06:08.193 --> 02:06:12.110
+Code Bahri: Oh, jadi banyak kepagi juga. Reimburse. Ini aslinya, ya?
+
+1484
+02:06:12.776 --> 02:06:14.240
+Benny Astria: Kepakai kayak. Misalkan kalau.
+
+1485
+02:06:14.841 --> 02:06:18.150
+Code Bahri: Deh. Kamu ada enggak reimburse tiap bulan atau dua bulan sekali.
+
+1486
+02:06:18.520 --> 02:06:24.320
+Benny Astria: Kalau saya sih, ini sih apa? Medical reimbursement? Ya, uh, uh, jatuhnya.
+
+1487
+02:06:25.716 --> 02:06:29.010
+Code Bahri: Berarti kayak Medical gitu, ya? Tanggal pengeluaran. Jumlah berapa
+
+1488
+02:06:29.592 --> 02:06:34.170
+Code Bahri: Nanti tinggal? Approval apa? Enggak gitu, ya? Berarti ini maksudnya nanti penambahan ke.
+
+1489
+02:06:35.080 --> 02:06:35.900
+Benny Astria: Fitur, tambahan.
+
+1490
+02:06:36.237 --> 02:06:41.640
+Code Bahri: Enggak maksudnya kayak di slip gajinya nanti. Ini transfernya bareng. Gaji Apa enggak kalau dampers ini.
+
+1491
+02:06:42.350 --> 02:06:47.389
+Benny Astria: Kalau saya barang gaji masuk, masuk, diproses. Gaji itu masuk. Dia.
+
+1492
+02:06:47.966 --> 02:06:52.079
+Code Bahri: Oh, Terus nanti pajak pajak. Pajek itu gimana? Ngurus ngaruh ke situ? Enggak.
+
+1493
+02:06:52.817 --> 02:06:56.560
+Benny Astria: Dia kan sebetulnya kalau masuk gaji kan? Berarti kan ada potongan pajak, kan?
+
+1494
+02:06:56.806 --> 02:06:57.300
+Code Bahri: Uh, uh.
+
+1495
+02:06:57.690 --> 02:07:00.030
+Benny Astria: Nah, perusahaan sudah nambahin potongan pajaknya.
+
+1496
+02:07:01.101 --> 02:07:05.610
+Benny Astria: Jadi potongan pajaknya untuk yang medical di cover perusahaan.
+
+1497
+02:07:06.340 --> 02:07:12.180
+Benny Astria: Jadi, secara secara gaji, itu kan? Pendapatan potongan
+
+1498
+02:07:13.985 --> 02:07:17.729
+Benny Astria: di sisi pendapatan muncul nih. Nilai reimbursement.
+
+1499
+02:07:18.193 --> 02:07:18.580
+Code Bahri: Uh, uh.
+
+1500
+02:07:19.133 --> 02:07:21.900
+Benny Astria: Tapi di bawahnya ditambahin tunjangan.
+
+1501
+02:07:23.380 --> 02:07:34.540
+Benny Astria: Tunjangan. Teks reimbursement gitu supaya tunjangan tax reimbursement yang di sisi pendapatan itu untuk nge Balance nge balance Potongan
+
+1502
+02:07:35.067 --> 02:07:36.670
+Benny Astria: nanti kan hasilnya jadi nol ya.
+
+1503
+02:07:37.186 --> 02:07:37.799
+Code Bahri: Uh, uh.
+
+1504
+02:07:39.070 --> 02:07:40.669
+Benny Astria: Nah, untuk hitungan itu, tuh.
+
+1505
+02:07:41.315 --> 02:07:46.050
+Benny Astria: Kalau itu saya perlu diskusi ke tim Parall tuh. Mereka yang punya calculation nya tuh.
+
+1506
+02:07:46.890 --> 02:07:47.250
+Code Bahri: Sudah ya.
+
+1507
+02:07:47.556 --> 02:07:49.089
+Benny Astria: Karena dinamis banget Itu hitungannya.
+
+1508
+02:07:49.391 --> 02:07:55.119
+Code Bahri: Sarannya untuk aku, nih. Kalau terlalu ribet, kan? Ribet, Mas. Nanti daripada orang banyak nanya di Take Out saja.
+
+1509
+02:07:55.621 --> 02:08:00.789
+Benny Astria: Better. Kalau buat saya sisi pinjaman dihilangin.
+
+1510
+02:08:01.679 --> 02:08:03.639
+Code Bahri: Segini pinjaman. Semua ini berarti enggak perlu.
+
+1511
+02:08:03.830 --> 02:08:04.019
+Benny Astria: Iya.
+
+1512
+02:08:05.038 --> 02:08:07.610
+Code Bahri: Pinjaman khas kecil itu dihilangin karena.
+
+1513
+02:08:08.095 --> 02:08:11.010
+Benny Astria: Itu berpengaruhnya ke hitungan pajak. Nantinya.
+
+1514
+02:08:12.323 --> 02:08:15.840
+Code Bahri: Ribet, ya. Mending mending ngurus pajaknya. Ini saja Bpjs. Bpjs. Ini.
+
+1515
+02:08:16.240 --> 02:08:19.839
+Benny Astria: Iya, yang yang kita yang basic. Basic aja gitu.
+
+1516
+02:08:20.072 --> 02:08:22.859
+Code Bahri: Iya, ini enggak perlu langsung. Parrol sama pacik Ini berarti, ya.
+
+1517
+02:08:23.160 --> 02:08:23.459
+Benny Astria: Hu, uh.
+
+1518
+02:08:23.735 --> 02:08:25.390
+Code Bahri: Sama laporan gitu. Ya, itu sudah
+
+1519
+02:08:25.903 --> 02:08:28.010
+Code Bahri: sudah. Okelah, sudah Worth it lah ya.
+
+1520
+02:08:28.563 --> 02:08:33.360
+Benny Astria: Dengan dengan ada fitur di situ. Paj, hitung pajak
+
+1521
+02:08:33.900 --> 02:08:36.359
+Benny Astria: otomatis saja. Itu sudah mantap sih.
+
+1522
+02:08:37.418 --> 02:08:39.210
+Benny Astria: Buat seorang ecer, Ya.
+
+1523
+02:08:39.650 --> 02:08:46.470
+Code Bahri: Kita enggak perlu capek. Capek lagi ngitung pajak yang ini, ya. Nanti kan muncul kayak per orang. Orang ini gitu. Ceritanya.
+
+1524
+02:08:47.168 --> 02:08:57.649
+Benny Astria: Cuma ini Ptkp nya. Saya harus ngecek lagi sih. Apakah ada update hitungan pajak terbaru atau enggak? Terakhir sih? Hitungan Pajaknya lebih banyak lagi sih. Komponennya tuh dari itu.
+
+1525
+02:08:58.467 --> 02:09:02.160
+Code Bahri: Oke, berarti ini kan? Ini minimal Next. Kita bisa diskusi lagi. Ya,
+
+1526
+02:09:03.421 --> 02:09:07.769
+Code Bahri: secara garis besar untuk. Mungkin besok aku bisa sepel sepuluh itu, kan?
+
+1527
+02:09:08.196 --> 02:09:08.410
+Benny Astria: Lanjutnya.
+
+1528
+02:09:08.666 --> 02:09:14.820
+Code Bahri: Plus, Phil, ini kan berarti ini udah aku take out daripada nanti. Aku sudah screenshot. Kirim, kirim kok. Enggak ada karir Mas gitu, ya?
+
+1529
+02:09:15.586 --> 02:09:15.969
+Benny Astria: Itu.
+
+1530
+02:09:16.292 --> 02:09:20.490
+Code Bahri: Khas kecil gitu, kan? Istilahnya. Nah, ini kan sudah mulai kelihatan gitu, kan?
+
+1531
+02:09:20.780 --> 02:09:21.070
+Benny Astria: Uh, uh.
+
+1532
+02:09:22.255 --> 02:09:22.740
+Code Bahri: Oke, oke.
+
+1533
+02:09:23.532 --> 02:09:29.440
+Benny Astria: Jadi lumayan tuh. Kalau misalkan nanti ada Next Course lagi bisa
+
+1534
+02:09:30.697 --> 02:09:43.139
+Benny Astria: saling berkaitan gitu dari Cost. Pertama, ngomongin, pero kos Keduanya ngomongin ter terkait poluation. Dan itu pun juga lebih ngejelimet lagi. Tuh, Mas, jujur saja.
+
+1535
+02:09:44.110 --> 02:09:44.790
+Benny Astria: Nah, terus.
+
+1536
+02:09:45.165 --> 02:09:53.790
+Code Bahri: Kalau nama nih nama Jeng Gadget ini nendang atau kayaknya terlalu lebay atau apa gitu atau ada ide ide Enggak Nama apa Kayak?
+
+1537
+02:09:54.328 --> 02:09:56.779
+Code Bahri: Tapi kan ada Sigma Haris gitu.
+
+1538
+02:09:58.022 --> 02:09:59.069
+Benny Astria: Kalau buat saya, ya.
+
+1539
+02:09:59.219 --> 02:09:59.669
+Code Bahri: Uh, uh, uh.
+
+1540
+02:10:00.943 --> 02:10:03.490
+Benny Astria: Karena saya sudah tahu. Jago Flutters, Ya,
+
+1541
+02:10:04.451 --> 02:10:11.950
+Benny Astria: E Catching sih. Buat saya jadi masih satu kayak. Satu brand, satu brand yang sama gitu loh.
+
+1542
+02:10:14.136 --> 02:10:15.280
+Code Bahri: Jadi kalau buat saya.
+
+1543
+02:10:15.636 --> 02:10:18.129
+Benny Astria: Masih masih Ear Catching. Kalau menurut saya.
+
+1544
+02:10:18.380 --> 02:10:20.380
+Code Bahri: Masih masuk ya? Masih masih aman lah, ya.
+
+1545
+02:10:20.666 --> 02:10:21.240
+Benny Astria: Masih aman.
+
+1546
+02:10:22.043 --> 02:10:25.080
+Code Bahri: Karena kan ini fokusnya memang ke parirel. Istilahnya, kan?
+
+1547
+02:10:25.316 --> 02:10:25.790
+Benny Astria: Uh, uh.
+
+1548
+02:10:26.158 --> 02:10:36.109
+Code Bahri: Kalau yang Harris kemarin itu kan dia memang fokusnya ke absensi lah Enggak ada sampai ke parol, kan? Pokoknya, udah Ngurusin orang Absen pakai face gitu kan.
+
+1549
+02:10:36.600 --> 02:10:49.159
+Benny Astria: Tapi ide saja sih. Kalau misalkan apa, Mas Bari ada project kayak gitu dari dari Project Absensi yang kemarin
+
+1550
+02:10:49.755 --> 02:10:51.540
+Benny Astria: itu bisa digabungin ke sini, kan? Ya.
+
+1551
+02:10:52.952 --> 02:10:54.280
+Code Bahri: Maksudnya gimana, Mas Ari?
+
+1552
+02:10:56.150 --> 02:11:00.879
+Benny Astria: Kalau kemarin kan sistem terkait dengan absensi Face Id, kan?
+
+1553
+02:11:01.052 --> 02:11:01.739
+Code Bahri: Uh, huh, uh, huh.
+
+1554
+02:11:02.816 --> 02:11:09.569
+Benny Astria: Itu sebetulnya bisa di dikombinasiin ke sistem parol. Ini kan absensinya. Based on face Id.
+
+1555
+02:11:09.833 --> 02:11:12.199
+Code Bahri: Iya, nanti kan? Ini kan ada mobil app nya.
+
+1556
+02:11:12.640 --> 02:11:15.080
+Benny Astria: Nah, ke situ arahnya, ya?
+
+1557
+02:11:15.627 --> 02:11:18.640
+Code Bahri: Mobile app nya. Nanti gadiran ini pakai Face Nation. Dia gitu.
+
+1558
+02:11:18.977 --> 02:11:19.989
+Benny Astria: Nah, sip, mantap.
+
+1559
+02:11:20.506 --> 02:11:25.299
+Code Bahri: Uh, uh, worth, it apa tujuh? Ratus tujuh ratus masak ya.
+
+1560
+02:11:26.627 --> 02:11:43.700
+Benny Astria: Kalau buat saya sih sangat worth it ya. Tapi, balik lagi mas, Bari Yang punya statistik apa. Namanya miss, Marketnya Di mana gitu kalau saya sih? Kalau kemarin ketemu ini duluan,
+
+1561
+02:11:45.222 --> 02:11:50.849
+Benny Astria: Saya ambil sih karena perbandingannya. Kalau harus ikut revolu, Ya,
+
+1562
+02:11:51.384 --> 02:11:56.980
+Benny Astria: saya kadang suka ikut kelas kelas gratisnya. Red for You juga kan? Kayak gitu, Tapi kan mereka hanya hanya
+
+1563
+02:11:57.446 --> 02:11:58.910
+Benny Astria: perkenalan tok gitu, ya?
+
+1564
+02:11:59.506 --> 02:12:00.059
+Code Bahri: Uh, uh.
+
+1565
+02:12:00.434 --> 02:12:04.179
+Benny Astria: Karena kelasnya, mereka juga kan mahal. Mahal tuh Jutaan jutaan.
+
+1566
+02:12:04.343 --> 02:12:04.669
+Code Bahri: Jutaan Ya.
+
+1567
+02:12:05.060 --> 02:12:10.529
+Benny Astria: Jutaan jutaan. Cuma itu. Iya, gitu buat. Kalau buat saya Kalau yang kayak gitu
+
+1568
+02:12:12.549 --> 02:12:17.580
+Benny Astria: mikir dua kali, kenapa? Karena masih belum menjawab apa yang saya butuhkan.
+
+1569
+02:12:18.234 --> 02:12:22.630
+Benny Astria: Kalau kayak kelasnya Mas Barry, ini kayak model kemarin, kan? Kayak absen gitu, kan?
+
+1570
+02:12:23.095 --> 02:12:23.327
+Code Bahri: Itu.
+
+1571
+02:12:24.302 --> 02:12:31.450
+Benny Astria: Sudah menjawab satu pertanyaan yang saya butuhkan kayak gitu. Apalagi dengan ini sistem payroll.
+
+1572
+02:12:32.556 --> 02:12:36.850
+Benny Astria: Oh, ini ini Core yang dibutuhkan Hr lagi.
+
+1573
+02:12:39.591 --> 02:12:47.100
+Benny Astria: Kalau sistem rekrutmen masih bisa dilakuin manual. Oke, gitu. Karena mereka mostly Kebanyakan koordinasi, ya?
+
+1574
+02:12:47.586 --> 02:12:48.054
+Code Bahri: Uh, uh, uh.
+
+1575
+02:12:48.711 --> 02:12:51.280
+Benny Astria: Kalau ini tuh. Ini Core nya Hr. Sebetulnya.
+
+1576
+02:12:52.893 --> 02:12:59.770
+Code Bahri: Sama ini nih, Mas. Apa saya kan kayak kalau kalau apa itu
+
+1577
+02:13:01.114 --> 02:13:12.419
+Code Bahri: terlihatnya kan kayak course gitu kayak course. Tapi kan? Aslinya kan Lebih ke jualan sourcode gitu. Jadi aku kadang tuh dilema gitu kayak
+
+1578
+02:13:12.767 --> 02:13:22.490
+Code Bahri: ini Membahasakannya Gimana gitu? Karena kalau course kan enggak Mungkin ya, kayak sudah enggak. Mungkin Course bikin aplikasi yang jadi seperti ini, kan? Enggak mungkin, kan
+
+1579
+02:13:23.419 --> 02:13:30.959
+Code Bahri: kan? Impossible Inilahnya kan Stephis Stepik ini, kan? Apalagi Ga pakai E Ai gitu, kan? Pakai E saja juga.
+
+1580
+02:13:31.593 --> 02:13:37.060
+Code Bahri: Tetap tetap prom, kan? Beda sih dan lupa kasih tahu apa kan Lupa kan gitu?
+
+1581
+02:13:38.187 --> 02:13:45.160
+Code Bahri: Nah, cuma kan lebih ke Akhirnya, lebih ke ini. Intinya, ini. Nanti kalian ikut. Dapat Ini gitu, kan?
+
+1582
+02:13:45.423 --> 02:13:45.686
+Benny Astria: Betul.
+
+1583
+02:13:46.262 --> 02:13:47.509
+Code Bahri: Sekalian ikut dapet ini.
+
+1584
+02:13:48.123 --> 02:13:48.549
+Benny Astria: Baik, Saya.
+
+1585
+02:13:49.197 --> 02:13:56.302
+Code Bahri: Terus udah ini saya kasih. Saya kasih apa itu ada? Anggap? Saja ada delapan belas pertemuan gitu
+
+1586
+02:13:57.511 --> 02:14:10.089
+Code Bahri: paling. Enam belas Delapan kali, dua enam belas, enam belas. Pertemuan Pertemuannya. Ngapain pertemuannya, kan? Enggak, mungkin nih pertemuannya. Saya step deh. Step Bikin. Ya, pertemuannya. Bagaimana? Instalasinya, kan? Kita diskusi tentang
+
+1587
+02:14:10.617 --> 02:14:16.649
+Code Bahri: Al. Apa itu alurnya, kan? Nanti mungkin kalau ada kita perbaikan. Nah, kalau seperti itu
+
+1588
+02:14:17.550 --> 02:14:20.249
+Code Bahri: masih oke, enggak menurutmu Maksudnya kayak
+
+1589
+02:14:20.825 --> 02:14:26.760
+Code Bahri: bisa masuk. Semua orang It non It bisa masuk atau gimana gitu Menurut atau atau malah.
+
+1590
+02:14:26.940 --> 02:14:27.480
+Benny Astria: Kalau kalau berikutnya.
+
+1591
+02:14:27.577 --> 02:14:27.869
+Code Bahri: Baik hari ini.
+
+1592
+02:14:28.026 --> 02:14:28.340
+Benny Astria: Uh, uh.
+
+1593
+02:14:28.624 --> 02:14:31.749
+Code Bahri: Enggak sesuai nih. Apa itu bohong nih? Atau gimana? Coba.
+
+1594
+02:14:32.750 --> 02:14:39.920
+Benny Astria: Kalau sebetulnya, kalau buat saya untuk orang yang awam gitu,
+
+1595
+02:14:41.012 --> 02:14:44.110
+Benny Astria: kan? Kita punya punya punya kebutuhan gitu.
+
+1596
+02:14:45.816 --> 02:14:52.149
+Benny Astria: Kadang kala perusahaan Ini punya uang, tapi kadang kan enggak mau ngeluarin uang gitu.
+
+1597
+02:14:52.976 --> 02:14:53.409
+Code Bahri: Uh, uh.
+
+1598
+02:14:53.702 --> 02:14:57.739
+Benny Astria: Tapi di satu sisi, kita sebagai staf, itu,
+
+1599
+02:14:58.541 --> 02:15:00.930
+Benny Astria: ada suatu kebutuhan yang harus terpenuhi nih.
+
+1600
+02:15:03.076 --> 02:15:12.987
+Benny Astria: Hr. Itu kerjaannya tuh menjelimet, Jadi kita butuh bantuan dan kebanyakan apa namanya?
+
+1601
+02:15:14.940 --> 02:15:25.020
+Benny Astria: Kita tuh Hr tuh. Kadang cuma dua orang, Satu orang gitu untuk ngerjain semua. Nah, dan Sekarang itu,
+
+1602
+02:15:26.165 --> 02:15:34.480
+Benny Astria: saya banyak nemuin, Genz. Ya, Genz. Ini kan lumayan familiar sama dunia It, kan? Sebetulnya mereka lebih adaptif gitu, Ya,
+
+1603
+02:15:36.418 --> 02:15:45.389
+Benny Astria: Jadi, untuk Course yang menjelaskan kalau kalau tadi Mas Fahri bilang kan sebetulnya jual Shorts Court gitu, kan?
+
+1604
+02:15:46.175 --> 02:15:55.020
+Benny Astria: Dengan ditambah penjelasan, itu masih oke, karena kemarin pun. Sebetulnya, saya baru beli Search Court.
+
+1605
+02:15:56.770 --> 02:16:03.809
+Benny Astria: Kurang lebih hampir sama kayak gini itu. Tapi enggak ada course
+
+1606
+02:16:05.880 --> 02:16:08.540
+Benny Astria: itu jadi kendala tersendiri tuh buat Saya
+
+1607
+02:16:10.688 --> 02:16:16.580
+Benny Astria: walaupun bisa ngikutin tutorial, tapi kan saya enggak punya wadah untuk bertanya untuk orang yang awam.
+
+1608
+02:16:19.611 --> 02:16:25.000
+Benny Astria: Kadang kala. Aduh, Mas, ini kok saya Enggak bisa Kurang Apanya kayak gitu.
+
+1609
+02:16:25.669 --> 02:16:33.630
+Benny Astria: Sama halnya waktu Saya kan sempat ikut live zoom nya, Mas Bari kan Yang pas absensi waktu itu Kan
+
+1610
+02:16:34.666 --> 02:16:39.639
+Benny Astria: Saya masih awam nih. Tools nya. Apa saja yang dipakai, kan? Gitu Benar, Benar, awam gitu di situ.
+
+1611
+02:16:40.120 --> 02:16:45.459
+Benny Astria: Kalau kita bisa interaksi langsung Kayak gini, kan? Kita juga enak gitu, Mas Basri Bisa
+
+1612
+02:16:46.594 --> 02:16:54.179
+Benny Astria: enggak ada yang buat buat ecer yang biasa interaksi sama orang itu enggak ada Yang bisa
+
+1613
+02:16:54.995 --> 02:17:00.250
+Benny Astria: mengalahkan Personal Touch dari orang dibandingkan harus mantengin video
+
+1614
+02:17:02.081 --> 02:17:07.350
+Benny Astria: itu. Sejauh ini saya masih belum bisa tuh nemuin bahwa video bisa
+
+1615
+02:17:08.114 --> 02:17:17.239
+Benny Astria: nge Guide. Tapi Personal Touch dari Entar itu dari mentor Ke. Ke. Apa Anak didiknya secara langsung Itu masih belum bisa, sih,
+
+1616
+02:17:19.389 --> 02:17:23.909
+Benny Astria: Makanya saya bukan Mas Bar. Ya, tapi
+
+1617
+02:17:25.695 --> 02:17:33.560
+Benny Astria: ketika saya ngambil kelas kelas lain itu, saya selalu berpatokan ke sini ke kelasnya. Mas Bari
+
+1618
+02:17:34.407 --> 02:17:37.269
+Benny Astria: kayak gitu, standar standarnya Ini masih di sini gitu.
+
+1619
+02:17:37.507 --> 02:17:38.219
+Code Bahri: Uh, uh, uh.
+
+1620
+02:17:39.423 --> 02:17:42.567
+Benny Astria: Karena saya ada beberapa juga kayak ngambil kelas
+
+1621
+02:17:43.624 --> 02:17:48.189
+Benny Astria: merubah Excel. Jadi, aplikasi itu dulu pas Awal awal tuh. Saya ambil kelas kayak gitu
+
+1622
+02:17:49.765 --> 02:17:52.919
+Benny Astria: untuk menjawab menjawab kebutuhan saya, kan?
+
+1623
+02:17:53.600 --> 02:17:54.120
+Code Bahri: Uh, uh, uh, uh.
+
+1624
+02:17:54.455 --> 02:17:56.129
+Benny Astria: Sampai akhirnya ketemu. Di sini.
+
+1625
+02:17:56.997 --> 02:18:04.299
+Benny Astria: Ada lah, jadi saya ke kelas yang enggak saya butuhin pun. Saya ambil ambilin aja dulu gitu untuk memperkaya diri gitu.
+
+1626
+02:18:06.589 --> 02:18:14.079
+Benny Astria: Tapi balik lagi. Semua itu harus dilihat. News Market nya Berdasarkan statistik itu gitu,
+
+1627
+02:18:16.086 --> 02:18:18.159
+Benny Astria: lima ratus enam ratus Itu masih masuk.
+
+1628
+02:18:19.920 --> 02:18:26.030
+Benny Astria: Tapi pertanyaan saya nih. Saya penasaran aja nih sama Mas Bari untuk empat bulan.
+
+1629
+02:18:26.491 --> 02:18:29.299
+Benny Astria: Sejujurnya, kelamaan enggak buat mas bari ngejelasin itu.
+
+1630
+02:18:30.578 --> 02:18:37.150
+Code Bahri: Kalau yang kemarin, Kalau kelamaan sih yang yang pos, ya. Makanya yang ini kayaknya dua bulan sih. Kemungkinan dua bulan. Makanya tadi
+
+1631
+02:18:38.112 --> 02:18:41.640
+Code Bahri: paling enam belas. Pertemuan lah gitu. Seminggu dua kali gitu.
+
+1632
+02:18:42.356 --> 02:18:43.230
+Code Bahri: Bayanganku sih.
+
+1633
+02:18:44.026 --> 02:18:50.059
+Benny Astria: Karena takutnya ini penilaian dari dua sisi. Ya,
+
+1634
+02:18:51.074 --> 02:18:59.659
+Benny Astria: dari sisi trainernya. Kayak Mas Baring Ini term kepanjangan dari sisi si Siapa si
+
+1635
+02:19:00.801 --> 02:19:04.729
+Benny Astria: user juga? Kalau kepanjangan tuh. Kalau enggak
+
+1636
+02:19:05.271 --> 02:19:10.549
+Benny Astria: enggak yang benar. Benar, Full stuck gitu kan? Kayak kepanjangan deh gitu gitu.
+
+1637
+02:19:10.908 --> 02:19:17.730
+Code Bahri: Iya, makanya kan. Ini kan dari Bed satu itu kemarin. Jadi pengalaman lah gitu karena kan Ps itu. Saya.
+
+1638
+02:19:18.643 --> 02:19:22.879
+Code Bahri: Di Awal itu belum belum lengkap pers, jadi saya cuma melempar ide.
+
+1639
+02:19:23.133 --> 02:19:23.259
+Benny Astria: Iya.
+
+1640
+02:19:23.638 --> 02:19:27.800
+Code Bahri: Melempar keingin melemar. Aku pingin dibikin ini gitu. Ayo kita buat.
+
+1641
+02:19:28.403 --> 02:19:28.716
+Code Bahri: Nah,
+
+1642
+02:19:30.505 --> 02:19:42.500
+Code Bahri: ini tinggal tinggal lima. Pertemuan lah. Ibaratnya tinggal Tiga, empat. Pertemuan paling pertemuan itu tuh masih masih belum banyak. Masih masih lumayan panjang lah gitu, kan? Makanya aku harus bikin di luar Gitu kan?
+
+1643
+02:19:42.964 --> 02:19:44.180
+Code Bahri: Di luar jumlah gitu.
+
+1644
+02:19:45.364 --> 02:19:48.930
+Code Bahri: Nah, kalau yang ini modelnya nanti. Karena kan ini sudah di awal tuh.
+
+1645
+02:19:49.582 --> 02:19:54.460
+Code Bahri: Cuma ini ntar lihat lah gitu, kan? Bahkan kalau bisa, saya upload tuh Apk gitu, kan? Jadi orang tahu nih.
+
+1646
+02:19:55.272 --> 02:19:55.909
+Benny Astria: Ini yang pertama.
+
+1647
+02:19:56.438 --> 02:19:58.550
+Code Bahri: Itu udah dapet gitu.
+
+1648
+02:19:58.786 --> 02:19:59.260
+Benny Astria: Uh, uh.
+
+1649
+02:19:59.495 --> 02:20:00.670
+Code Bahri: Menarik, enggak kan Gitu, kan?
+
+1650
+02:20:02.106 --> 02:20:07.329
+Code Bahri: Kan? Jadi hari H pertama dapat nih. Nanti selanjutnya datang ke datang, kan? Sudah dapat.
+
+1651
+02:20:07.626 --> 02:20:10.200
+Benny Astria: Quote. Nya yang dicari kan itu? Biasanya kan gitu.
+
+1652
+02:20:10.665 --> 02:20:18.139
+Code Bahri: Gitu. Jadi, konsepnya memang agak bergeser, tapi kan tetap tetap seperti itu gitu karena fokusnya, kan? Gimana caranya?
+
+1653
+02:20:19.067 --> 02:20:24.029
+Code Bahri: Apa software Ini gini apa? Kalau visi misinya salah satunya, kan?
+
+1654
+02:20:24.640 --> 02:20:29.239
+Code Bahri: Bagaimana? Biar Jacko Flutter itu membuat sesuatu atau membuat satu
+
+1655
+02:20:29.910 --> 02:20:35.630
+Code Bahri: source code yang bisa dipakai oleh member nya Dipakai untuk freelance.
+
+1656
+02:20:36.810 --> 02:20:39.899
+Code Bahri: Enggak sih, pakai sendirilah. Pakai sendiri atau freelance.
+
+1657
+02:20:40.453 --> 02:20:46.970
+Code Bahri: Jadi kan kadang juga bertentangan gitu. Waduh berarti kan? Jadi Komitedor
+
+1658
+02:20:47.837 --> 02:20:49.089
+Code Bahri: enggak semudah itu juga gitu, kan?
+
+1659
+02:20:49.300 --> 02:20:49.509
+Benny Astria: Betul.
+
+1660
+02:20:50.359 --> 02:21:01.239
+Code Bahri: Jadi itu urusan masing. Masing lah gitu. Kalau aku bayangku gitu sih. Pokoknya, aku bikin ini sudah di Dilempar gitu, Kan Di Char yang mau. Joni, ayo. Enggak, sudah kan gitu.
+
+1661
+02:21:01.690 --> 02:21:09.950
+Code Bahri: Makanya kayaknya dua bulan deh gitu. Dua bulan. Makanya kan gini lah yang Rugi kenapa? Empat bulan? Karena tadi untuk saya bisa harga enam ratus.
+
+1662
+02:21:10.723 --> 02:21:18.990
+Code Bahri: Karena kebiasaan orang itu Seratus lima puluh. Biar jadi enam ratus, kan Empat kali, empat bulan. Nah, sekitar empat bulan gitu.
+
+1663
+02:21:19.206 --> 02:21:19.640
+Benny Astria: Uh, uh.
+
+1664
+02:21:20.015 --> 02:21:27.890
+Code Bahri: Ini seumpama nih. Saya kasih harga enam ratus. Dua bulan, kok. Tiga ratus kok mahal. Nah, itu yang. Bagaimana tugasku Untuk
+
+1665
+02:21:29.064 --> 02:21:35.513
+Code Bahri: membahasakan itu gitu. Kayak mem membahaskan supaya ini. Itu terlihat enggak mahal. Gitu gitu.
+
+1666
+02:21:36.323 --> 02:21:38.040
+Benny Astria: Mungkin itu tadi karena
+
+1667
+02:21:38.718 --> 02:21:46.669
+Benny Astria: app nya sudah jadi di awal. Jadi, sudah lempar. Lempar video video. Apa namanya? Simulasinya di awal tuh.
+
+1668
+02:21:46.816 --> 02:21:47.110
+Code Bahri: Uh, uh.
+
+1669
+02:21:47.540 --> 02:21:57.450
+Benny Astria: Oh, kurang. Jadi biar mereka ada gambaran. Karena kalau saya sendiri, saya kan sering banget nih. Searching Tutorial Vba di Youtube gitu, kan?
+
+1670
+02:21:59.095 --> 02:22:03.669
+Benny Astria: Seringkali tuh saya akan melihat ini review nya dulu tuh.
+
+1671
+02:22:04.222 --> 02:22:09.959
+Benny Astria: Saya tuh ngelihat di Excel and Vba tuh di Youtube, jadi Saya akan melihat video preview nya dulu tuh.
+
+1672
+02:22:10.758 --> 02:22:16.019
+Benny Astria: Wah, ini oke nih. Kalau saya bikin apps dari Xl nya kayak gini nih, kayak gitu,
+
+1673
+02:22:17.759 --> 02:22:28.090
+Benny Astria: Jadi Da dari preview itu, dia bisa gini. Bisa gitu, Misalnya. Baru nanti saya buka buka video tutorial yang panjangnya itu
+
+1674
+02:22:28.873 --> 02:22:33.009
+Benny Astria: untuk lebih dalam ngelihat apa?
+
+1675
+02:22:33.673 --> 02:22:34.079
+Code Bahri: Suksesnya ya.
+
+1676
+02:22:34.970 --> 02:22:36.150
+Benny Astria: Kode nya itu. Ya.
+
+1677
+02:22:37.815 --> 02:22:40.769
+Code Bahri: Mas, ini saya tak pulang dulu. Masih di Grooking Space.
+
+1678
+02:22:41.830 --> 02:22:42.700
+Benny Astria: Oke, siap.
+
+1679
+02:22:43.132 --> 02:22:44.429
+Code Bahri: Baru tutup nih.
+
+1680
+02:22:44.750 --> 02:22:45.070
+Benny Astria: Oke, oke.
+
+1681
+02:22:45.372 --> 02:22:48.999
+Code Bahri: Thank you, Mas. Ya, Next. Nanti kita ngomong ngobrol lagi. Thank you.
+
+1682
+02:22:49.520 --> 02:22:50.040
+Benny Astria: Assalamualaikum.
+

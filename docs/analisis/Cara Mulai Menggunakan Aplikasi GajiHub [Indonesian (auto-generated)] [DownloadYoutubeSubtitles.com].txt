@@ -1,0 +1,289 @@
+Halo kawan Gaji Hub. Ketika karyawan
+
+sudah ditambahkan oleh administrator
+
+melalui website Gaji Hub, karyawan akan
+
+menerima WhatsApp notifikasi dari Gaji
+
+Hub. WhatsApp ini berisi username,
+
+password, serta tautan unduhan aplikasi
+
+Gaji Hubb melalui Play Store maupun App
+
+Store. Setelah aplikasi Gaji Hubb
+
+berhasil diunduh, ikon Gaji Hub akan
+
+muncul di layar ponsel. Di sini kawan
+
+GajiHub bisa membuka aplikasi GajiHub.
+
+Karyawan dapat masuk dengan memasukkan
+
+email dan kata sandi atau menggunakan
+
+opsi masuk dengan Google dan memilih
+
+email yang terhubung dengan akun Gajih
+
+Hub.
+
+Mulai sekarang tampilan Gajih Hub ISS
+
+telah diperbarui. Desainnya lebih
+
+modern, fitur-fiturnya lebih lengkap,
+
+dan navigasinya jauh lebih mudah
+
+digunakan oleh karyawan.
+
+Pada halaman utama tersedia menu
+
+kehadiran. Fitur ini digunakan untuk
+
+presensi masuk, presensi keluar,
+
+istirahat, lembur, hingga kunjungan
+
+klien. Nantinya setiap transsi yang
+
+dilakukan akan muncul pada riwayat di
+
+bagian bawah pada story absensi seperti
+
+pada contoh berikut ini.
+
+Kemudian untuk melakukan presensi,
+
+karyawan cukup menekan tombol ikon
+
+pesawat di bagian berikut. Selanjutnya
+
+pilih jenis presensinya misalnya
+
+presensi masuk. Kemudian tunggu beberapa
+
+saat.
+
+Selanjutnya klik go
+
+dan nantinya presensi juga bisa
+
+dilakukan melalui sua foto sesuai
+
+pengaturan perusahaan.
+
+Setelah berhasil akan muncul notifikasi
+
+presensi masuk berhasil. Lalu timer di
+
+bagian atas akan berjalan otomatis
+
+hingga jam kerja selesai.
+
+Selanjutnya pada menu izin dan cuti,
+
+karyawan dapat mengajukan izin, cuti
+
+maupun sakit.
+
+Untuk mengajukan izin atau cuti bisa
+
+dilakukan dengan memilih salah satu
+
+jenis izin atau cuti misalnya sakit.
+
+Selanjutnya klik ikon tambah di pojok
+
+kanan bawah. Masukkan data yang
+
+dibutuhkan mulai dari tanggal izin.
+
+Selanjutnya masukkan keterangan.
+
+Kawan gaji juga bisa melampirkan berkas
+
+seperti surat keterangan dokter dengan
+
+cara klik unggah. Dan jika sudah
+
+berikutnya klik ajukan.
+
+Setelah dikirim, maka status pengajuan
+
+akan tampil di bagian berikut. Apakah
+
+masih menunggu, disetujui, atau ditolak?
+
+Dan nantinya cara yang sama juga bisa
+
+dilakukan untuk jenis izin dan cuti
+
+lainnya.
+
+Berikutnya terdapat menu slip gaji.
+
+Jika slip gaji bulan berjalan sudah
+
+diterbitkan oleh HR, maka slip tersebut
+
+otomatis muncul di halaman ini dan dapat
+
+diunduh sesuai izin perusahaan.
+
+Untuk mengunduh slip gaji bisa dilakukan
+
+dengan cara memilih slip gaji bulanan.
+
+Kemudian klik icon download di bagian
+
+pojok kanan bawah.
+
+Kemudian kita akan membuka menu
+
+kalender.
+
+Di menu kalender karyawan dapat melihat
+
+kalender perusahaan,
+
+kehadiran,
+
+jadwal kerja,
+
+dan izin dan cuti.
+
+Kemudian di bagian kehadiran,
+
+warna merah menunjukkan mangkit, biru
+
+menunjukkan hadir, dan abu-abu berarti
+
+belum ada presensi. Nantinya untuk
+
+keterangan lengkap dapat dilihat pada
+
+bagian berikut, yaitu klik icon titik3
+
+dan di sini ditunjukkan keterangan
+
+masing-masing detail warna.
+
+Setelah itu terdapat menu perusahaan
+
+yang menampilkan profil perusahaan,
+
+pengumuman
+
+dan aturan kerja yang telah ditetapkan
+
+oleh administrator.
+
+Berikutnya, jika karyawan memiliki peran
+
+sebagai HR finance atau atasan yang
+
+diberi wewenang menyetujui pengajuan,
+
+maka di menu approval permohonan cuti,
+
+izin, sakit, lembur, rimbes, ataupun
+
+lainnya dari tim akan muncul di menu
+
+approval.
+
+Sedangkan menu kasbon berfungsi
+
+menampilkan informasi kasbon yang pernah
+
+diajukan, jumlah pinjaman berjalan,
+
+serta status pembayarannya.
+
+Karyawan dapat mengajukan kasbon dengan
+
+cara klik ikon tambah di bagian berikut.
+
+Kemudian masukkan dekat informasi yang
+
+dibutuhkan dan selanjutnya klik ajukan.
+
+Melalui menu rimbes, karyawan dapat
+
+mengajukan pembiayaan seperti uang
+
+makan, transportasi, ataupun perjalanan
+
+bisnis. Untuk mengajukan rimbes bisa
+
+dilakukan dengan klik ikon tambah di
+
+bagian berikut. Kemudian masukkan data
+
+yang dibutuhkan dan nantinya pengajuan
+
+akan diteruskan ke administrator untuk
+
+diproses.
+
+Pada bagian timeline karyawan dapat
+
+melihat berbagai informasi terkini
+
+seperti ucapan ulang tahun, pengumuman
+
+hari ini, serta siapa saja yang
+
+mengajukan cuti. Di sini karyawan juga
+
+dapat menuliskan status singkat jika
+
+diperlukan.
+
+Pada menu profil di bagian kanan bawah,
+
+karyawan dapat melihat informasi seperti
+
+nama dan email. Di sini terdapat
+
+informasi profilku,
+
+informasi akun,
+
+pengubahan bahasa sesuai kebutuhan.
+
+Kemudian
+
+memilih mode aplikasi apakah dipilih
+
+mode malam atau siang.
+
+Selanjutnya
+
+karyawan juga bisa melihat pengaturan
+
+detail tim,
+
+pengaturan notifikasi,
+
+pengaturan timeline dan pengumuman,
+
+mengubah password, dan juga bisa
+
+mengakses menu FAQ.
+
+Nantinya jika membutuhkan bantuan lebih
+
+lanjut, kawan Kajiha bisa menghubungi
+
+tim Hebat YH. Demikian video penjelasan
+
+ini. Terima kasih.
+
+Yeah.
+
+

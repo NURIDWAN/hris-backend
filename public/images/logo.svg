@@ -1,0 +1,16 @@
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon - Stylized GP with payroll/money theme -->
+  <g>
+    <!-- Circle background -->
+    <circle cx="25" cy="25" r="22" fill="#3B82F6"/>
+    <!-- G letter stylized -->
+    <path d="M25 10C16.716 10 10 16.716 10 25C10 33.284 16.716 40 25 40C29.418 40 33.418 38.209 36.25 35.25V25H25V30H31V33C29.209 34.284 27.134 35 25 35C19.477 35 15 30.523 15 25C15 19.477 19.477 15 25 15C28.134 15 30.955 16.477 32.75 18.75L36.5 15.5C33.791 12.209 29.657 10 25 10Z" fill="white"/>
+    <!-- P inside G -->
+    <path d="M22 22H28C29.657 22 31 23.343 31 25C31 26.657 29.657 28 28 28H25V32H22V22Z" fill="#3B82F6"/>
+  </g>
+
+  <!-- Text: GajiPro -->
+  <text x="55" y="33" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="700" fill="#1E293B">
+    <tspan fill="#3B82F6">Gaji</tspan><tspan fill="#1E293B">Pro</tspan>
+  </text>
+</svg>

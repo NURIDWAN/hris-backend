@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" role="img" aria-label="HR Gemilang">
+  <defs>
+    <linearGradient id="hr-gemilang-mark-only" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="52" height="52" rx="14" fill="url(#hr-gemilang-mark-only)"/>
+  <path d="M18 18v20M18 28h12M30 18v20" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="40" cy="22" r="2.5" fill="#f97316"/>
+</svg>
