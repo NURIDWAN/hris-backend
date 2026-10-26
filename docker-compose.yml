@@ -1,0 +1,105 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gajipro-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini:ro
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - APP_DEBUG=${APP_DEBUG:-true}
+    networks:
+      - default
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  web:
+    image: nginx:alpine
+    container_name: toko-web      # 1. nama unik, ini yang diisi di "Forward Hostname" NPM
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - default                   # 2. network internal project (ke app/db/redis)
+      - proxy                     # 3. network yang sama dengan NPM
+    # 4. JANGAN ada "ports:" di sini, NPM yang membuka 80/443
+    depends_on:
+      - app
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: gajipro-mariadb
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_DB_PORT:-3307}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-gajipro}
+      MYSQL_USER: ${DB_USERNAME:-gajipro}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: gajipro-redis
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_REDIS_PORT:-6380}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gajipro-queue
+    restart: unless-stopped
+    working_dir: /var/www
+    command: php artisan queue:work --tries=3 --timeout=90
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini:ro
+    networks:
+      - default
+    depends_on:
+      app:
+        condition: service_started
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+networks:
+  default:
+    driver: bridge
+  proxy:
+    external: true                # network sudah dibuat NPM, jangan dibuat ulang
+
+volumes:
+  mariadb_data:
+    driver: local
+  redis_data:
+    driver: local

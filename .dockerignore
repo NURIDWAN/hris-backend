@@ -1,0 +1,13 @@
+.git
+.github
+.ddev
+.agents
+.claude
+.codex
+.cursor
+node_modules
+npm-debug.log
+yarn-error.log
+.env
+.phpunit.result.cache
+storage/*.key
