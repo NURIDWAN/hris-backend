@@ -275,8 +275,8 @@
                             <select name="work_schedule_id" id="work_schedule_id" class="input w-full @error('work_schedule_id') border-danger-500 @enderror">
                                 <option value="">Pilih Jadwal Kerja</option>
                                 @foreach($workSchedules as $schedule)
-                                    <option value="{{ $schedule->id }}" {{ old('work_schedule_id') == $schedule->id ? 'selected' : '' }}>
-                                        {{ $schedule->name }} ({{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }})
+                                    <option value="{{ $schedule->id }}" {{ old('work_schedule_id', $defaultSchedule?->id) == $schedule->id ? 'selected' : '' }}>
+                                        {{ $schedule->name }} ({{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }})@if($schedule->is_default) (Default)@endif
                                     </option>
                                 @endforeach
                             </select>
@@ -351,8 +351,8 @@
         {{-- Office Locations --}}
         @if($officeLocations->count() > 0)
         <div class="card" x-data="{
-            selectedOffices: {{ json_encode(old('office_location_ids', [])) }},
-            primaryOffice: '{{ old('primary_office_id') ?? '' }}',
+            selectedOffices: {{ json_encode(old('office_location_ids', $primaryOffice ? [(string)$primaryOffice->id] : [])) }},
+            primaryOffice: '{{ old('primary_office_id', $primaryOffice?->id ?? '') }}',
             toggleOffice(id) {
                 const strId = String(id);
                 const index = this.selectedOffices.indexOf(strId);

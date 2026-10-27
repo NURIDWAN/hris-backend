@@ -46,6 +46,9 @@ class Attendance extends Model
         'approved_by',
         'approved_at',
         'admin_notes',
+        'lark_record_id',
+        'lark_synced_at',
+        'lark_sync_error',
     ];
 
     protected function casts(): array
@@ -55,6 +58,7 @@ class Attendance extends Model
             'clock_in' => 'datetime',
             'clock_out' => 'datetime',
             'approved_at' => 'datetime',
+            'lark_synced_at' => 'datetime',
             'is_manual_entry' => 'boolean',
             'face_verified' => 'boolean',
             'face_confidence' => 'decimal:4',

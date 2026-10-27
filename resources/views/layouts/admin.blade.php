@@ -217,6 +217,7 @@
                     <div x-show="open && !sidebarCollapsed" x-collapse class="mt-2 sidebar-submenu-light">
                         <a href="{{ route('settings.company-profile.index') }}" class="sidebar-sublink-light {{ request()->routeIs('settings.company-profile.*') ? 'active' : '' }}">Profil Perusahaan</a>
                         <a href="{{ route('settings.attendance.index') }}" class="sidebar-sublink-light {{ request()->routeIs('settings.attendance.*') ? 'active' : '' }}">Pengaturan Absensi</a>
+                        <a href="{{ route('settings.lark.index') }}" class="sidebar-sublink-light {{ request()->routeIs('settings.lark.*') ? 'active' : '' }}">Integrasi Lark</a>
                         <a href="{{ route('settings.users.index') }}" class="sidebar-sublink-light {{ request()->routeIs('settings.users.*') ? 'active' : '' }}">Pengguna</a>
                         <a href="{{ route('settings.roles.index') }}" class="sidebar-sublink-light {{ request()->routeIs('settings.roles.*') ? 'active' : '' }}">Role & Hak Akses</a>
                         <a href="{{ route('settings.approval-workflows.index') }}" class="sidebar-sublink-light {{ request()->routeIs('settings.approval-workflows.*') ? 'active' : '' }}">Alur Persetujuan</a>

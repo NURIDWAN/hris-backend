@@ -108,8 +108,8 @@ class FaceRecognitionController extends Controller
             abort(404);
         }
 
-        // Hapus semua embedding aktif maupun tidak aktif
-        $embeddings = $employee->faceEmbedding()->get();
+        // Hapus semua embedding aktif maupun tidak aktif (termasuk soft-deleted)
+        $embeddings = $employee->faceEmbedding()->withTrashed()->get();
 
         if ($embeddings->isEmpty()) {
             return redirect()

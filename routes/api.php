@@ -54,6 +54,11 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::post('/demo-register', [AuthController::class, 'demoRegister'])
             ->middleware('throttle:3,1')
             ->name('demo-register');
+
+        // Forgot password: 5 attempts per minute per IP
+        Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])
+            ->middleware('throttle:5,1')
+            ->name('forgot-password');
     });
 
     // Protected routes
@@ -165,6 +170,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::get('/status', [FaceRecognitionController::class, 'status'])->name('status');
             Route::post('/enroll', [FaceRecognitionController::class, 'enroll'])->name('enroll');
             Route::post('/verify', [FaceRecognitionController::class, 'verify'])->name('verify');
+            Route::delete('/enrollment', [FaceRecognitionController::class, 'removeEnrollment'])->name('enrollment.destroy');
         });
 
         // Device Tokens (Push Notifications)
@@ -184,4 +190,32 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::patch('/{office}/set-primary', [EmployeeOfficeController::class, 'setPrimary'])->name('set-primary');
         });
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Dashboard API (Next.js & External Clients)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('admin')->name('admin.')->group(function () {
+        // Admin Auth (Public)
+        Route::post('/auth/login', [\App\Http\Controllers\Api\V1\Admin\AuthController::class, 'login'])
+            ->middleware('throttle:5,1')
+            ->name('auth.login');
+
+        // Admin Protected Routes
+        Route::middleware('auth:sanctum')->group(function () {
+            // Auth Profile & Session
+            Route::get('/auth/me', [\App\Http\Controllers\Api\V1\Admin\AuthController::class, 'me'])->name('auth.me');
+            Route::post('/auth/logout', [\App\Http\Controllers\Api\V1\Admin\AuthController::class, 'logout'])->name('auth.logout');
+
+            // Dashboard Stats
+            Route::get('/dashboard/stats', [\App\Http\Controllers\Api\V1\Admin\DashboardController::class, 'stats'])->name('dashboard.stats');
+
+            // Employees
+            Route::get('/employees/options', [\App\Http\Controllers\Api\V1\Admin\EmployeeController::class, 'options'])->name('employees.options');
+            Route::get('/employees', [\App\Http\Controllers\Api\V1\Admin\EmployeeController::class, 'index'])->name('employees.index');
+            Route::get('/employees/{id}', [\App\Http\Controllers\Api\V1\Admin\EmployeeController::class, 'show'])->name('employees.show');
+        });
+    });
 });
+

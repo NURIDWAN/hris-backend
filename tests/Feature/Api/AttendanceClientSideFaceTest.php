@@ -246,5 +246,42 @@ describe('Client-Side Face Verification Flow', function () {
 
             $response->assertOk(); // Passes because face_verified=true is used
         });
+
+        it('accepts face_descriptors as a JSON encoded string for clock-in', function () {
+            Sanctum::actingAs($this->user, ['*']);
+
+            $response = $this->postJson('/api/v1/attendance/clock-in', [
+                'latitude' => -6.2088,
+                'longitude' => 106.8456,
+                'face_verified' => true,
+                'face_confidence' => 0.95,
+                'face_descriptors' => json_encode(array_fill(0, 192, 0.5)),
+            ]);
+
+            $response->assertOk()
+                ->assertJsonPath('success', true);
+        });
+
+        it('accepts face_descriptors as a JSON encoded string for clock-out', function () {
+            Sanctum::actingAs($this->user, ['*']);
+
+            \App\Models\Attendance::factory()->create([
+                'employee_id' => $this->employee->id,
+                'date' => $this->company->today(),
+                'clock_in' => '08:00:00',
+                'clock_out' => null,
+            ]);
+
+            $response = $this->postJson('/api/v1/attendance/clock-out', [
+                'latitude' => -6.2088,
+                'longitude' => 106.8456,
+                'face_verified' => true,
+                'face_confidence' => 0.95,
+                'face_descriptors' => json_encode(array_fill(0, 192, 0.5)),
+            ]);
+
+            $response->assertOk()
+                ->assertJsonPath('success', true);
+        });
     });
 });

@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use OpenApi\Attributes as OA;
 
@@ -445,15 +446,24 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
+                    'roles' => $user->getRoleNames()->values()->all(),
                 ],
                 'employee' => [
                     'id' => $employee->id,
                     'employee_id' => $employee->employee_id,
                     'full_name' => $employee->full_name,
+                    'first_name' => $employee->first_name,
+                    'last_name' => $employee->last_name,
+                    'phone' => $employee->phone,
+                    'address' => $employee->address,
+                    'photo' => $employee->photo ? asset('storage/'.$employee->photo) : null,
                     'department' => $employee->department?->name,
                     'position' => $employee->position?->name,
+                    'hire_date' => $employee->hire_date?->toDateString(),
+                    'employment_status' => $employee->employment_status,
                     'face_enrolled' => $faceEnrolled,
                     'face_embedding' => $faceEmbedding,
+                    'has_subordinates' => $employee->subordinates()->exists(),
                     'assigned_offices' => $assignedOffices,
                 ],
                 'company' => [
@@ -465,6 +475,67 @@ class AuthController extends Controller
                 ],
             ],
         ]);
+    }
+
+    #[OA\Post(
+        path: '/auth/forgot-password',
+        summary: 'Kirim link reset password',
+        description: 'Mengirimkan email berisi link untuk reset password',
+        tags: ['Authentication'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['email'],
+                properties: [
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'user@example.com'),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Permintaan reset password berhasil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Link reset password telah dikirim ke email Anda.'),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Email tidak ditemukan atau tidak valid',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: false),
+                        new OA\Property(property: 'message', type: 'string', example: 'Kami tidak dapat menemukan pengguna dengan alamat email tersebut.'),
+                    ]
+                )
+            ),
+        ]
+    )]
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+        ]);
+
+        $status = Password::sendResetLink($request->only('email'));
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return response()->json([
+                'success' => true,
+                'message' => __($status),
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => __($status),
+        ], 422);
     }
 
     #[OA\Post(
@@ -533,6 +604,7 @@ class AuthController extends Controller
                                         new OA\Property(property: 'first_name', type: 'string'),
                                         new OA\Property(property: 'last_name', type: 'string'),
                                         new OA\Property(property: 'phone', type: 'string', nullable: true),
+                                        new OA\Property(property: 'address', type: 'string', nullable: true),
                                         new OA\Property(property: 'photo', type: 'string', nullable: true),
                                         new OA\Property(property: 'department', type: 'string', nullable: true),
                                         new OA\Property(property: 'position', type: 'string', nullable: true),
@@ -628,6 +700,7 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
+                    'roles' => $user->getRoleNames()->values()->all(),
                 ],
                 'employee' => [
                     'id' => $employee->id,
@@ -636,6 +709,7 @@ class AuthController extends Controller
                     'first_name' => $employee->first_name,
                     'last_name' => $employee->last_name,
                     'phone' => $employee->phone,
+                    'address' => $employee->address,
                     'photo' => $employee->photo ? asset('storage/'.$employee->photo) : null,
                     'department' => $employee->department?->name,
                     'position' => $employee->position?->name,
@@ -643,6 +717,7 @@ class AuthController extends Controller
                     'employment_status' => $employee->employment_status,
                     'face_enrolled' => $faceEnrolled,
                     'face_embedding' => $faceEmbedding,
+                    'has_subordinates' => $employee->subordinates()->exists(),
                     'assigned_offices' => $assignedOffices,
                 ],
                 'company' => [

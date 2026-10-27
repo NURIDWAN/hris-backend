@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\EmployeeFaceEmbedding;
 use App\Models\FaceVerificationLog;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class FaceRecognitionService
 {
@@ -19,10 +20,18 @@ class FaceRecognitionService
         ?User $enrolledBy = null,
         ?float $qualityScore = null
     ): EmployeeFaceEmbedding {
-        // Force delete existing embedding if any (unique constraint on employee_id)
-        $existingEmbedding = $employee->faceEmbedding;
-        if ($existingEmbedding) {
-            $existingEmbedding->forceDelete();
+        // Force delete existing embeddings if any (including soft-deleted) to satisfy unique constraint on employee_id
+        $existingEmbeddings = EmployeeFaceEmbedding::withTrashed()
+            ->where('employee_id', $employee->id)
+            ->get();
+
+        foreach ($existingEmbeddings as $existing) {
+            if ($existing->enrollment_photo && $existing->enrollment_photo !== $photoPath && $existing->enrollment_photo !== 'no-photo') {
+                if (Storage::disk('public')->exists($existing->enrollment_photo)) {
+                    Storage::disk('public')->delete($existing->enrollment_photo);
+                }
+            }
+            $existing->forceDelete();
         }
 
         // Create new embedding

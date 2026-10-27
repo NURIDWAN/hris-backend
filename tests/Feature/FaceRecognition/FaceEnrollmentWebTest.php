@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
+    $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
     $this->company = Company::factory()->create([
         'enable_face_recognition' => true,
     ]);
@@ -19,6 +21,8 @@ beforeEach(function () {
     $this->admin = User::factory()->create([
         'company_id' => $this->company->id,
     ]);
+    setPermissionsTeamId($this->company->id);
+    $this->admin->assignRole('admin');
 
     $this->workSchedule = WorkSchedule::factory()->create([
         'company_id' => $this->company->id,
@@ -160,10 +164,10 @@ describe('Face Enrollment - Destroy', function () {
         $response = $this->actingAs($this->admin)
             ->delete(route('face-recognition.destroy', $this->employee));
 
-        $response->assertRedirect(route('face-recognition.index'));
+        $response->assertRedirect(route('employees.show', $this->employee));
         $response->assertSessionHas('success');
 
-        expect($embedding->fresh()->is_active)->toBeFalse();
+        expect(EmployeeFaceEmbedding::find($embedding->id))->toBeNull();
     });
 
     it('returns error if employee has no enrollment', function () {

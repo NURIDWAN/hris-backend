@@ -8,6 +8,8 @@ use DateTimeZone;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -100,6 +102,11 @@ class Company extends Model
         return $this->hasMany(User::class);
     }
 
+    public function larkIntegration(): HasOne
+    {
+        return $this->hasOne(LarkIntegration::class);
+    }
+
     public function isSubscriptionActive(): bool
     {
         if (! $this->is_active) {
@@ -148,6 +155,11 @@ class Company extends Model
     public function officeLocations()
     {
         return $this->hasMany(OfficeLocation::class);
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
     }
 
     /**

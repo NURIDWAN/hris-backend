@@ -21,6 +21,8 @@ class Employee extends Model
         'manager_id',
         'user_id',
         'employee_id',
+        'lark_user_id',
+        'lark_open_id',
         'first_name',
         'last_name',
         'email',
@@ -164,6 +166,17 @@ class Employee extends Model
         $schedule = $this->relationLoaded('workSchedule')
             ? $this->workSchedule
             : $this->workSchedule()->first();
+
+        // Fallback to company default active work schedule if not explicitly assigned
+        if (! $schedule) {
+            $schedule = WorkSchedule::where('company_id', $this->company_id)
+                ->where('is_active', true)
+                ->where('is_default', true)
+                ->first()
+                ?? WorkSchedule::where('company_id', $this->company_id)
+                    ->where('is_active', true)
+                    ->first();
+        }
 
         if ($schedule && $schedule->isWorkingDay($date->dayOfWeekIso)) {
             return $schedule;

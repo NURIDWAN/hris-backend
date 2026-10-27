@@ -287,6 +287,14 @@ class AttendanceController extends Controller
         $company = $user->company;
         $schedule = $employee->resolveScheduleForDate(\Carbon\Carbon::parse($company->today()));
 
+        // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
+        if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
+            $decoded = json_decode($request->input('face_descriptors'), true);
+            if (is_array($decoded)) {
+                $request->merge(['face_descriptors' => $decoded]);
+            }
+        }
+
         // Build validation rules
         $rules = [
             'latitude' => 'required|numeric',
@@ -295,7 +303,7 @@ class AttendanceController extends Controller
             'notes' => 'nullable|string|max:500',
             'face_verified' => 'nullable|boolean',
             'face_confidence' => 'nullable|numeric|min:0|max:1',
-            'face_descriptors' => ['nullable', 'array', 'min:128', 'max:128'],
+            'face_descriptors' => ['nullable', 'array', 'min:128', 'max:192'],
             'face_descriptors.*' => ['nullable', 'numeric'],
             'gps_verified' => 'nullable|boolean',
             'office_location_id' => 'nullable|integer|exists:office_locations,id',
@@ -423,7 +431,10 @@ class AttendanceController extends Controller
 
             // Determine verification mode: client-side (face_verified) or server-side (face_descriptors)
             $hasClientVerification = $request->has('face_verified');
-            $hasServerDescriptors = $request->has('face_descriptors') && is_array($request->face_descriptors) && count($request->face_descriptors) === 128;
+            $hasServerDescriptors = $request->has('face_descriptors')
+                && is_array($request->face_descriptors)
+                && count($request->face_descriptors) >= 128
+                && count($request->face_descriptors) <= 192;
 
             if ($hasClientVerification) {
                 // Client-side verification flow - trust the client's verification result
@@ -659,6 +670,14 @@ class AttendanceController extends Controller
         $employee = $user->employee;
         $company = $user->company;
 
+        // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
+        if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
+            $decoded = json_decode($request->input('face_descriptors'), true);
+            if (is_array($decoded)) {
+                $request->merge(['face_descriptors' => $decoded]);
+            }
+        }
+
         // Build validation rules
         $rules = [
             'latitude' => 'required|numeric',
@@ -667,7 +686,7 @@ class AttendanceController extends Controller
             'notes' => 'nullable|string|max:500',
             'face_verified' => 'nullable|boolean',
             'face_confidence' => 'nullable|numeric|min:0|max:1',
-            'face_descriptors' => ['nullable', 'array', 'min:128', 'max:128'],
+            'face_descriptors' => ['nullable', 'array', 'min:128', 'max:192'],
             'face_descriptors.*' => ['nullable', 'numeric'],
             'gps_verified' => 'nullable|boolean',
             'office_location_id' => 'nullable|integer|exists:office_locations,id',
@@ -790,7 +809,10 @@ class AttendanceController extends Controller
 
             // Determine verification mode: client-side (face_verified) or server-side (face_descriptors)
             $hasClientVerification = $request->has('face_verified');
-            $hasServerDescriptors = $request->has('face_descriptors') && is_array($request->face_descriptors) && count($request->face_descriptors) === 128;
+            $hasServerDescriptors = $request->has('face_descriptors')
+                && is_array($request->face_descriptors)
+                && count($request->face_descriptors) >= 128
+                && count($request->face_descriptors) <= 192;
 
             if ($hasClientVerification) {
                 // Client-side verification flow - trust the client's verification result

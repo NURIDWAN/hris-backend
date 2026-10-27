@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkScheduleRequest;
+use App\Models\Employee;
 use App\Models\WorkSchedule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,18 +43,26 @@ class WorkScheduleController extends Controller
     public function store(WorkScheduleRequest $request): RedirectResponse
     {
         $tenant = app('tenant');
+        $isDefault = $request->boolean('is_default');
 
         // If this schedule is set as default, remove default from others
-        if ($request->boolean('is_default')) {
+        if ($isDefault) {
             WorkSchedule::where('company_id', $tenant->id)
                 ->where('is_default', true)
                 ->update(['is_default' => false]);
         }
 
-        WorkSchedule::create([
+        $workSchedule = WorkSchedule::create([
             ...$request->validated(),
             'company_id' => $tenant->id,
         ]);
+
+        if ($isDefault) {
+            Employee::where('company_id', $tenant->id)
+                ->whereNull('work_schedule_id')
+                ->whereDoesntHave('weeklySchedules')
+                ->update(['work_schedule_id' => $workSchedule->id]);
+        }
 
         return redirect()->route('work-schedules.index')
             ->with('success', 'Jadwal kerja berhasil ditambahkan.');
@@ -86,16 +95,22 @@ class WorkScheduleController extends Controller
     public function update(WorkScheduleRequest $request, WorkSchedule $workSchedule): RedirectResponse
     {
         $tenant = app('tenant');
+        $isDefault = $request->boolean('is_default');
 
         if ($workSchedule->company_id !== $tenant->id) {
             abort(404);
         }
 
         // If this schedule is set as default, remove default from others
-        if ($request->boolean('is_default') && !$workSchedule->is_default) {
+        if ($isDefault && !$workSchedule->is_default) {
             WorkSchedule::where('company_id', $tenant->id)
                 ->where('is_default', true)
                 ->update(['is_default' => false]);
+
+            Employee::where('company_id', $tenant->id)
+                ->whereNull('work_schedule_id')
+                ->whereDoesntHave('weeklySchedules')
+                ->update(['work_schedule_id' => $workSchedule->id]);
         }
 
         $workSchedule->update($request->validated());

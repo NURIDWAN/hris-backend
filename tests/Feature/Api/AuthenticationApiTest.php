@@ -39,6 +39,7 @@ describe('POST /api/v1/auth/login', function () {
                         'id',
                         'name',
                         'email',
+                        'roles',
                     ],
                     'employee' => [
                         'id',
@@ -46,6 +47,7 @@ describe('POST /api/v1/auth/login', function () {
                         'full_name',
                         'department',
                         'position',
+                        'has_subordinates',
                     ],
                     'company' => [
                         'id',
@@ -67,7 +69,7 @@ describe('POST /api/v1/auth/login', function () {
         $response->assertStatus(401)
             ->assertJson([
                 'success' => false,
-                'message' => 'Email atau password salah.',
+                'message' => 'Email/ID Karyawan atau password salah.',
             ]);
     });
 
@@ -147,11 +149,13 @@ describe('GET /api/v1/auth/profile', function () {
                         'id',
                         'name',
                         'email',
+                        'roles',
                     ],
                     'employee' => [
                         'id',
                         'employee_id',
                         'full_name',
+                        'has_subordinates',
                         'first_name',
                         'last_name',
                         'phone',
@@ -369,5 +373,40 @@ describe('POST /api/v1/auth/change-password', function () {
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['password']);
+    });
+});
+
+describe('POST /api/v1/auth/forgot-password', function () {
+    it('can request password reset with valid registered email', function () {
+        Illuminate\Support\Facades\Notification::fake();
+
+        $response = $this->postJson('/api/v1/auth/forgot-password', [
+            'email' => 'employee@test.com',
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'success' => true,
+            ]);
+    });
+
+    it('returns error when email is not found', function () {
+        $response = $this->postJson('/api/v1/auth/forgot-password', [
+            'email' => 'nonexistent@test.com',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJson([
+                'success' => false,
+            ]);
+    });
+
+    it('validates required and valid email format', function () {
+        $response = $this->postJson('/api/v1/auth/forgot-password', [
+            'email' => 'not-an-email',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
     });
 });

@@ -184,6 +184,14 @@ class FaceRecognitionController extends Controller
             ], 403);
         }
 
+        // Support JSON string decoding if sent as string (e.g., from multipart or mobile request)
+        if (is_string($request->input('embedding_data'))) {
+            $decoded = json_decode($request->input('embedding_data'), true);
+            if (is_array($decoded)) {
+                $request->merge(['embedding_data' => $decoded]);
+            }
+        }
+
         // Support both 'embedding' (new format) and 'descriptors' (legacy)
         $hasEmbedding = $request->has('embedding_data.embedding');
         $embeddingField = $hasEmbedding ? 'embedding' : 'descriptors';

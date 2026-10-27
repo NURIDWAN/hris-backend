@@ -16,9 +16,9 @@
 /public/hot
 /public/storage
 /storage/*.key
-/storage/pail
 /storage/api-docs
-
+/.ddev
+/vendor
 Homestead.json
 Homestead.yaml
 Thumbs.db

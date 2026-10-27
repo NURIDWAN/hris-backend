@@ -7,6 +7,7 @@ use App\Events\AttendanceClockOut;
 use App\Events\LeaveRequestApproved;
 use App\Events\LeaveRequestRejected;
 use App\Listeners\LogEmailActivity;
+use App\Listeners\PushAttendanceToLarkListener;
 use App\Listeners\SendAttendanceClockInNotification;
 use App\Listeners\SendAttendanceClockOutNotification;
 use App\Listeners\SendLeaveApprovalNotification;
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(AttendanceClockOut::class, SendAttendanceClockOutNotification::class);
         Event::listen(LeaveRequestApproved::class, SendLeaveApprovalNotification::class);
         Event::listen(LeaveRequestRejected::class, SendLeaveApprovalNotification::class);
+
+        // Register event listeners for Lark attendance push
+        Event::listen(AttendanceClockIn::class, [PushAttendanceToLarkListener::class, 'handleClockIn']);
+        Event::listen(AttendanceClockOut::class, [PushAttendanceToLarkListener::class, 'handleClockOut']);
 
         // Register email logging listeners
         Event::listen(MessageSending::class, [LogEmailActivity::class, 'handleSending']);

@@ -316,7 +316,7 @@ describe('Face Recognition API', function () {
     });
 
     describe('DELETE /api/v1/face-recognition/enrollment', function () {
-        it('is not available via API - employee must contact HR to reset face', function () {
+        it('removes face enrollment successfully', function () {
             Sanctum::actingAs($this->user, ['*']);
 
             EmployeeFaceEmbedding::factory()->create([
@@ -326,9 +326,9 @@ describe('Face Recognition API', function () {
 
             $response = $this->deleteJson('/api/v1/face-recognition/enrollment');
 
-            $response->assertNotFound();
+            $response->assertOk();
 
-            expect($this->employee->fresh()->hasFaceEnrolled())->toBeTrue();
+            expect($this->employee->fresh()->hasFaceEnrolled())->toBeFalse();
         });
     });
 });

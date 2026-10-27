@@ -56,6 +56,7 @@ use App\Http\Controllers\Settings\ApprovalWorkflowController;
 use App\Http\Controllers\Settings\AttendanceSettingController;
 use App\Http\Controllers\Settings\BillingController;
 use App\Http\Controllers\Settings\CompanyProfileController;
+use App\Http\Controllers\Settings\LarkIntegrationController;
 use App\Http\Controllers\Settings\SessionController;
 use App\Http\Controllers\Settings\UserController;
 use App\Http\Controllers\Spt1721Controller;
@@ -451,6 +452,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
         // Attendance Settings
         Route::get('attendance', [AttendanceSettingController::class, 'index'])->name('attendance.index');
         Route::put('attendance', [AttendanceSettingController::class, 'update'])->name('attendance.update');
+
+        // Lark Integration Settings
+        Route::get('lark', [LarkIntegrationController::class, 'index'])->name('lark.index');
+        Route::put('lark', [LarkIntegrationController::class, 'update'])->name('lark.update');
+        Route::post('lark/test-connection', [LarkIntegrationController::class, 'testConnection'])->name('lark.test-connection');
+        Route::post('lark/sync-employees', [LarkIntegrationController::class, 'syncEmployees'])->name('lark.sync-employees');
+        Route::post('lark/retry-sync', [LarkIntegrationController::class, 'retrySync'])->name('lark.retry-sync');
+        Route::get('lark/mapping', [LarkIntegrationController::class, 'mapping'])->name('lark.mapping');
+        Route::post('lark/mapping/{employee}', [LarkIntegrationController::class, 'saveEmployeeMapping'])->name('lark.mapping.save');
+        Route::delete('lark/mapping/{employee}', [LarkIntegrationController::class, 'unmapEmployee'])->name('lark.mapping.destroy');
 
         // Role Management
         Route::resource('roles', \App\Http\Controllers\Settings\RoleController::class)

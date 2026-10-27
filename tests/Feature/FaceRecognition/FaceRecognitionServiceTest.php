@@ -77,6 +77,38 @@ describe('FaceRecognitionService', function () {
             expect($result->is_active)->toBeTrue();
         });
 
+        it('replaces soft-deleted embedding when re-enrolling', function () {
+            // First enrollment and soft-delete it
+            $oldEmbedding = EmployeeFaceEmbedding::factory()->create([
+                'employee_id' => $this->employee->id,
+                'is_active' => true,
+            ]);
+            $oldEmbedding->delete();
+            $oldId = $oldEmbedding->id;
+
+            expect(EmployeeFaceEmbedding::withTrashed()->find($oldId)->trashed())->toBeTrue();
+
+            $newEmbeddingData = [
+                'model' => 'google_mlkit',
+                'version' => '1.0',
+                'embedding' => array_fill(0, 128, 0.6),
+            ];
+
+            // Re-enroll must not throw duplicate entry violation
+            $result = $this->service->enrollFace(
+                $this->employee,
+                $newEmbeddingData,
+                'photos/new.jpg',
+                $this->admin
+            );
+
+            // Old soft-deleted embedding should be force deleted
+            expect(EmployeeFaceEmbedding::withTrashed()->find($oldId))->toBeNull();
+            // New embedding should be active
+            expect($result->is_active)->toBeTrue();
+            expect($result->employee_id)->toBe($this->employee->id);
+        });
+
         it('stores quality score if provided', function () {
             $embeddingData = [
                 'model' => 'google_mlkit',

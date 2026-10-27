@@ -90,7 +90,10 @@ class EmployeeController extends Controller
             ->orderBy('first_name')
             ->get();
 
-        return view('employees.create', compact('departments', 'positions', 'officeLocations', 'workSchedules', 'managers'));
+        $defaultSchedule = $workSchedules->firstWhere('is_default', true) ?? $workSchedules->first();
+        $primaryOffice = $officeLocations->firstWhere('is_primary', true) ?? $officeLocations->first();
+
+        return view('employees.create', compact('departments', 'positions', 'officeLocations', 'workSchedules', 'managers', 'defaultSchedule', 'primaryOffice'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -134,12 +137,24 @@ class EmployeeController extends Controller
 
         $validated['company_id'] = $tenant->id;
 
-        // If weekly mode, clear work_schedule_id
+        // If weekly mode, clear work_schedule_id; otherwise auto-assign default schedule if empty
         $scheduleMode = $request->input('schedule_mode', 'default');
         $weeklySchedules = $request->input('weekly_schedules', []);
 
         if ($scheduleMode === 'weekly') {
             $validated['work_schedule_id'] = null;
+        } elseif (empty($validated['work_schedule_id'])) {
+            $defaultSchedule = WorkSchedule::where('company_id', $tenant->id)
+                ->where('is_active', true)
+                ->where('is_default', true)
+                ->first()
+                ?? WorkSchedule::where('company_id', $tenant->id)
+                    ->where('is_active', true)
+                    ->first();
+
+            if ($defaultSchedule) {
+                $validated['work_schedule_id'] = $defaultSchedule->id;
+            }
         }
 
         DB::transaction(function () use ($validated, $tenant, $request, $scheduleMode, $weeklySchedules) {
@@ -177,9 +192,20 @@ class EmployeeController extends Controller
                 $this->syncWeeklySchedules($employee, $weeklySchedules, $tenant->id);
             }
 
-            // Attach office locations
+            // Attach office locations (fallback to primary/active office if not selected)
             $officeIds = $request->input('office_location_ids', []);
             $primaryOfficeId = (int) $request->input('primary_office_id');
+
+            if (empty($officeIds)) {
+                $defaultOffice = OfficeLocation::where('company_id', $tenant->id)
+                    ->where('is_active', true)
+                    ->orderByDesc('is_primary')
+                    ->first();
+                if ($defaultOffice) {
+                    $officeIds = [$defaultOffice->id];
+                    $primaryOfficeId = $defaultOffice->id;
+                }
+            }
 
             if (! empty($officeIds)) {
                 $syncData = [];
