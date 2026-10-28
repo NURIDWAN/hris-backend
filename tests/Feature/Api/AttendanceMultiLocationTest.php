@@ -14,6 +14,7 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     $this->company = Company::factory()->create([
         'enable_gps_validation' => true,
+        'enable_face_recognition' => false,
     ]);
     $this->user = User::factory()->create([
         'company_id' => $this->company->id,

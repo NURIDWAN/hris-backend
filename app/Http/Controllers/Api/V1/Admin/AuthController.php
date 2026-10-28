@@ -36,6 +36,10 @@ class AuthController extends Controller
             ], 403);
         }
 
+        if ($user->company_id) {
+            setPermissionsTeamId($user->company_id);
+        }
+
         // Allow superadmin, or users with administrative roles
         $adminRoles = ['admin', 'super-admin', 'hr-manager', 'payroll-manager', 'manager'];
         $hasAdminAccess = $user->is_superadmin || $user->hasAnyRole($adminRoles);
@@ -82,6 +86,10 @@ class AuthController extends Controller
     public function me(Request $request): JsonResponse
     {
         $user = $request->user();
+
+        if ($user->company_id) {
+            setPermissionsTeamId($user->company_id);
+        }
 
         return response()->json([
             'success' => true,

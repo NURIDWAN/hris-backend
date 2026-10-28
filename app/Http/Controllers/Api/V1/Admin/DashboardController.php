@@ -7,13 +7,21 @@ use App\Models\Attendance;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\LeaveRequest;
+use App\Models\OfficeLocation;
 use App\Models\PayrollItem;
 use App\Services\DashboardAnalyticsService;
+use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
 {
+    private const DEFAULT_LATITUDE = -6.2088;
+
+    private const DEFAULT_LONGITUDE = 106.8456;
+
     public function __construct(
         private DashboardAnalyticsService $analyticsService
     ) {}
@@ -24,46 +32,90 @@ class DashboardController extends Controller
     public function stats(Request $request): JsonResponse
     {
         $user = $request->user();
-        $company = $user->company;
+        $company = $user->company ?? Company::first();
 
         if (! $company) {
-            // If superadmin without company, fallback to default or first company
-            $company = Company::first();
-        }
-
-        if (! $company) {
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'stats' => [
-                        'total_employees' => 0,
-                        'present_today' => 0,
-                        'pending_leaves' => 0,
-                        'total_payroll_this_month' => 0,
-                        'new_employees_this_month' => 0,
-                        'attendance_percentage' => 0,
-                    ],
-                    'attendance_today' => [
-                        'present' => 0,
-                        'late' => 0,
-                        'on_leave' => 0,
-                        'absent' => 0,
-                    ],
-                    'recent_clock_ins' => [],
-                    'analytics' => null,
-                ],
-            ]);
+            return $this->emptyStatsResponse();
         }
 
         $companyNow = method_exists($company, 'now') ? $company->now() : now();
         $companyToday = method_exists($company, 'today') ? $company->today() : today();
 
-        // 1. Total active employees
         $totalEmployees = Employee::where('company_id', $company->id)
             ->where('is_active', true)
             ->count();
 
-        // 2. Attendance today
+        $attendanceBreakdown = $this->calculateAttendanceBreakdown($company, $companyToday, $totalEmployees);
+
+        $pendingLeaves = LeaveRequest::where('company_id', $company->id)
+            ->where('status', 'pending')
+            ->count();
+
+        $totalPayrollThisMonth = $this->calculateTotalPayrollThisMonth($company, $companyNow);
+        $recentClockIns = $this->getRecentClockIns($company, $companyToday);
+        $officeLocations = $this->getOfficeLocations($company);
+        $attendanceLocations = $this->getAttendanceLocations($company, $companyToday, $officeLocations);
+        $analytics = $this->analyticsService->getAllAnalytics($company->id, $company);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'stats' => [
+                    'total_employees' => $totalEmployees,
+                    'present_today' => $attendanceBreakdown['present_today'],
+                    'pending_leaves' => $pendingLeaves,
+                    'total_payroll_this_month' => $totalPayrollThisMonth,
+                    'attendance_percentage' => $attendanceBreakdown['percentage'],
+                ],
+                'attendance_today' => [
+                    'present' => $attendanceBreakdown['present'],
+                    'late' => $attendanceBreakdown['late'],
+                    'on_leave' => $attendanceBreakdown['on_leave'],
+                    'absent' => $attendanceBreakdown['absent'],
+                ],
+                'recent_clock_ins' => $recentClockIns,
+                'office_locations' => $officeLocations,
+                'attendance_locations' => $attendanceLocations,
+                'analytics' => $analytics,
+            ],
+        ]);
+    }
+
+    /**
+     * Fallback response when no company is available
+     */
+    private function emptyStatsResponse(): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'stats' => [
+                    'total_employees' => 0,
+                    'present_today' => 0,
+                    'pending_leaves' => 0,
+                    'total_payroll_this_month' => 0,
+                    'new_employees_this_month' => 0,
+                    'attendance_percentage' => 0,
+                ],
+                'attendance_today' => [
+                    'present' => 0,
+                    'late' => 0,
+                    'on_leave' => 0,
+                    'absent' => 0,
+                ],
+                'recent_clock_ins' => [],
+                'analytics' => null,
+            ],
+        ]);
+    }
+
+    /**
+     * Calculate today's attendance summary and breakdown counts
+     *
+     * @return array{present: int, late: int, on_leave: int, absent: int, present_today: int, percentage: float|int}
+     */
+    private function calculateAttendanceBreakdown(Company $company, CarbonInterface $companyToday, int $totalEmployees): array
+    {
         $attendanceStats = Attendance::where('company_id', $company->id)
             ->whereDate('date', $companyToday)
             ->selectRaw("
@@ -75,7 +127,6 @@ class DashboardController extends Controller
         $present = (int) ($attendanceStats->present ?? 0);
         $late = (int) ($attendanceStats->late ?? 0);
 
-        // Leave count today
         $onLeave = LeaveRequest::where('company_id', $company->id)
             ->where('status', 'approved')
             ->whereDate('start_date', '<=', $companyToday)
@@ -88,20 +139,39 @@ class DashboardController extends Controller
             ? round(($presentToday / $totalEmployees) * 100, 1)
             : 0;
 
-        // 3. Pending leave requests
-        $pendingLeaves = LeaveRequest::where('company_id', $company->id)
-            ->where('status', 'pending')
-            ->count();
+        return [
+            'present' => $present,
+            'late' => $late,
+            'on_leave' => $onLeave,
+            'absent' => $absent,
+            'present_today' => $presentToday,
+            'percentage' => $attendancePercentage,
+        ];
+    }
 
-        // 4. Payroll this month
-        $totalPayrollThisMonth = PayrollItem::join('payrolls', 'payroll_items.payroll_id', '=', 'payrolls.id')
+    /**
+     * Calculate total net payroll for current month
+     */
+    private function calculateTotalPayrollThisMonth(Company $company, CarbonInterface $companyNow): float
+    {
+        $total = PayrollItem::join('payrolls', 'payroll_items.payroll_id', '=', 'payrolls.id')
             ->where('payrolls.company_id', $company->id)
             ->where('payrolls.period_month', $companyNow->month)
             ->where('payrolls.period_year', $companyNow->year)
             ->sum('payroll_items.net_salary');
 
-        // 5. Recent Clock Ins
-        $recentClockIns = Attendance::with(['employee:id,first_name,last_name,employee_id,avatar,department_id', 'employee.department:id,name'])
+        return (float) $total;
+    }
+
+    /**
+     * Retrieve the 5 most recent clock-ins for today
+     */
+    private function getRecentClockIns(Company $company, CarbonInterface $companyToday): Collection
+    {
+        return Attendance::with([
+            'employee:id,first_name,last_name,employee_id,avatar,department_id',
+            'employee.department:id,name',
+        ])
             ->where('company_id', $company->id)
             ->whereDate('date', $companyToday)
             ->whereNotNull('clock_in')
@@ -110,29 +180,43 @@ class DashboardController extends Controller
             ->get()
             ->map(fn ($att) => [
                 'id' => $att->id,
-                'employee_name' => $att->employee ? ($att->employee->first_name . ' ' . $att->employee->last_name) : 'Karyawan',
+                'employee_name' => $this->formatEmployeeName($att->employee),
                 'employee_id' => $att->employee?->employee_id,
                 'avatar' => $att->employee?->avatar,
                 'department' => $att->employee?->department?->name ?? '-',
-                'clock_in' => $att->clock_in ? (is_string($att->clock_in) ? $att->clock_in : $att->clock_in->format('H:i:s')) : null,
+                'clock_in' => $this->formatClockInTime($att->clock_in),
                 'clock_in_status' => $att->clock_in_status,
             ]);
+    }
 
-        // 6. Office Locations for Geofence Map
-        $officeLocations = \App\Models\OfficeLocation::where('company_id', $company->id)
+    /**
+     * Retrieve active office locations for geofencing
+     */
+    private function getOfficeLocations(Company $company): EloquentCollection
+    {
+        return OfficeLocation::where('company_id', $company->id)
             ->where('is_active', true)
             ->get(['id', 'name', 'code', 'address', 'city', 'latitude', 'longitude', 'radius', 'is_headquarters']);
+    }
 
-        $defaultLat = -6.2088;
-        $defaultLng = 106.8456;
+    /**
+     * Map attendance GPS points with coordinate fallbacks
+     */
+    private function getAttendanceLocations(Company $company, CarbonInterface $companyToday, EloquentCollection $officeLocations): Collection
+    {
+        $defaultLat = self::DEFAULT_LATITUDE;
+        $defaultLng = self::DEFAULT_LONGITUDE;
+
         if ($officeLocations->isNotEmpty()) {
             $hq = $officeLocations->firstWhere('is_headquarters', true) ?? $officeLocations->first();
             $defaultLat = $hq->latitude ?? $defaultLat;
             $defaultLng = $hq->longitude ?? $defaultLng;
         }
 
-        // 7. Attendance GPS Locations for Map
-        $attendanceLocations = Attendance::with(['employee:id,first_name,last_name,employee_id,avatar,department_id', 'employee.department:id,name'])
+        return Attendance::with([
+            'employee:id,first_name,last_name,employee_id,avatar,department_id',
+            'employee.department:id,name',
+        ])
             ->where('company_id', $company->id)
             ->whereDate('date', $companyToday)
             ->whereNotNull('clock_in')
@@ -143,41 +227,35 @@ class DashboardController extends Controller
 
                 return [
                     'id' => $att->id,
-                    'employee_name' => $att->employee ? ($att->employee->first_name . ' ' . $att->employee->last_name) : 'Karyawan',
+                    'employee_name' => $this->formatEmployeeName($att->employee),
                     'employee_id' => $att->employee?->employee_id,
                     'avatar' => $att->employee?->avatar,
                     'department' => $att->employee?->department?->name ?? '-',
-                    'clock_in' => $att->clock_in ? (is_string($att->clock_in) ? $att->clock_in : $att->clock_in->format('H:i:s')) : null,
+                    'clock_in' => $this->formatClockInTime($att->clock_in),
                     'clock_in_status' => $att->clock_in_status,
                     'latitude' => $lat,
                     'longitude' => $lng,
                 ];
             });
+    }
 
-        // 8. Analytics charts
-        $analytics = $this->analyticsService->getAllAnalytics($company->id, $company);
+    /**
+     * Format full employee name with fallback
+     */
+    private function formatEmployeeName(?Employee $employee): string
+    {
+        return $employee ? ($employee->first_name.' '.$employee->last_name) : 'Karyawan';
+    }
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'stats' => [
-                    'total_employees' => $totalEmployees,
-                    'present_today' => $presentToday,
-                    'pending_leaves' => $pendingLeaves,
-                    'total_payroll_this_month' => (float) $totalPayrollThisMonth,
-                    'attendance_percentage' => $attendancePercentage,
-                ],
-                'attendance_today' => [
-                    'present' => $present,
-                    'late' => $late,
-                    'on_leave' => $onLeave,
-                    'absent' => $absent,
-                ],
-                'recent_clock_ins' => $recentClockIns,
-                'office_locations' => $officeLocations,
-                'attendance_locations' => $attendanceLocations,
-                'analytics' => $analytics,
-            ],
-        ]);
+    /**
+     * Format clock-in timestamp to standard H:i:s
+     */
+    private function formatClockInTime(mixed $clockIn): ?string
+    {
+        if (! $clockIn) {
+            return null;
+        }
+
+        return is_string($clockIn) ? $clockIn : $clockIn->format('H:i:s');
     }
 }

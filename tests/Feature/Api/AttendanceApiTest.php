@@ -15,7 +15,10 @@ uses(RefreshDatabase::class);
 beforeEach(function () {
     Storage::fake('public');
 
-    $this->company = Company::factory()->create();
+    $this->company = Company::factory()->create([
+        'enable_face_recognition' => false,
+        'enable_gps_validation' => false,
+    ]);
     $this->workSchedule = WorkSchedule::factory()->create([
         'company_id' => $this->company->id,
         'name' => 'Regular',
@@ -307,7 +310,7 @@ describe('POST /api/v1/attendance/clock-out', function () {
         $response->assertStatus(422)
             ->assertJson([
                 'success' => false,
-                'message' => 'Anda belum melakukan clock in hari ini.',
+                'message' => 'Anda belum melakukan clock in.',
             ]);
     });
 
@@ -359,7 +362,7 @@ describe('GET /api/v1/attendance/history', function () {
                         'clock_out',
                         'status',
                         'status_label',
-                        'working_hours',
+                        'working_formatted',
                     ],
                 ],
                 'meta' => [

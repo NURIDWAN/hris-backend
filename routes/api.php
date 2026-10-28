@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Admin as AdminApi;
 use App\Http\Controllers\Api\V1\AnnouncementController;
 use App\Http\Controllers\Api\V1\ApprovalController;
 use App\Http\Controllers\Api\V1\AttendanceController;
@@ -198,24 +199,107 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
     */
     Route::prefix('admin')->name('admin.')->group(function () {
         // Admin Auth (Public)
-        Route::post('/auth/login', [\App\Http\Controllers\Api\V1\Admin\AuthController::class, 'login'])
+        Route::post('/auth/login', [AdminApi\AuthController::class, 'login'])
             ->middleware('throttle:5,1')
             ->name('auth.login');
 
         // Admin Protected Routes
         Route::middleware('auth:sanctum')->group(function () {
             // Auth Profile & Session
-            Route::get('/auth/me', [\App\Http\Controllers\Api\V1\Admin\AuthController::class, 'me'])->name('auth.me');
-            Route::post('/auth/logout', [\App\Http\Controllers\Api\V1\Admin\AuthController::class, 'logout'])->name('auth.logout');
+            Route::get('/auth/me', [AdminApi\AuthController::class, 'me'])->name('auth.me');
+            Route::post('/auth/logout', [AdminApi\AuthController::class, 'logout'])->name('auth.logout');
 
             // Dashboard Stats
-            Route::get('/dashboard/stats', [\App\Http\Controllers\Api\V1\Admin\DashboardController::class, 'stats'])->name('dashboard.stats');
+            Route::get('/dashboard/stats', [AdminApi\DashboardController::class, 'stats'])->name('dashboard.stats');
 
-            // Employees
-            Route::get('/employees/options', [\App\Http\Controllers\Api\V1\Admin\EmployeeController::class, 'options'])->name('employees.options');
-            Route::get('/employees', [\App\Http\Controllers\Api\V1\Admin\EmployeeController::class, 'index'])->name('employees.index');
-            Route::get('/employees/{id}', [\App\Http\Controllers\Api\V1\Admin\EmployeeController::class, 'show'])->name('employees.show');
+            // Master Organisasi
+            Route::apiResource('departments', AdminApi\DepartmentController::class);
+            Route::apiResource('positions', AdminApi\PositionController::class);
+
+            // Lokasi Kantor
+            Route::match(['post', 'patch'], '/office-locations/{id}/toggle-status', [AdminApi\OfficeLocationController::class, 'toggleStatus'])->name('office-locations.toggle-status');
+            Route::post('/office-locations/{id}/assign-employees', [AdminApi\OfficeLocationController::class, 'assignEmployees'])->name('office-locations.assign-employees');
+            Route::delete('/office-locations/{id}/remove-employee/{employeeId}', [AdminApi\OfficeLocationController::class, 'removeEmployee'])->name('office-locations.remove-employee');
+            Route::apiResource('office-locations', AdminApi\OfficeLocationController::class);
+
+            // Karyawan
+            Route::get('/employees/options', [AdminApi\EmployeeController::class, 'options'])->name('employees.options');
+            Route::post('/employees/{id}/reset-password', [AdminApi\EmployeeController::class, 'resetPassword'])->name('employees.reset-password');
+            Route::apiResource('employees', AdminApi\EmployeeController::class);
+
+            // Jadwal Kerja & Hari Libur
+            Route::apiResource('work-schedules', AdminApi\WorkScheduleController::class);
+            Route::post('/holidays/generate', [AdminApi\HolidayController::class, 'generate'])->name('holidays.generate');
+            Route::apiResource('holidays', AdminApi\HolidayController::class);
+
+            // Kehadiran (Presensi)
+            Route::get('/attendances/report', [AdminApi\AttendanceController::class, 'report'])->name('attendances.report');
+            Route::apiResource('attendances', AdminApi\AttendanceController::class);
+
+            // Cuti
+            Route::match(['post', 'patch'], '/leave-types/{id}/toggle-status', [AdminApi\LeaveTypeController::class, 'toggleStatus'])->name('leave-types.toggle-status');
+            Route::apiResource('leave-types', AdminApi\LeaveTypeController::class);
+            Route::post('/leave-balances/generate-bulk', [AdminApi\LeaveBalanceController::class, 'generateBulk'])->name('leave-balances.generate-bulk');
+            Route::apiResource('leave-balances', AdminApi\LeaveBalanceController::class);
+            Route::post('/leave-requests/{id}/approve', [AdminApi\LeaveRequestController::class, 'approve'])->name('leave-requests.approve');
+            Route::post('/leave-requests/{id}/reject', [AdminApi\LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
+            Route::post('/leave-requests/{id}/cancel', [AdminApi\LeaveRequestController::class, 'cancel'])->name('leave-requests.cancel');
+            Route::apiResource('leave-requests', AdminApi\LeaveRequestController::class)->only(['index', 'store', 'show']);
+
+            // Lembur
+            Route::get('/overtime-settings', [AdminApi\OvertimeSettingController::class, 'show'])->name('overtime-settings.show');
+            Route::match(['put', 'patch'], '/overtime-settings', [AdminApi\OvertimeSettingController::class, 'update'])->name('overtime-settings.update');
+            Route::post('/overtime-requests/{id}/approve', [AdminApi\OvertimeRequestController::class, 'approve'])->name('overtime-requests.approve');
+            Route::post('/overtime-requests/{id}/reject', [AdminApi\OvertimeRequestController::class, 'reject'])->name('overtime-requests.reject');
+            Route::apiResource('overtime-requests', AdminApi\OvertimeRequestController::class)->only(['index', 'store', 'show']);
+
+            // Reimbursement
+            Route::apiResource('reimbursement-categories', AdminApi\ReimbursementCategoryController::class);
+            Route::post('/reimbursements/{id}/approve', [AdminApi\ReimbursementController::class, 'approve'])->name('reimbursements.approve');
+            Route::post('/reimbursements/{id}/reject', [AdminApi\ReimbursementController::class, 'reject'])->name('reimbursements.reject');
+            Route::post('/reimbursements/{id}/pay', [AdminApi\ReimbursementController::class, 'pay'])->name('reimbursements.pay');
+            Route::apiResource('reimbursements', AdminApi\ReimbursementController::class)->only(['index', 'store', 'show']);
+
+            // Komponen & Pengaturan Gaji
+            Route::match(['post', 'patch'], '/salary-components/{id}/toggle-status', [AdminApi\SalaryComponentController::class, 'toggleStatus'])->name('salary-components.toggle-status');
+            Route::apiResource('salary-components', AdminApi\SalaryComponentController::class);
+            Route::apiResource('employee-salaries', AdminApi\EmployeeSalaryController::class)->only(['index', 'store', 'show', 'update']);
+
+            // Payroll Siklus & Slip
+            Route::get('/payroll-settings', [AdminApi\PayrollSettingController::class, 'show'])->name('payroll-settings.show');
+            Route::match(['put', 'patch'], '/payroll-settings', [AdminApi\PayrollSettingController::class, 'update'])->name('payroll-settings.update');
+            Route::post('/payrolls/{id}/process', [AdminApi\PayrollController::class, 'process'])->name('payrolls.process');
+            Route::post('/payrolls/{id}/approve', [AdminApi\PayrollController::class, 'approve'])->name('payrolls.approve');
+            Route::post('/payrolls/{id}/pay', [AdminApi\PayrollController::class, 'pay'])->name('payrolls.pay');
+            Route::post('/payrolls/{id}/cancel', [AdminApi\PayrollController::class, 'cancel'])->name('payrolls.cancel');
+            Route::get('/payrolls/{id}/export-bank', [AdminApi\PayrollController::class, 'exportBank'])->name('payrolls.export-bank');
+            Route::apiResource('payrolls', AdminApi\PayrollController::class);
+
+            Route::post('/payroll-items/{id}/recalculate', [AdminApi\PayrollItemController::class, 'recalculate'])->name('payroll-items.recalculate');
+            Route::apiResource('payroll-items', AdminApi\PayrollItemController::class)->only(['index', 'show', 'update']);
+
+            // Pengumuman
+            Route::post('/announcements/{id}/publish', [AdminApi\AnnouncementController::class, 'publish'])->name('announcements.publish');
+            Route::post('/announcements/{id}/unpublish', [AdminApi\AnnouncementController::class, 'unpublish'])->name('announcements.unpublish');
+            Route::apiResource('announcements', AdminApi\AnnouncementController::class);
+
+            // Pengaturan Sistem & User Admin
+            Route::prefix('settings')->name('settings.')->group(function () {
+                // Profil Perusahaan
+                Route::get('/company-profile', [AdminApi\Settings\CompanyProfileController::class, 'show'])->name('company-profile.show');
+                Route::match(['put', 'patch'], '/company-profile', [AdminApi\Settings\CompanyProfileController::class, 'update'])->name('company-profile.update');
+                Route::post('/company-profile/logo', [AdminApi\Settings\CompanyProfileController::class, 'uploadLogo'])->name('company-profile.upload-logo');
+                Route::delete('/company-profile/logo', [AdminApi\Settings\CompanyProfileController::class, 'deleteLogo'])->name('company-profile.delete-logo');
+
+                // Pengaturan Presensi
+                Route::get('/attendance', [AdminApi\Settings\AttendanceSettingController::class, 'show'])->name('attendance.show');
+                Route::match(['put', 'patch'], '/attendance', [AdminApi\Settings\AttendanceSettingController::class, 'update'])->name('attendance.update');
+
+                // User Admin & Roles
+                Route::get('/users/roles', [AdminApi\Settings\UserController::class, 'roles'])->name('users.roles');
+                Route::match(['post', 'patch'], '/users/{id}/toggle-status', [AdminApi\Settings\UserController::class, 'toggleStatus'])->name('users.toggle-status');
+                Route::apiResource('users', AdminApi\Settings\UserController::class);
+            });
         });
     });
 });
-

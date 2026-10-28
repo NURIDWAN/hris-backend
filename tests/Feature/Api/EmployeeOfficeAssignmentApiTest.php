@@ -26,6 +26,8 @@ beforeEach(function () {
     Role::create(['name' => 'hr-manager', 'guard_name' => 'web']);
     Role::create(['name' => 'employee', 'guard_name' => 'web']);
 
+    setPermissionsTeamId($this->company->id);
+
     // HR Manager user
     $this->hrUser = User::factory()->create([
         'company_id' => $this->company->id,
@@ -49,16 +51,19 @@ beforeEach(function () {
     // Office locations
     $this->officeA = OfficeLocation::factory()->create([
         'company_id' => $this->company->id,
+        'code' => 'OFFA',
         'name' => 'Office A',
         'is_active' => true,
     ]);
     $this->officeB = OfficeLocation::factory()->create([
         'company_id' => $this->company->id,
+        'code' => 'OFFB',
         'name' => 'Office B',
         'is_active' => true,
     ]);
     $this->officeC = OfficeLocation::factory()->create([
         'company_id' => $this->company->id,
+        'code' => 'OFFC',
         'name' => 'Office C',
         'is_active' => true,
     ]);

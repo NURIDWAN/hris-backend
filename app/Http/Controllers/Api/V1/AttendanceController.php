@@ -330,300 +330,300 @@ class AttendanceController extends Controller
 
             $schedule = $employee->resolveScheduleForDate(\Carbon\Carbon::parse($company->today()));
 
-        // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
-        if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
-            $decoded = json_decode($request->input('face_descriptors'), true);
-            if (is_array($decoded)) {
-                $request->merge(['face_descriptors' => $decoded]);
+            // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
+            if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
+                $decoded = json_decode($request->input('face_descriptors'), true);
+                if (is_array($decoded)) {
+                    $request->merge(['face_descriptors' => $decoded]);
+                }
             }
-        }
 
-        // Build validation rules
-        $rules = [
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'notes' => 'nullable|string|max:500',
-            'face_verified' => 'nullable|boolean',
-            'face_confidence' => 'nullable|numeric|min:0|max:1',
-            'face_descriptors' => ['nullable', 'array', 'min:128', 'max:192'],
-            'face_descriptors.*' => ['nullable', 'numeric'],
-            'gps_verified' => 'nullable|boolean',
-            'office_location_id' => 'nullable|integer|exists:office_locations,id',
-        ];
+            // Build validation rules
+            $rules = [
+                'latitude' => 'required|numeric',
+                'longitude' => 'required|numeric',
+                'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'notes' => 'nullable|string|max:500',
+                'face_verified' => 'nullable|boolean',
+                'face_confidence' => 'nullable|numeric|min:0|max:1',
+                'face_descriptors' => ['nullable', 'array', 'min:128', 'max:192'],
+                'face_descriptors.*' => ['nullable', 'numeric'],
+                'gps_verified' => 'nullable|boolean',
+                'office_location_id' => 'nullable|integer|exists:office_locations,id',
+            ];
 
-        $request->validate($rules);
+            $request->validate($rules);
 
-        // Check if soft-deleted record exists for today - force delete it
-        $companyToday = $company->today();
-        $softDeleted = Attendance::onlyTrashed()
-            ->where('employee_id', $employee->id)
-            ->whereDate('date', $companyToday)
-            ->first();
+            // Check if soft-deleted record exists for today - force delete it
+            $companyToday = $company->today();
+            $softDeleted = Attendance::onlyTrashed()
+                ->where('employee_id', $employee->id)
+                ->whereDate('date', $companyToday)
+                ->first();
 
-        if ($softDeleted) {
-            // Log to audit before force delete
-            activity()
-                ->performedOn($softDeleted)
-                ->causedBy($user)
-                ->withProperties([
-                    'old_data' => $softDeleted->toArray(),
-                    'reason' => 'Force deleted to allow new clock in',
-                ])
-                ->log('attendance_force_deleted');
+            if ($softDeleted) {
+                // Log to audit before force delete
+                activity()
+                    ->performedOn($softDeleted)
+                    ->causedBy($user)
+                    ->withProperties([
+                        'old_data' => $softDeleted->toArray(),
+                        'reason' => 'Force deleted to allow new clock in',
+                    ])
+                    ->log('attendance_force_deleted');
 
-            $softDeleted->forceDelete();
-        }
+                $softDeleted->forceDelete();
+            }
 
-        // Check if already clocked in today
-        $existing = Attendance::where('employee_id', $employee->id)
-            ->whereDate('date', $companyToday)
-            ->first();
+            // Check if already clocked in today
+            $existing = Attendance::where('employee_id', $employee->id)
+                ->whereDate('date', $companyToday)
+                ->first();
 
-        if ($existing) {
-            // Smart logic: allow replace if within 5 minutes and no clock out yet (handle double-tap)
-            $companyNow = $company->now();
-            $withinReplaceWindow = $existing->clock_in->diffInMinutes($companyNow) <= 5;
-            $notClockedOut = is_null($existing->clock_out);
+            if ($existing) {
+                // Smart logic: allow replace if within 5 minutes and no clock out yet (handle double-tap)
+                $companyNow = $company->now();
+                $withinReplaceWindow = $existing->clock_in->diffInMinutes($companyNow) <= 5;
+                $notClockedOut = is_null($existing->clock_out);
 
-            if ($withinReplaceWindow && $notClockedOut) {
-                // Will update existing record instead of creating new one
-                $existingToUpdate = $existing;
-            } else {
+                if ($withinReplaceWindow && $notClockedOut) {
+                    // Will update existing record instead of creating new one
+                    $existingToUpdate = $existing;
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Anda sudah melakukan clock in hari ini.',
+                    ], 422);
+                }
+            }
+
+            // Check GPS if enabled
+            // Always capture office_location_id if provided, even when GPS validation is disabled
+            $officeLocationId = $request->office_location_id;
+            if ($company->enable_gps_validation) {
+                // Determine validation mode: client-side (gps_verified) or server-side
+                $hasClientGpsVerification = $request->has('gps_verified');
+
+                if ($hasClientGpsVerification) {
+                    // Client-side GPS validation flow - trust the client's verification result
+                    if (! $request->boolean('gps_verified')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Validasi GPS gagal.',
+                        ], 422);
+                    }
+
+                    // Validate office_location_id is provided and belongs to employee's assigned offices
+                    if (! $request->office_location_id) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Office location ID diperlukan untuk validasi GPS client-side.',
+                        ], 422);
+                    }
+
+                    // Verify the office is assigned to employee
+                    $isAssigned = $employee->officeLocations()
+                        ->where('office_location_id', $request->office_location_id)
+                        ->exists();
+
+                    if (! $isAssigned) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Office location tidak di-assign ke karyawan ini.',
+                        ], 422);
+                    }
+
+                    $officeLocationId = $request->office_location_id;
+                } else {
+                    // Server-side GPS validation (legacy flow)
+                    $gpsResult = $this->gpsValidationService->validateEmployeeLocation(
+                        $employee,
+                        $request->latitude,
+                        $request->longitude
+                    );
+
+                    if (! $gpsResult['valid']) {
+                        $message = match ($gpsResult['reason']) {
+                            'no_assigned_offices' => 'Tidak ada lokasi kantor yang ditugaskan.',
+                            'no_active_offices' => 'Tidak ada lokasi kantor aktif yang ditugaskan.',
+                            'outside_radius' => 'Lokasi Anda terlalu jauh dari kantor.',
+                            default => 'Validasi lokasi gagal.',
+                        };
+
+                        return response()->json([
+                            'success' => false,
+                            'message' => $message,
+                        ], 422);
+                    }
+
+                    $officeLocationId = $gpsResult['office_location_id'];
+                }
+            }
+
+            // Face recognition verification if enabled
+            $faceVerified = false;
+            $faceConfidence = null;
+            if ($company->enable_face_recognition) {
+                // Check if employee has face enrolled
+                if (! $employee->hasFaceEnrolled()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
+                    ], 422);
+                }
+
+                // Determine verification mode: client-side (face_verified) or server-side (face_descriptors)
+                $hasClientVerification = $request->has('face_verified');
+                $hasServerDescriptors = $request->has('face_descriptors')
+                    && is_array($request->face_descriptors)
+                    && count($request->face_descriptors) >= 128
+                    && count($request->face_descriptors) <= 192;
+
+                if ($hasClientVerification) {
+                    // Client-side verification flow - trust the client's verification result
+                    if (! $request->boolean('face_verified')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Verifikasi wajah gagal.',
+                        ], 422);
+                    }
+
+                    $faceVerified = true;
+                    $faceConfidence = $request->face_confidence;
+                } elseif ($hasServerDescriptors) {
+                    // Legacy server-side verification flow
+                    $faceResult = $this->faceRecognitionService->verifyFace(
+                        $employee,
+                        $request->face_descriptors,
+                        $company->face_match_threshold ?? 0.6,
+                        'clock_in'
+                    );
+
+                    if (! $faceResult['matched']) {
+                        $message = match ($faceResult['error'] ?? null) {
+                            'no_face_enrolled' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
+                            default => 'Verifikasi wajah gagal. Wajah tidak cocok.',
+                        };
+
+                        return response()->json([
+                            'success' => false,
+                            'message' => $message,
+                        ], 422);
+                    }
+
+                    $faceVerified = true;
+                    $faceConfidence = $faceResult['confidence'];
+                } else {
+                    // No face verification provided when required
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Verifikasi wajah diperlukan untuk absensi.',
+                    ], 422);
+                }
+            }
+
+            // Calculate late status using company timezone
+            $now = $company->now();
+            $status = 'present';
+            $lateMinutes = 0;
+
+            if ($schedule) {
+                $scheduleStart = $now->copy()
+                    ->setTimeFromTimeString($schedule->start_time->format('H:i:s'));
+                $tolerance = $schedule->late_tolerance ?? 15;
+
+                if ($now->gt($scheduleStart->copy()->addMinutes($tolerance))) {
+                    $lateMinutes = $scheduleStart->diffInMinutes($now);
+                    $status = $lateMinutes > 30 ? 'late' : 'late';
+                }
+            }
+
+            // Upload photo if provided
+            $photoPath = null;
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')
+                    ->store('attendance-photos/'.$company->id, 'public');
+            }
+
+            // Create or update attendance record
+            // Store clock_in in UTC for multi-timezone support
+            $attendanceData = [
+                'company_id' => $company->id,
+                'employee_id' => $employee->id,
+                'office_location_id' => $officeLocationId,
+                'work_schedule_id' => $schedule?->id,
+                'date' => $company->today(),
+                'clock_in' => $company->toUtc($now),
+                'clock_in_latitude' => $request->latitude,
+                'clock_in_longitude' => $request->longitude,
+                'clock_in_photo' => $photoPath,
+                'clock_in_notes' => $request->notes,
+                'face_verified' => $faceVerified,
+                'face_confidence' => $faceConfidence,
+                'status' => $status,
+                'late_minutes' => $lateMinutes,
+                'scheduled_start' => $schedule?->start_time,
+                'scheduled_end' => $schedule?->end_time,
+            ];
+
+            try {
+                if (isset($existingToUpdate)) {
+                    // Update existing record (within 5 minute window)
+                    $existingToUpdate->update($attendanceData);
+                    $attendance = $existingToUpdate;
+                } else {
+                    // Create new record
+                    $attendance = Attendance::create($attendanceData);
+                }
+            } catch (\Illuminate\Database\UniqueConstraintViolationException) {
+                // Race condition: another request already created the attendance
                 return response()->json([
                     'success' => false,
                     'message' => 'Anda sudah melakukan clock in hari ini.',
                 ], 422);
             }
-        }
 
-        // Check GPS if enabled
-        // Always capture office_location_id if provided, even when GPS validation is disabled
-        $officeLocationId = $request->office_location_id;
-        if ($company->enable_gps_validation) {
-            // Determine validation mode: client-side (gps_verified) or server-side
-            $hasClientGpsVerification = $request->has('gps_verified');
+            // Load office location for response
+            $attendance->load('officeLocation');
 
-            if ($hasClientGpsVerification) {
-                // Client-side GPS validation flow - trust the client's verification result
-                if (! $request->boolean('gps_verified')) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validasi GPS gagal.',
-                    ], 422);
-                }
-
-                // Validate office_location_id is provided and belongs to employee's assigned offices
-                if (! $request->office_location_id) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Office location ID diperlukan untuk validasi GPS client-side.',
-                    ], 422);
-                }
-
-                // Verify the office is assigned to employee
-                $isAssigned = $employee->officeLocations()
-                    ->where('office_location_id', $request->office_location_id)
-                    ->exists();
-
-                if (! $isAssigned) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Office location tidak di-assign ke karyawan ini.',
-                    ], 422);
-                }
-
-                $officeLocationId = $request->office_location_id;
-            } else {
-                // Server-side GPS validation (legacy flow)
-                $gpsResult = $this->gpsValidationService->validateEmployeeLocation(
-                    $employee,
-                    $request->latitude,
-                    $request->longitude
-                );
-
-                if (! $gpsResult['valid']) {
-                    $message = match ($gpsResult['reason']) {
-                        'no_assigned_offices' => 'Tidak ada lokasi kantor yang ditugaskan.',
-                        'no_active_offices' => 'Tidak ada lokasi kantor aktif yang ditugaskan.',
-                        'outside_radius' => 'Lokasi Anda terlalu jauh dari kantor.',
-                        default => 'Validasi lokasi gagal.',
-                    };
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => $message,
-                    ], 422);
-                }
-
-                $officeLocationId = $gpsResult['office_location_id'];
-            }
-        }
-
-        // Face recognition verification if enabled
-        $faceVerified = false;
-        $faceConfidence = null;
-        if ($company->enable_face_recognition) {
-            // Check if employee has face enrolled
-            if (! $employee->hasFaceEnrolled()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
-                ], 422);
+            // Log face verification for audit purposes
+            if ($company->enable_face_recognition && $faceVerified) {
+                FaceVerificationLog::create([
+                    'employee_id' => $employee->id,
+                    'attendance_id' => $attendance->id,
+                    'verification_type' => 'clock_in',
+                    'is_successful' => true,
+                    'confidence_score' => $faceConfidence,
+                    'ip_address' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                    'created_at' => now(),
+                ]);
             }
 
-            // Determine verification mode: client-side (face_verified) or server-side (face_descriptors)
-            $hasClientVerification = $request->has('face_verified');
-            $hasServerDescriptors = $request->has('face_descriptors')
-                && is_array($request->face_descriptors)
-                && count($request->face_descriptors) >= 128
-                && count($request->face_descriptors) <= 192;
+            // Dispatch event for push notification
+            AttendanceClockIn::dispatch($attendance);
 
-            if ($hasClientVerification) {
-                // Client-side verification flow - trust the client's verification result
-                if (! $request->boolean('face_verified')) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Verifikasi wajah gagal.',
-                    ], 422);
-                }
-
-                $faceVerified = true;
-                $faceConfidence = $request->face_confidence;
-            } elseif ($hasServerDescriptors) {
-                // Legacy server-side verification flow
-                $faceResult = $this->faceRecognitionService->verifyFace(
-                    $employee,
-                    $request->face_descriptors,
-                    $company->face_match_threshold ?? 0.6,
-                    'clock_in'
-                );
-
-                if (! $faceResult['matched']) {
-                    $message = match ($faceResult['error'] ?? null) {
-                        'no_face_enrolled' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
-                        default => 'Verifikasi wajah gagal. Wajah tidak cocok.',
-                    };
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => $message,
-                    ], 422);
-                }
-
-                $faceVerified = true;
-                $faceConfidence = $faceResult['confidence'];
-            } else {
-                // No face verification provided when required
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Verifikasi wajah diperlukan untuk absensi.',
-                ], 422);
-            }
-        }
-
-        // Calculate late status using company timezone
-        $now = $company->now();
-        $status = 'present';
-        $lateMinutes = 0;
-
-        if ($schedule) {
-            $scheduleStart = $now->copy()
-                ->setTimeFromTimeString($schedule->start_time->format('H:i:s'));
-            $tolerance = $schedule->late_tolerance ?? 15;
-
-            if ($now->gt($scheduleStart->copy()->addMinutes($tolerance))) {
-                $lateMinutes = $scheduleStart->diffInMinutes($now);
-                $status = $lateMinutes > 30 ? 'late' : 'late';
-            }
-        }
-
-        // Upload photo if provided
-        $photoPath = null;
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')
-                ->store('attendance-photos/'.$company->id, 'public');
-        }
-
-        // Create or update attendance record
-        // Store clock_in in UTC for multi-timezone support
-        $attendanceData = [
-            'company_id' => $company->id,
-            'employee_id' => $employee->id,
-            'office_location_id' => $officeLocationId,
-            'work_schedule_id' => $schedule?->id,
-            'date' => $company->today(),
-            'clock_in' => $company->toUtc($now),
-            'clock_in_latitude' => $request->latitude,
-            'clock_in_longitude' => $request->longitude,
-            'clock_in_photo' => $photoPath,
-            'clock_in_notes' => $request->notes,
-            'face_verified' => $faceVerified,
-            'face_confidence' => $faceConfidence,
-            'status' => $status,
-            'late_minutes' => $lateMinutes,
-            'scheduled_start' => $schedule?->start_time,
-            'scheduled_end' => $schedule?->end_time,
-        ];
-
-        try {
-            if (isset($existingToUpdate)) {
-                // Update existing record (within 5 minute window)
-                $existingToUpdate->update($attendanceData);
-                $attendance = $existingToUpdate;
-            } else {
-                // Create new record
-                $attendance = Attendance::create($attendanceData);
-            }
-        } catch (\Illuminate\Database\UniqueConstraintViolationException) {
-            // Race condition: another request already created the attendance
-            return response()->json([
-                'success' => false,
-                'message' => 'Anda sudah melakukan clock in hari ini.',
-            ], 422);
-        }
-
-        // Load office location for response
-        $attendance->load('officeLocation');
-
-        // Log face verification for audit purposes
-        if ($company->enable_face_recognition && $faceVerified) {
-            FaceVerificationLog::create([
-                'employee_id' => $employee->id,
-                'attendance_id' => $attendance->id,
-                'verification_type' => 'clock_in',
-                'is_successful' => true,
-                'confidence_score' => $faceConfidence,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'created_at' => now(),
-            ]);
-        }
-
-        // Dispatch event for push notification
-        AttendanceClockIn::dispatch($attendance);
-
-        $responseData = [
-            'id' => $attendance->id,
-            'date' => $attendance->date->toDateString(),
-            'clock_in' => $attendance->clock_in->setTimezone($company->timezone)->format('H:i'),
-            'status' => $attendance->status,
-            'late_minutes' => $attendance->late_minutes,
-            'face_verified' => $attendance->face_verified,
-        ];
-
-        if ($attendance->officeLocation) {
-            $responseData['office_location'] = [
-                'id' => $attendance->officeLocation->id,
-                'name' => $attendance->officeLocation->name,
+            $responseData = [
+                'id' => $attendance->id,
+                'date' => $attendance->date->toDateString(),
+                'clock_in' => $attendance->clock_in->setTimezone($company->timezone)->format('H:i'),
+                'status' => $attendance->status,
+                'late_minutes' => $attendance->late_minutes,
+                'face_verified' => $attendance->face_verified,
             ];
-        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Clock in berhasil.',
-            'data' => $responseData,
-        ]);
+            if ($attendance->officeLocation) {
+                $responseData['office_location'] = [
+                    'id' => $attendance->officeLocation->id,
+                    'name' => $attendance->officeLocation->name,
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Clock in berhasil.',
+                'data' => $responseData,
+            ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             throw $e;
         } catch (\Throwable $e) {
@@ -741,272 +741,272 @@ class AttendanceController extends Controller
                 ], 422);
             }
 
-        // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
-        if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
-            $decoded = json_decode($request->input('face_descriptors'), true);
-            if (is_array($decoded)) {
-                $request->merge(['face_descriptors' => $decoded]);
+            // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
+            if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
+                $decoded = json_decode($request->input('face_descriptors'), true);
+                if (is_array($decoded)) {
+                    $request->merge(['face_descriptors' => $decoded]);
+                }
             }
-        }
 
-        // Build validation rules
-        $rules = [
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'notes' => 'nullable|string|max:500',
-            'face_verified' => 'nullable|boolean',
-            'face_confidence' => 'nullable|numeric|min:0|max:1',
-            'face_descriptors' => ['nullable', 'array', 'min:128', 'max:192'],
-            'face_descriptors.*' => ['nullable', 'numeric'],
-            'gps_verified' => 'nullable|boolean',
-            'office_location_id' => 'nullable|integer|exists:office_locations,id',
-        ];
+            // Build validation rules
+            $rules = [
+                'latitude' => 'required|numeric',
+                'longitude' => 'required|numeric',
+                'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'notes' => 'nullable|string|max:500',
+                'face_verified' => 'nullable|boolean',
+                'face_confidence' => 'nullable|numeric|min:0|max:1',
+                'face_descriptors' => ['nullable', 'array', 'min:128', 'max:192'],
+                'face_descriptors.*' => ['nullable', 'numeric'],
+                'gps_verified' => 'nullable|boolean',
+                'office_location_id' => 'nullable|integer|exists:office_locations,id',
+            ];
 
-        $request->validate($rules);
+            $request->validate($rules);
 
-        // Check if clocked in - check today first, then yesterday for overnight shifts
-        $today = $company->today();
-        $attendance = Attendance::where('employee_id', $employee->id)
-            ->whereDate('date', $today)
-            ->first();
-
-        if (! $attendance) {
-            // Check yesterday for overnight shift
-            $yesterday = $today->copy()->subDay();
+            // Check if clocked in - check today first, then yesterday for overnight shifts
+            $today = $company->today();
             $attendance = Attendance::where('employee_id', $employee->id)
-                ->whereDate('date', $yesterday)
-                ->whereNotNull('clock_in')
-                ->whereNull('clock_out')
+                ->whereDate('date', $today)
                 ->first();
 
-            // Only use yesterday's attendance if the schedule is overnight
-            if ($attendance && (! $attendance->workSchedule || ! $attendance->workSchedule->is_overnight)) {
-                $attendance = null;
+            if (! $attendance) {
+                // Check yesterday for overnight shift
+                $yesterday = $today->copy()->subDay();
+                $attendance = Attendance::where('employee_id', $employee->id)
+                    ->whereDate('date', $yesterday)
+                    ->whereNotNull('clock_in')
+                    ->whereNull('clock_out')
+                    ->first();
+
+                // Only use yesterday's attendance if the schedule is overnight
+                if ($attendance && (! $attendance->workSchedule || ! $attendance->workSchedule->is_overnight)) {
+                    $attendance = null;
+                }
             }
-        }
 
-        if (! $attendance) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Anda belum melakukan clock in.',
-            ], 422);
-        }
-
-        if ($attendance->clock_out) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Anda sudah melakukan clock out hari ini.',
-            ], 422);
-        }
-
-        // Use schedule from the attendance record (important for overnight shifts)
-        $schedule = $attendance->workSchedule;
-
-        // Check GPS if enabled
-        // Always capture office_location_id if provided, even when GPS validation is disabled
-        $clockOutOfficeLocationId = $request->office_location_id;
-        if ($company->enable_gps_validation) {
-            // Determine validation mode: client-side (gps_verified) or server-side
-            $hasClientGpsVerification = $request->has('gps_verified');
-
-            if ($hasClientGpsVerification) {
-                // Client-side GPS validation flow - trust the client's verification result
-                if (! $request->boolean('gps_verified')) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Validasi GPS gagal.',
-                    ], 422);
-                }
-
-                // Validate office_location_id is provided and belongs to employee's assigned offices
-                if (! $request->office_location_id) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Office location ID diperlukan untuk validasi GPS client-side.',
-                    ], 422);
-                }
-
-                // Verify the office is assigned to employee
-                $isAssigned = $employee->officeLocations()
-                    ->where('office_location_id', $request->office_location_id)
-                    ->exists();
-
-                if (! $isAssigned) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Office location tidak di-assign ke karyawan ini.',
-                    ], 422);
-                }
-
-                $clockOutOfficeLocationId = $request->office_location_id;
-            } else {
-                // Server-side GPS validation (legacy flow)
-                $gpsResult = $this->gpsValidationService->validateEmployeeLocation(
-                    $employee,
-                    $request->latitude,
-                    $request->longitude
-                );
-
-                if (! $gpsResult['valid']) {
-                    $message = match ($gpsResult['reason']) {
-                        'no_assigned_offices' => 'Tidak ada lokasi kantor yang ditugaskan.',
-                        'no_active_offices' => 'Tidak ada lokasi kantor aktif yang ditugaskan.',
-                        'outside_radius' => 'Lokasi Anda terlalu jauh dari kantor.',
-                        default => 'Validasi lokasi gagal.',
-                    };
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => $message,
-                    ], 422);
-                }
-
-                $clockOutOfficeLocationId = $gpsResult['office_location_id'];
-            }
-        }
-
-        // Face recognition verification if enabled
-        $faceVerified = false;
-        $faceConfidence = null;
-        if ($company->enable_face_recognition) {
-            // Check if employee has face enrolled
-            if (! $employee->hasFaceEnrolled()) {
+            if (! $attendance) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
+                    'message' => 'Anda belum melakukan clock in.',
                 ], 422);
             }
 
-            // Determine verification mode: client-side (face_verified) or server-side (face_descriptors)
-            $hasClientVerification = $request->has('face_verified');
-            $hasServerDescriptors = $request->has('face_descriptors')
-                && is_array($request->face_descriptors)
-                && count($request->face_descriptors) >= 128
-                && count($request->face_descriptors) <= 192;
-
-            if ($hasClientVerification) {
-                // Client-side verification flow - trust the client's verification result
-                if (! $request->boolean('face_verified')) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Verifikasi wajah gagal.',
-                    ], 422);
-                }
-
-                $faceVerified = true;
-                $faceConfidence = $request->face_confidence;
-            } elseif ($hasServerDescriptors) {
-                // Legacy server-side verification flow
-                $faceResult = $this->faceRecognitionService->verifyFace(
-                    $employee,
-                    $request->face_descriptors,
-                    $company->face_match_threshold ?? 0.6,
-                    'clock_out'
-                );
-
-                if (! $faceResult['matched']) {
-                    $message = match ($faceResult['error'] ?? null) {
-                        'no_face_enrolled' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
-                        default => 'Verifikasi wajah gagal. Wajah tidak cocok.',
-                    };
-
-                    return response()->json([
-                        'success' => false,
-                        'message' => $message,
-                    ], 422);
-                }
-
-                $faceVerified = true;
-                $faceConfidence = $faceResult['confidence'];
-            } else {
-                // No face verification provided when required
+            if ($attendance->clock_out) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Verifikasi wajah diperlukan untuk absensi.',
+                    'message' => 'Anda sudah melakukan clock out hari ini.',
                 ], 422);
             }
-        }
 
-        // Calculate working time using company timezone
-        $now = $company->now();
-        $workingMinutes = $attendance->clock_in->diffInMinutes($now);
+            // Use schedule from the attendance record (important for overnight shifts)
+            $schedule = $attendance->workSchedule;
 
-        // Subtract break duration if applicable
-        if ($schedule && $schedule->break_duration) {
-            $workingMinutes -= $schedule->break_duration;
-            $workingMinutes = max(0, $workingMinutes);
-        }
+            // Check GPS if enabled
+            // Always capture office_location_id if provided, even when GPS validation is disabled
+            $clockOutOfficeLocationId = $request->office_location_id;
+            if ($company->enable_gps_validation) {
+                // Determine validation mode: client-side (gps_verified) or server-side
+                $hasClientGpsVerification = $request->has('gps_verified');
 
-        // Calculate early leave or overtime using scheduled end (accounts for overnight)
-        $overtimeMinutes = 0;
-        $earlyLeaveMinutes = 0;
-        $clockOutStatus = 'on_time';
-        $scheduledEnd = $attendance->getScheduledEndDatetime();
+                if ($hasClientGpsVerification) {
+                    // Client-side GPS validation flow - trust the client's verification result
+                    if (! $request->boolean('gps_verified')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Validasi GPS gagal.',
+                        ], 422);
+                    }
 
-        if ($scheduledEnd) {
-            $tolerance = $schedule?->early_leave_tolerance ?? 15;
+                    // Validate office_location_id is provided and belongs to employee's assigned offices
+                    if (! $request->office_location_id) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Office location ID diperlukan untuk validasi GPS client-side.',
+                        ], 422);
+                    }
 
-            if ($now->lt($scheduledEnd->copy()->subMinutes($tolerance))) {
-                $earlyLeaveMinutes = $now->diffInMinutes($scheduledEnd);
-                $clockOutStatus = 'early';
-            } elseif ($now->gt($scheduledEnd)) {
-                $overtimeMinutes = $scheduledEnd->diffInMinutes($now);
-                $clockOutStatus = 'overtime';
+                    // Verify the office is assigned to employee
+                    $isAssigned = $employee->officeLocations()
+                        ->where('office_location_id', $request->office_location_id)
+                        ->exists();
+
+                    if (! $isAssigned) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Office location tidak di-assign ke karyawan ini.',
+                        ], 422);
+                    }
+
+                    $clockOutOfficeLocationId = $request->office_location_id;
+                } else {
+                    // Server-side GPS validation (legacy flow)
+                    $gpsResult = $this->gpsValidationService->validateEmployeeLocation(
+                        $employee,
+                        $request->latitude,
+                        $request->longitude
+                    );
+
+                    if (! $gpsResult['valid']) {
+                        $message = match ($gpsResult['reason']) {
+                            'no_assigned_offices' => 'Tidak ada lokasi kantor yang ditugaskan.',
+                            'no_active_offices' => 'Tidak ada lokasi kantor aktif yang ditugaskan.',
+                            'outside_radius' => 'Lokasi Anda terlalu jauh dari kantor.',
+                            default => 'Validasi lokasi gagal.',
+                        };
+
+                        return response()->json([
+                            'success' => false,
+                            'message' => $message,
+                        ], 422);
+                    }
+
+                    $clockOutOfficeLocationId = $gpsResult['office_location_id'];
+                }
             }
-        }
 
-        // Upload photo if provided
-        $photoPath = null;
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')
-                ->store('attendance-photos/'.$company->id, 'public');
-        }
+            // Face recognition verification if enabled
+            $faceVerified = false;
+            $faceConfidence = null;
+            if ($company->enable_face_recognition) {
+                // Check if employee has face enrolled
+                if (! $employee->hasFaceEnrolled()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
+                    ], 422);
+                }
 
-        // Update attendance record
-        // Store clock_out in UTC for multi-timezone support
-        $attendance->update([
-            'clock_out' => $company->toUtc($now),
-            'clock_out_latitude' => $request->latitude,
-            'clock_out_longitude' => $request->longitude,
-            'clock_out_office_location_id' => $clockOutOfficeLocationId,
-            'clock_out_photo' => $photoPath,
-            'clock_out_notes' => $request->notes,
-            'working_minutes' => $workingMinutes,
-            'early_leave_minutes' => $earlyLeaveMinutes,
-            'overtime_minutes' => $overtimeMinutes,
-            'clock_out_status' => $clockOutStatus,
-        ]);
+                // Determine verification mode: client-side (face_verified) or server-side (face_descriptors)
+                $hasClientVerification = $request->has('face_verified');
+                $hasServerDescriptors = $request->has('face_descriptors')
+                    && is_array($request->face_descriptors)
+                    && count($request->face_descriptors) >= 128
+                    && count($request->face_descriptors) <= 192;
 
-        // Log face verification for audit purposes
-        if ($company->enable_face_recognition && $faceVerified) {
-            FaceVerificationLog::create([
-                'employee_id' => $employee->id,
-                'attendance_id' => $attendance->id,
-                'verification_type' => 'clock_out',
-                'is_successful' => true,
-                'confidence_score' => $faceConfidence,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'created_at' => now(),
+                if ($hasClientVerification) {
+                    // Client-side verification flow - trust the client's verification result
+                    if (! $request->boolean('face_verified')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Verifikasi wajah gagal.',
+                        ], 422);
+                    }
+
+                    $faceVerified = true;
+                    $faceConfidence = $request->face_confidence;
+                } elseif ($hasServerDescriptors) {
+                    // Legacy server-side verification flow
+                    $faceResult = $this->faceRecognitionService->verifyFace(
+                        $employee,
+                        $request->face_descriptors,
+                        $company->face_match_threshold ?? 0.6,
+                        'clock_out'
+                    );
+
+                    if (! $faceResult['matched']) {
+                        $message = match ($faceResult['error'] ?? null) {
+                            'no_face_enrolled' => 'Wajah belum terdaftar. Silakan daftarkan wajah Anda terlebih dahulu.',
+                            default => 'Verifikasi wajah gagal. Wajah tidak cocok.',
+                        };
+
+                        return response()->json([
+                            'success' => false,
+                            'message' => $message,
+                        ], 422);
+                    }
+
+                    $faceVerified = true;
+                    $faceConfidence = $faceResult['confidence'];
+                } else {
+                    // No face verification provided when required
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Verifikasi wajah diperlukan untuk absensi.',
+                    ], 422);
+                }
+            }
+
+            // Calculate working time using company timezone
+            $now = $company->now();
+            $workingMinutes = $attendance->clock_in->diffInMinutes($now);
+
+            // Subtract break duration if applicable
+            if ($schedule && $schedule->break_duration) {
+                $workingMinutes -= $schedule->break_duration;
+                $workingMinutes = max(0, $workingMinutes);
+            }
+
+            // Calculate early leave or overtime using scheduled end (accounts for overnight)
+            $overtimeMinutes = 0;
+            $earlyLeaveMinutes = 0;
+            $clockOutStatus = 'on_time';
+            $scheduledEnd = $attendance->getScheduledEndDatetime();
+
+            if ($scheduledEnd) {
+                $tolerance = $schedule?->early_leave_tolerance ?? 15;
+
+                if ($now->lt($scheduledEnd->copy()->subMinutes($tolerance))) {
+                    $earlyLeaveMinutes = $now->diffInMinutes($scheduledEnd);
+                    $clockOutStatus = 'early';
+                } elseif ($now->gt($scheduledEnd)) {
+                    $overtimeMinutes = $scheduledEnd->diffInMinutes($now);
+                    $clockOutStatus = 'overtime';
+                }
+            }
+
+            // Upload photo if provided
+            $photoPath = null;
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')
+                    ->store('attendance-photos/'.$company->id, 'public');
+            }
+
+            // Update attendance record
+            // Store clock_out in UTC for multi-timezone support
+            $attendance->update([
+                'clock_out' => $company->toUtc($now),
+                'clock_out_latitude' => $request->latitude,
+                'clock_out_longitude' => $request->longitude,
+                'clock_out_office_location_id' => $clockOutOfficeLocationId,
+                'clock_out_photo' => $photoPath,
+                'clock_out_notes' => $request->notes,
+                'working_minutes' => $workingMinutes,
+                'early_leave_minutes' => $earlyLeaveMinutes,
+                'overtime_minutes' => $overtimeMinutes,
+                'clock_out_status' => $clockOutStatus,
             ]);
-        }
 
-        // Dispatch event for push notification
-        AttendanceClockOut::dispatch($attendance);
+            // Log face verification for audit purposes
+            if ($company->enable_face_recognition && $faceVerified) {
+                FaceVerificationLog::create([
+                    'employee_id' => $employee->id,
+                    'attendance_id' => $attendance->id,
+                    'verification_type' => 'clock_out',
+                    'is_successful' => true,
+                    'confidence_score' => $faceConfidence,
+                    'ip_address' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                    'created_at' => now(),
+                ]);
+            }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Clock out berhasil.',
-            'data' => [
-                'id' => $attendance->id,
-                'date' => $attendance->date->toDateString(),
-                'clock_in' => $attendance->clock_in->setTimezone($company->timezone)->format('H:i'),
-                'clock_out' => $attendance->clock_out->setTimezone($company->timezone)->format('H:i'),
-                'working_minutes' => $attendance->working_minutes,
-                'overtime_minutes' => $attendance->overtime_minutes,
-            ],
-        ]);
+            // Dispatch event for push notification
+            AttendanceClockOut::dispatch($attendance);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Clock out berhasil.',
+                'data' => [
+                    'id' => $attendance->id,
+                    'date' => $attendance->date->toDateString(),
+                    'clock_in' => $attendance->clock_in->setTimezone($company->timezone)->format('H:i'),
+                    'clock_out' => $attendance->clock_out->setTimezone($company->timezone)->format('H:i'),
+                    'working_minutes' => $attendance->working_minutes,
+                    'overtime_minutes' => $attendance->overtime_minutes,
+                ],
+            ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             throw $e;
         } catch (\Throwable $e) {
