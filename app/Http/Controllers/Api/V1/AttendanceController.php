@@ -94,91 +94,118 @@ class AttendanceController extends Controller
     )]
     public function today(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $company = $user->company;
-        $employee = $user->employee;
-        $today = $company->today();
-        $schedule = $employee->resolveScheduleForDate(\Carbon\Carbon::parse($today));
+        try {
+            $user = $request->user();
+            $company = $user->company;
+            $employee = $user->employee;
 
-        // Check today's attendance first, then check yesterday for overnight shifts
-        $attendance = Attendance::with('officeLocation')
-            ->where('employee_id', $employee->id)
-            ->whereDate('date', $today)
-            ->first();
+            if (! $company) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data perusahaan tidak ditemukan atau akun perusahaan tidak aktif.',
+                ], 422);
+            }
 
-        // If no attendance today, check for an active overnight shift from yesterday
-        if (! $attendance) {
-            $yesterday = $today->copy()->subDay();
+            if (! $employee) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
+                ], 422);
+            }
+
+            $today = $company->today();
+            $schedule = $employee->resolveScheduleForDate(\Carbon\Carbon::parse($today));
+
+            // Check today's attendance first, then check yesterday for overnight shifts
             $attendance = Attendance::with('officeLocation')
                 ->where('employee_id', $employee->id)
-                ->whereDate('date', $yesterday)
-                ->whereNotNull('clock_in')
-                ->whereNull('clock_out')
+                ->whereDate('date', $today)
                 ->first();
 
-            // Only use yesterday's attendance if the schedule is overnight
-            if ($attendance && (! $attendance->workSchedule || ! $attendance->workSchedule->is_overnight)) {
-                $attendance = null;
-            }
-        }
+            // If no attendance today, check for an active overnight shift from yesterday
+            if (! $attendance) {
+                $yesterday = $today->copy()->subDay();
+                $attendance = Attendance::with('officeLocation')
+                    ->where('employee_id', $employee->id)
+                    ->whereDate('date', $yesterday)
+                    ->whereNotNull('clock_in')
+                    ->whereNull('clock_out')
+                    ->first();
 
-        $timezone = $company->timezone ?? 'Asia/Jakarta';
-
-        $data = null;
-        if ($attendance) {
-            // Recalculate late_minutes if it's 0 but status is 'late' or clock_in is after schedule start
-            $lateMinutes = $attendance->late_minutes ?? 0;
-            if ($lateMinutes === 0 && $schedule && $attendance->clock_in) {
-                $clockInTime = $attendance->clock_in->setTimezone($timezone);
-                $scheduleStart = $clockInTime->copy()
-                    ->setTimeFromTimeString($schedule->start_time->format('H:i:s'));
-
-                if ($clockInTime->gt($scheduleStart)) {
-                    $lateMinutes = $scheduleStart->diffInMinutes($clockInTime);
-                    // Update the database record for future consistency
-                    if ($lateMinutes > 0) {
-                        $attendance->update([
-                            'late_minutes' => $lateMinutes,
-                            'status' => 'late',
-                        ]);
-                    }
+                // Only use yesterday's attendance if the schedule is overnight
+                if ($attendance && (! $attendance->workSchedule || ! $attendance->workSchedule->is_overnight)) {
+                    $attendance = null;
                 }
             }
 
-            $data = [
-                'id' => $attendance->id,
-                'date' => $attendance->date->toDateString(),
-                'clock_in' => $attendance->clock_in?->setTimezone($timezone)->format('H:i'),
-                'clock_out' => $attendance->clock_out?->setTimezone($timezone)->format('H:i'),
-                'status' => $attendance->status,
-                'status_label' => $attendance->status_label,
-                'late_minutes' => $lateMinutes,
-                'working_minutes' => $attendance->working_minutes,
+            $timezone = $company->timezone ?? 'Asia/Jakarta';
+
+            $data = null;
+            if ($attendance) {
+                // Recalculate late_minutes if it's 0 but status is 'late' or clock_in is after schedule start
+                $lateMinutes = $attendance->late_minutes ?? 0;
+                if ($lateMinutes === 0 && $schedule && $attendance->clock_in) {
+                    $clockInTime = $attendance->clock_in->setTimezone($timezone);
+                    $scheduleStart = $clockInTime->copy()
+                        ->setTimeFromTimeString($schedule->start_time->format('H:i:s'));
+
+                    if ($clockInTime->gt($scheduleStart)) {
+                        $lateMinutes = $scheduleStart->diffInMinutes($clockInTime);
+                        // Update the database record for future consistency
+                        if ($lateMinutes > 0) {
+                            $attendance->update([
+                                'late_minutes' => $lateMinutes,
+                                'status' => 'late',
+                            ]);
+                        }
+                    }
+                }
+
+                $data = [
+                    'id' => $attendance->id,
+                    'date' => $attendance->date->toDateString(),
+                    'clock_in' => $attendance->clock_in?->setTimezone($timezone)->format('H:i'),
+                    'clock_out' => $attendance->clock_out?->setTimezone($timezone)->format('H:i'),
+                    'status' => $attendance->status,
+                    'status_label' => $attendance->status_label,
+                    'late_minutes' => $lateMinutes,
+                    'working_minutes' => $attendance->working_minutes,
+                    'schedule' => $schedule ? [
+                        'start_time' => Carbon::parse($schedule->start_time)->format('H:i'),
+                        'end_time' => Carbon::parse($schedule->end_time)->format('H:i'),
+                    ] : null,
+                    'office_location' => $attendance->officeLocation ? [
+                        'id' => $attendance->officeLocation->id,
+                        'name' => $attendance->officeLocation->name,
+                    ] : null,
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
                 'schedule' => $schedule ? [
+                    'name' => $schedule->name,
                     'start_time' => Carbon::parse($schedule->start_time)->format('H:i'),
                     'end_time' => Carbon::parse($schedule->end_time)->format('H:i'),
                 ] : null,
-                'office_location' => $attendance->officeLocation ? [
-                    'id' => $attendance->officeLocation->id,
-                    'name' => $attendance->officeLocation->name,
-                ] : null,
-            ];
-        }
+                'timezone' => [
+                    'name' => $company->timezone,
+                    'offset' => $company->timezone_offset,
+                    'current_time' => $company->now()->format('Y-m-d H:i:s'),
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            \Log::error('Error fetching today attendance: '.$e->getMessage(), [
+                'user_id' => $request->user()?->id,
+                'trace' => $e->getTraceAsString(),
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $data,
-            'schedule' => $schedule ? [
-                'name' => $schedule->name,
-                'start_time' => Carbon::parse($schedule->start_time)->format('H:i'),
-                'end_time' => Carbon::parse($schedule->end_time)->format('H:i'),
-            ] : null,
-            'timezone' => [
-                'name' => $company->timezone,
-                'offset' => $company->timezone_offset,
-                'current_time' => $company->now()->format('Y-m-d H:i:s'),
-            ],
-        ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memuat data kehadiran hari ini. Silakan coba sesaat lagi.',
+            ], 500);
+        }
     }
 
     #[OA\Post(
@@ -282,10 +309,26 @@ class AttendanceController extends Controller
     )]
     public function clockIn(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $employee = $user->employee;
-        $company = $user->company;
-        $schedule = $employee->resolveScheduleForDate(\Carbon\Carbon::parse($company->today()));
+        try {
+            $user = $request->user();
+            $employee = $user->employee;
+            $company = $user->company;
+
+            if (! $company) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data perusahaan tidak ditemukan atau akun perusahaan tidak aktif.',
+                ], 422);
+            }
+
+            if (! $employee) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
+                ], 422);
+            }
+
+            $schedule = $employee->resolveScheduleForDate(\Carbon\Carbon::parse($company->today()));
 
         // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
         if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
@@ -581,6 +624,19 @@ class AttendanceController extends Controller
             'message' => 'Clock in berhasil.',
             'data' => $responseData,
         ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            \Log::error('Error during clock-in: '.$e->getMessage(), [
+                'user_id' => $request->user()?->id,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memproses absen masuk: '.$e->getMessage(),
+            ], 500);
+        }
     }
 
     #[OA\Post(
@@ -666,9 +722,24 @@ class AttendanceController extends Controller
     )]
     public function clockOut(Request $request): JsonResponse
     {
-        $user = $request->user();
-        $employee = $user->employee;
-        $company = $user->company;
+        try {
+            $user = $request->user();
+            $employee = $user->employee;
+            $company = $user->company;
+
+            if (! $company) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data perusahaan tidak ditemukan atau akun perusahaan tidak aktif.',
+                ], 422);
+            }
+
+            if (! $employee) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
+                ], 422);
+            }
 
         // Decode face_descriptors if sent as JSON string (e.g. from multipart form-data)
         if ($request->has('face_descriptors') && is_string($request->input('face_descriptors'))) {
@@ -936,6 +1007,19 @@ class AttendanceController extends Controller
                 'overtime_minutes' => $attendance->overtime_minutes,
             ],
         ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            \Log::error('Error during clock-out: '.$e->getMessage(), [
+                'user_id' => $request->user()?->id,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memproses absen keluar: '.$e->getMessage(),
+            ], 500);
+        }
     }
 
     #[OA\Get(
@@ -1000,6 +1084,13 @@ class AttendanceController extends Controller
 
         $user = $request->user();
         $employee = $user->employee;
+
+        if (! $employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
+            ], 422);
+        }
 
         $query = Attendance::with(['officeLocation', 'clockOutOfficeLocation'])
             ->where('employee_id', $employee->id)
@@ -1114,6 +1205,13 @@ class AttendanceController extends Controller
 
         $user = $request->user();
         $employee = $user->employee;
+
+        if (! $employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
+            ], 422);
+        }
 
         // Optimized: Use database aggregate instead of loading all records
         $summary = Attendance::where('employee_id', $employee->id)
