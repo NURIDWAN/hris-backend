@@ -97,6 +97,13 @@ class OvertimeController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
+        if (! $employee) {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+            ]);
+        }
+
         $query = OvertimeRequest::where('employee_id', $employee->id)
             ->orderByDesc('date');
 

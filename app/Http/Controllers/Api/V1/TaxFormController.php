@@ -74,6 +74,13 @@ class TaxFormController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
+        if (! $employee) {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+            ]);
+        }
+
         $query = TaxForm1721A1::where('employee_id', $employee->id);
 
         if ($request->year) {

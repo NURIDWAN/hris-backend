@@ -56,7 +56,7 @@ class OfficeLocationController extends Controller
     public function index(Request $request): JsonResponse
     {
         $user = $request->user();
-        $companyId = $user->company_id;
+        $companyId = $user->company_id ?? \App\Models\Company::first()?->id;
 
         $officeLocations = OfficeLocation::where('company_id', $companyId)
             ->where('is_active', true)
@@ -64,6 +64,7 @@ class OfficeLocationController extends Controller
             ->get();
 
         return response()->json([
+            'success' => true,
             'data' => $officeLocations->map(fn ($office) => $this->formatOfficeLocation($office)),
         ]);
     }

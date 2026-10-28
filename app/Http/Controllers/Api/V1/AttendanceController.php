@@ -1087,9 +1087,9 @@ class AttendanceController extends Controller
 
         if (! $employee) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
-            ], 422);
+                'success' => true,
+                'data' => [],
+            ]);
         }
 
         $query = Attendance::with(['officeLocation', 'clockOutOfficeLocation'])
@@ -1199,24 +1199,37 @@ class AttendanceController extends Controller
     public function summary(Request $request): JsonResponse
     {
         $request->validate([
-            'month' => 'required|integer|between:1,12',
-            'year' => 'required|integer',
+            'month' => 'nullable|integer|between:1,12',
+            'year' => 'nullable|integer',
         ]);
 
         $user = $request->user();
         $employee = $user->employee;
+        $company = $user->company;
+
+        $month = (int) ($request->month ?? ($company ? $company->now()->month : now()->month));
+        $year = (int) ($request->year ?? ($company ? $company->now()->year : now()->year));
 
         if (! $employee) {
             return response()->json([
-                'success' => false,
-                'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
-            ], 422);
+                'success' => true,
+                'data' => [
+                    'total_working_days' => 0,
+                    'total_present' => 0,
+                    'total_absent' => 0,
+                    'total_late' => 0,
+                    'total_leave' => 0,
+                    'total_working_hours' => 0,
+                    'total_overtime_hours' => 0,
+                    'total_late_minutes' => 0,
+                ],
+            ]);
         }
 
         // Optimized: Use database aggregate instead of loading all records
         $summary = Attendance::where('employee_id', $employee->id)
-            ->whereYear('date', $request->year)
-            ->whereMonth('date', $request->month)
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
             ->selectRaw("
                 SUM(CASE WHEN status IN ('present', 'late') THEN 1 ELSE 0 END) as total_present,
                 SUM(CASE WHEN status = 'absent' THEN 1 ELSE 0 END) as total_absent,
@@ -1229,7 +1242,7 @@ class AttendanceController extends Controller
             ->first();
 
         // Calculate working days in the month (excluding weekends)
-        $startOfMonth = Carbon::create($request->year, $request->month, 1);
+        $startOfMonth = Carbon::create($year, $month, 1);
         $endOfMonth = $startOfMonth->copy()->endOfMonth();
         $workingDays = 0;
         for ($date = $startOfMonth->copy(); $date->lte($endOfMonth); $date->addDay()) {

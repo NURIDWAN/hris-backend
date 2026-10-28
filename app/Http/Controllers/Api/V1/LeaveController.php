@@ -91,6 +91,13 @@ class LeaveController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
+        if (! $employee) {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+            ]);
+        }
+
         $query = LeaveRequest::with(['leaveType', 'approvedBy'])
             ->where('employee_id', $employee->id)
             ->orderByDesc('created_at');
@@ -220,6 +227,13 @@ class LeaveController extends Controller
         $user = $request->user();
         $employee = $user->employee;
         $company = $user->company;
+
+        if (! $employee) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data karyawan tidak ditemukan. Akun Anda belum ditautkan dengan data pegawai aktif.',
+            ], 422);
+        }
 
         // Calculate total days
         $startDate = Carbon::parse($request->start_date);
@@ -378,7 +392,7 @@ class LeaveController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
-        if ($leave->employee_id !== $employee->id) {
+        if (! $employee || $leave->employee_id !== $employee->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data tidak ditemukan.',
@@ -474,7 +488,7 @@ class LeaveController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
-        if ($leave->employee_id !== $employee->id) {
+        if (! $employee || $leave->employee_id !== $employee->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data tidak ditemukan.',
@@ -556,7 +570,15 @@ class LeaveController extends Controller
         $user = $request->user();
         $company = $user->company;
         $employee = $user->employee;
-        $year = $request->year ?? $company->now()->year;
+
+        if (! $employee) {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+            ]);
+        }
+
+        $year = $request->year ?? ($company ? $company->now()->year : now()->year);
 
         $balances = LeaveBalance::with('leaveType')
             ->where('employee_id', $employee->id)

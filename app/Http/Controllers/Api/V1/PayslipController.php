@@ -81,6 +81,13 @@ class PayslipController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
+        if (! $employee) {
+            return response()->json([
+                'success' => true,
+                'data' => [],
+            ]);
+        }
+
         // Optimized: Use join instead of whereHas for better performance
         $query = PayrollItem::select('payroll_items.*')
             ->join('payrolls', 'payroll_items.payroll_id', '=', 'payrolls.id')
@@ -107,6 +114,9 @@ class PayslipController extends Controller
                     'period' => $payroll->period_label,
                     'period_month' => $payroll->period_month,
                     'period_year' => $payroll->period_year,
+                    'basic_salary' => (float) $item->basic_salary,
+                    'total_allowance' => (float) max(0, (float) $item->total_earnings - (float) $item->basic_salary),
+                    'total_deduction' => (float) $item->total_deductions,
                     'net_salary' => (float) $item->net_salary,
                     'formatted_net_salary' => 'Rp '.number_format($item->net_salary, 0, ',', '.'),
                     'payment_date' => $payroll->payment_date?->toDateString(),
@@ -238,7 +248,7 @@ class PayslipController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
-        if ($payslip->employee_id !== $employee->id) {
+        if (! $employee || $payslip->employee_id !== $employee->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data tidak ditemukan.',
@@ -376,7 +386,7 @@ class PayslipController extends Controller
         $user = $request->user();
         $employee = $user->employee;
 
-        if ($payslip->employee_id !== $employee->id) {
+        if (! $employee || $payslip->employee_id !== $employee->id) {
             return response()->json([
                 'success' => false,
                 'message' => 'Data tidak ditemukan.',
@@ -546,12 +556,31 @@ class PayslipController extends Controller
     public function summary(Request $request): JsonResponse
     {
         $request->validate([
-            'year' => 'required|integer',
+            'year' => 'nullable|integer',
         ]);
 
+        $year = (int) ($request->year ?? now()->year);
         $user = $request->user();
         $employee = $user->employee;
-        $year = (int) $request->year;
+
+        if (! $employee) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'year' => $year,
+                    'total_months' => 0,
+                    'total_earnings' => 0,
+                    'total_deductions' => 0,
+                    'total_net_salary' => 0,
+                    'average_net_salary' => 0,
+                    'formatted_total_earnings' => 'Rp 0',
+                    'formatted_total_deductions' => 'Rp 0',
+                    'formatted_total_net_salary' => 'Rp 0',
+                    'formatted_average_net_salary' => 'Rp 0',
+                    'monthly_breakdown' => [],
+                ],
+            ]);
+        }
 
         // Optimized: Use database aggregate instead of loading all records
         $totals = PayrollItem::join('payrolls', 'payroll_items.payroll_id', '=', 'payrolls.id')
