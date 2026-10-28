@@ -71,11 +71,11 @@ test('pushAttendance successfully pushes record to Lark API and updates attendan
             'tenant_access_token' => 't-token_123',
             'expire' => 7200,
         ], 200),
-        '*/attendance/v1/user_flow_records*' => Http::response([
+        '*/attendance/v1/user_flows/batch_create*' => Http::response([
             'code' => 0,
             'msg' => 'success',
             'data' => [
-                'user_flow_records' => [
+                'flow_records' => [
                     [
                         'record_id' => 'rec_lark_9999',
                         'user_id' => 'ou_emp_123',
@@ -105,7 +105,7 @@ test('pushAttendance records lark_sync_error on API failure', function () {
             'tenant_access_token' => 't-token_123',
             'expire' => 7200,
         ], 200),
-        '*/attendance/v1/user_flow_records*' => Http::response([
+        '*/attendance/v1/user_flows/batch_create*' => Http::response([
             'code' => 40001,
             'msg' => 'user_id not found in tenant',
         ], 200),

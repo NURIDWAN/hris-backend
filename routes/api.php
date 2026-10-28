@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\V1\PayslipController;
 use App\Http\Controllers\Api\V1\ReimbursementController;
 use App\Http\Controllers\Api\V1\ScheduleController;
 use App\Http\Controllers\Api\V1\TaxFormController;
+use App\Http\Controllers\Api\V1\Webhooks\LarkWebhookController;
 use App\Http\Controllers\Api\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,15 +27,16 @@ Route::get('/user', function (Request $request) {
 
 /*
 |--------------------------------------------------------------------------
-| Payment Gateway Webhooks
+| Webhooks (Payment Gateways & Third-Party Platforms like Lark)
 |--------------------------------------------------------------------------
 */
 
 Route::prefix('webhooks')
-    ->middleware(['throttle:60,1', 'abort_if_single_tenant']) // 60 requests per minute for webhooks
+    ->middleware(['throttle:120,1'])
     ->group(function () {
-        Route::post('/xendit', [WebhookController::class, 'xendit'])->name('webhooks.xendit');
-        Route::post('/midtrans', [WebhookController::class, 'midtrans'])->name('webhooks.midtrans');
+        Route::post('/lark', [LarkWebhookController::class, 'handle'])->name('webhooks.lark');
+        Route::post('/xendit', [WebhookController::class, 'xendit'])->middleware('abort_if_single_tenant')->name('webhooks.xendit');
+        Route::post('/midtrans', [WebhookController::class, 'midtrans'])->middleware('abort_if_single_tenant')->name('webhooks.midtrans');
     });
 
 /*
@@ -44,6 +46,9 @@ Route::prefix('webhooks')
 */
 
 Route::prefix('v1')->name('api.v1.')->group(function () {
+    // Lark Webhook
+    Route::post('/webhooks/lark', [LarkWebhookController::class, 'handle'])->name('webhooks.lark');
+
     // Authentication (public) - with strict rate limiting
     Route::prefix('auth')->name('auth.')->group(function () {
         // Login: 5 attempts per minute per IP (brute-force protection)

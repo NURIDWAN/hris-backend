@@ -130,6 +130,28 @@ describe('Admin Lark Settings API', function () {
         expect($integration->app_secret)->toBe('secret_12345');
     });
 
+    it('can save and return webhook credentials and webhook_url', function () {
+        $res = $this->putJson('/api/v1/admin/settings/lark', [
+            'app_id' => 'cli_webhook_app',
+            'app_secret' => 'webhook_secret',
+            'is_active' => true,
+            'push_clock_in' => true,
+            'push_clock_out' => true,
+            'verification_token' => 'v_token_abc_123',
+            'encrypt_key' => 'enc_key_xyz_456',
+        ]);
+
+        $res->assertStatus(200)
+            ->assertJsonPath('data.verification_token', 'v_token_abc_123')
+            ->assertJsonPath('data.has_encrypt_key', true);
+
+        $getRes = $this->getJson('/api/v1/admin/settings/lark');
+        $getRes->assertStatus(200)
+            ->assertJsonPath('data.integration.verification_token', 'v_token_abc_123')
+            ->assertJsonPath('data.integration.has_encrypt_key', true)
+            ->assertJsonPath('data.integration.webhook_url', url('/api/v1/webhooks/lark'));
+    });
+
     it('can test connection with Lark API using Http fake', function () {
         Http::fake([
             'open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal' => Http::response([

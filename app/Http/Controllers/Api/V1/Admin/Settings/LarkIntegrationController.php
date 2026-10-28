@@ -22,7 +22,7 @@ class LarkIntegrationController extends AdminBaseController
             return $this->errorResponse('Data perusahaan tidak ditemukan', 404);
         }
 
-        $integration = $company->larkIntegration;
+        $integration = $company->larkIntegration()->first();
 
         $totalEmployees = $company->employees()->where('is_active', true)->count();
         $mappedEmployees = $company->employees()->where('is_active', true)->whereNotNull('lark_user_id')->count();
@@ -41,6 +41,8 @@ class LarkIntegrationController extends AdminBaseController
             'failed_attendances' => $failedAttendances,
         ];
 
+        $webhookUrl = url('/api/v1/webhooks/lark');
+
         $integrationData = [
             'id' => $integration?->id,
             'company_id' => $company->id,
@@ -51,6 +53,9 @@ class LarkIntegrationController extends AdminBaseController
             'push_clock_out' => (bool) ($integration?->push_clock_out ?? true),
             'enable_bot_notifications' => (bool) ($integration?->enable_bot_notifications ?? false),
             'bot_webhook_url' => $integration?->bot_webhook_url,
+            'verification_token' => $integration?->verification_token,
+            'has_encrypt_key' => ! empty($integration?->encrypt_key),
+            'webhook_url' => $webhookUrl,
             'last_synced_at' => $integration?->last_synced_at?->toISOString(),
             'settings' => $integration?->settings,
             'created_at' => $integration?->created_at?->toISOString(),
@@ -80,6 +85,8 @@ class LarkIntegrationController extends AdminBaseController
             'push_clock_out' => ['required', 'boolean'],
             'enable_bot_notifications' => ['nullable', 'boolean'],
             'bot_webhook_url' => ['nullable', 'url', 'max:500'],
+            'verification_token' => ['nullable', 'string', 'max:100'],
+            'encrypt_key' => ['nullable', 'string', 'max:255'],
         ];
 
         if (! $integration) {
@@ -97,10 +104,17 @@ class LarkIntegrationController extends AdminBaseController
             'push_clock_out' => (bool) $validated['push_clock_out'],
             'enable_bot_notifications' => (bool) ($validated['enable_bot_notifications'] ?? false),
             'bot_webhook_url' => $validated['bot_webhook_url'] ?? null,
+            'verification_token' => ! empty($validated['verification_token']) ? trim($validated['verification_token']) : ($integration?->verification_token ?? null),
         ];
 
         if (! empty($validated['app_secret'])) {
             $data['app_secret'] = trim($validated['app_secret']);
+        }
+
+        if (array_key_exists('encrypt_key', $validated)) {
+            if (! empty($validated['encrypt_key'])) {
+                $data['encrypt_key'] = trim($validated['encrypt_key']);
+            }
         }
 
         if ($integration) {
@@ -120,6 +134,9 @@ class LarkIntegrationController extends AdminBaseController
             'push_clock_out' => (bool) $integration->push_clock_out,
             'enable_bot_notifications' => (bool) $integration->enable_bot_notifications,
             'bot_webhook_url' => $integration->bot_webhook_url,
+            'verification_token' => $integration->verification_token,
+            'has_encrypt_key' => ! empty($integration->encrypt_key),
+            'webhook_url' => url('/api/v1/webhooks/lark'),
             'last_synced_at' => $integration->last_synced_at?->toISOString(),
             'settings' => $integration->settings,
             'created_at' => $integration->created_at?->toISOString(),

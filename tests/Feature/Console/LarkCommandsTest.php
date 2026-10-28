@@ -80,11 +80,11 @@ test('lark:retry-sync command retries unsynced attendances', function () {
             'tenant_access_token' => 't-token_123',
             'expire' => 7200,
         ], 200),
-        '*/attendance/v1/user_flow_records*' => Http::response([
+        '*/attendance/v1/user_flows/batch_create*' => Http::response([
             'code' => 0,
             'msg' => 'success',
             'data' => [
-                'user_flow_records' => [
+                'flow_records' => [
                     [
                         'record_id' => 'rec_retried_888',
                     ],

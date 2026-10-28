@@ -99,15 +99,16 @@ class LarkAttendanceService
         try {
             $response = $this->apiClient->post(
                 $integration,
-                'attendance/v1/user_flow_records?user_id_type=user_id',
-                ['user_flow_records' => [$recordPayload]]
+                'attendance/v1/user_flows/batch_create?employee_type=employee_id',
+                ['flow_records' => [$recordPayload]]
             );
 
-            $createdRecords = $response['data']['user_flow_records'] ?? [];
+            $createdRecords = $response['data']['flow_records'] ?? ($response['data']['user_flow_records'] ?? []);
             $recordId = ! empty($createdRecords) ? ($createdRecords[0]['record_id'] ?? null) : null;
+            $fallbackRecordId = 'synced_' . $punchTime->timestamp . '_' . $employee->id;
 
             $attendance->update([
-                'lark_record_id' => $recordId ?: ($attendance->lark_record_id ?: 'synced_'.time()),
+                'lark_record_id' => $recordId ?: ($attendance->lark_record_id ?: $fallbackRecordId),
                 'lark_synced_at' => now(),
                 'lark_sync_error' => null,
             ]);
@@ -115,7 +116,7 @@ class LarkAttendanceService
             return [
                 'success' => true,
                 'status' => 'synced',
-                'record_id' => $recordId,
+                'record_id' => $recordId ?: $fallbackRecordId,
             ];
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();

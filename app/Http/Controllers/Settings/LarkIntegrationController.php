@@ -57,6 +57,8 @@ class LarkIntegrationController extends Controller
             'push_clock_out' => ['required', 'boolean'],
             'enable_bot_notifications' => ['nullable', 'boolean'],
             'bot_webhook_url' => ['nullable', 'url', 'max:500'],
+            'verification_token' => ['nullable', 'string', 'max:100'],
+            'encrypt_key' => ['nullable', 'string', 'max:255'],
         ];
 
         // If no integration yet, app_secret is required
@@ -75,10 +77,17 @@ class LarkIntegrationController extends Controller
             'push_clock_out' => (bool) $validated['push_clock_out'],
             'enable_bot_notifications' => (bool) ($validated['enable_bot_notifications'] ?? false),
             'bot_webhook_url' => $validated['bot_webhook_url'] ?? null,
+            'verification_token' => ! empty($validated['verification_token']) ? trim($validated['verification_token']) : ($integration?->verification_token ?? null),
         ];
 
         if (! empty($validated['app_secret'])) {
             $data['app_secret'] = trim($validated['app_secret']);
+        }
+
+        if (array_key_exists('encrypt_key', $validated)) {
+            if (! empty($validated['encrypt_key'])) {
+                $data['encrypt_key'] = trim($validated['encrypt_key']);
+            }
         }
 
         if ($integration) {

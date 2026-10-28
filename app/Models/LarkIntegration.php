@@ -19,6 +19,8 @@ class LarkIntegration extends Model
         'push_clock_out',
         'enable_bot_notifications',
         'bot_webhook_url',
+        'verification_token',
+        'encrypt_key',
         'last_synced_at',
         'settings',
     ];
@@ -27,6 +29,7 @@ class LarkIntegration extends Model
     {
         return [
             'app_secret' => 'encrypted',
+            'encrypt_key' => 'encrypted',
             'is_active' => 'boolean',
             'push_clock_in' => 'boolean',
             'push_clock_out' => 'boolean',
