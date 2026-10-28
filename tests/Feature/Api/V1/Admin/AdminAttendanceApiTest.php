@@ -108,7 +108,7 @@ describe('Admin Attendance Management API', function () {
         expect($att->working_minutes)->toBeGreaterThan(0);
     });
 
-    it('can retrieve attendance report summary', function () {
+    it('can retrieve attendance report summary with Y-m format', function () {
         Attendance::create([
             'company_id' => $this->company->id,
             'employee_id' => $this->employee->id,
@@ -127,7 +127,46 @@ describe('Admin Attendance Management API', function () {
         $response->assertStatus(200)
             ->assertJsonPath('success', true)
             ->assertJsonPath('data.summary.present', 1)
-            ->assertJsonPath('data.summary.late', 1);
+            ->assertJsonPath('data.summary.late', 1)
+            ->assertJsonStructure(['data' => ['month', 'summary', 'report']]);
+    });
+
+    it('can retrieve attendance report with numeric month and year params without 500 error', function () {
+        Attendance::create([
+            'company_id' => $this->company->id,
+            'employee_id' => $this->employee->id,
+            'date' => '2026-10-05',
+            'status' => 'present',
+        ]);
+
+        $response = $this->getJson('/api/v1/admin/attendances/report?month=10&year=2026');
+
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.month', '2026-10')
+            ->assertJsonPath('data.summary.present', 1)
+            ->assertJsonStructure([
+                'data' => [
+                    'month',
+                    'summary',
+                    'report' => [
+                        '*' => [
+                            'employee_id',
+                            'employee_number',
+                            'employee_name',
+                            'department_name',
+                            'position_name',
+                            'total_days',
+                            'present_days',
+                            'late_days',
+                            'total_late_minutes',
+                            'absent_days',
+                            'leave_days',
+                            'attendance_percentage',
+                        ],
+                    ],
+                ],
+            ]);
     });
 
     it('can delete attendance record', function () {

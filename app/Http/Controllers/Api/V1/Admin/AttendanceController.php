@@ -42,8 +42,8 @@ class AttendanceController extends AdminBaseController
             $query->where('status', $status);
         }
 
-        if ($month = $request->input('month')) {
-            $parsed = Carbon::parse($month);
+        if ($request->filled('month')) {
+            $parsed = $this->parseMonthDate($request);
             $query->whereYear('date', $parsed->year)->whereMonth('date', $parsed->month);
         }
 
@@ -208,12 +208,17 @@ class AttendanceController extends AdminBaseController
     public function report(Request $request): JsonResponse
     {
         $companyId = $this->getCompanyId($request);
-        $month = $request->input('month', now()->format('Y-m'));
-        $date = Carbon::parse($month);
+        $date = $this->parseMonthDate($request);
 
         $query = Attendance::where('company_id', $companyId)
             ->whereYear('date', $date->year)
             ->whereMonth('date', $date->month);
+
+        if ($departmentId = $request->input('department_id')) {
+            $query->whereHas('employee', function ($q) use ($departmentId) {
+                $q->where('department_id', $departmentId);
+            });
+        }
 
         $totalRecords = (clone $query)->count();
         $present = (clone $query)->where('status', 'present')->count();
@@ -223,6 +228,61 @@ class AttendanceController extends AdminBaseController
         $halfDay = (clone $query)->where('status', 'half_day')->count();
 
         $activeEmployees = Employee::where('company_id', $companyId)->where('is_active', true)->count();
+
+        // Aggregate attendance report per employee for the monthly summary table
+        $employeeQuery = Employee::with(['department:id,name', 'position:id,name'])
+            ->where('company_id', $companyId)
+            ->where('is_active', true);
+
+        if ($departmentId = $request->input('department_id')) {
+            $employeeQuery->where('department_id', $departmentId);
+        }
+
+        $employees = $employeeQuery->get();
+
+        $attendanceStats = (clone $query)
+            ->selectRaw("
+                employee_id,
+                COUNT(*) as total_days,
+                SUM(CASE WHEN status IN ('present', 'late') THEN 1 ELSE 0 END) as present_days,
+                SUM(CASE WHEN status = 'late' THEN 1 ELSE 0 END) as late_days,
+                COALESCE(SUM(late_minutes), 0) as total_late_minutes,
+                SUM(CASE WHEN status = 'absent' THEN 1 ELSE 0 END) as absent_days,
+                SUM(CASE WHEN status = 'leave' THEN 1 ELSE 0 END) as leave_days
+            ")
+            ->groupBy('employee_id')
+            ->get()
+            ->keyBy('employee_id');
+
+        $distinctDates = (clone $query)->distinct()->count('date');
+        $baselineDays = max($distinctDates, 1);
+
+        $report = $employees->map(function ($emp) use ($attendanceStats, $baselineDays) {
+            $stat = $attendanceStats->get($emp->id);
+            $presentDays = (int) ($stat->present_days ?? 0);
+            $lateDays = (int) ($stat->late_days ?? 0);
+            $totalLateMinutes = (int) ($stat->total_late_minutes ?? 0);
+            $absentDays = (int) ($stat->absent_days ?? 0);
+            $leaveDays = (int) ($stat->leave_days ?? 0);
+            $totalDays = (int) ($stat->total_days ?? 0);
+
+            $percentage = $baselineDays > 0 ? round(($presentDays / $baselineDays) * 100, 1) : 0;
+
+            return [
+                'employee_id' => $emp->id,
+                'employee_number' => $emp->employee_id ?? '',
+                'employee_name' => trim(($emp->first_name ?? '') . ' ' . ($emp->last_name ?? '')),
+                'department_name' => $emp->department->name ?? 'Belum diatur',
+                'position_name' => $emp->position->name ?? '-',
+                'total_days' => $totalDays,
+                'present_days' => $presentDays,
+                'late_days' => $lateDays,
+                'total_late_minutes' => $totalLateMinutes,
+                'absent_days' => $absentDays,
+                'leave_days' => $leaveDays,
+                'attendance_percentage' => min($percentage, 100),
+            ];
+        })->values();
 
         return $this->successResponse([
             'month' => $date->format('Y-m'),
@@ -236,7 +296,31 @@ class AttendanceController extends AdminBaseController
                 'half_day' => $halfDay,
                 'on_time_rate' => ($totalRecords > 0) ? round(($present / $totalRecords) * 100, 1) : 0,
             ],
+            'report' => $report,
         ], 'Laporan rekapitulasi kehadiran berhasil diambil');
+    }
+
+    private function parseMonthDate(Request $request): Carbon
+    {
+        $monthInput = $request->input('month');
+        $yearInput = $request->input('year');
+
+        if ($monthInput && is_numeric($monthInput)) {
+            $year = $yearInput && is_numeric($yearInput) ? (int) $yearInput : (int) now()->year;
+            $month = (int) $monthInput;
+            return Carbon::createFromDate($year, $month, 1)->startOfMonth();
+        }
+
+        if ($monthInput && is_string($monthInput)) {
+            try {
+                return Carbon::parse($monthInput)->startOfMonth();
+            } catch (\Exception $e) {
+                // fallback to current date
+            }
+        }
+
+        $year = $yearInput && is_numeric($yearInput) ? (int) $yearInput : (int) now()->year;
+        return Carbon::createFromDate($year, (int) now()->month, 1)->startOfMonth();
     }
 
     private function calculateLateMinutes(?string $clockIn, ?WorkSchedule $schedule): int
