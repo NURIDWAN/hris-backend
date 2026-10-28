@@ -2,6 +2,7 @@
 
 use App\Models\Company;
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -224,3 +225,34 @@ it('allows superadmin to switch context via X-Company-Id header while isolating 
     expect($adminDeptNames)->toContain('Engineering Perusahaan A');
     expect($adminDeptNames)->not->toContain('Finance Perusahaan B');
 });
+
+it('allows superadmin to switch dashboard context via X-Company-Id header while isolating company admins', function () {
+    // Create an employee in Company B
+    Employee::factory()->create([
+        'company_id' => $this->companyB->id,
+        'first_name' => 'Budi',
+        'last_name' => 'Santoso',
+        'is_active' => true,
+    ]);
+
+    // 1. Superadmin switches context to Company B
+    Sanctum::actingAs($this->superAdmin);
+    $saResponse = $this->withHeader('X-Company-Id', (string) $this->companyB->id)
+        ->getJson('/api/v1/admin/dashboard/stats');
+
+    $saResponse->assertStatus(200);
+    expect($saResponse->json('data.company.id'))->toBe($this->companyB->id);
+    expect($saResponse->json('data.company.name'))->toBe('PT Perusahaan B');
+    expect($saResponse->json('data.stats.total_employees'))->toBe(1);
+
+    // 2. Admin of Company A tries to pass X-Company-Id of Company B
+    Sanctum::actingAs($this->adminA);
+    $adminResponse = $this->withHeader('X-Company-Id', (string) $this->companyB->id)
+        ->getJson('/api/v1/admin/dashboard/stats');
+
+    $adminResponse->assertStatus(200);
+    // Must remain strictly locked to Company A!
+    expect($adminResponse->json('data.company.id'))->toBe($this->companyA->id);
+    expect($adminResponse->json('data.company.name'))->toBe('PT Perusahaan A');
+});
+

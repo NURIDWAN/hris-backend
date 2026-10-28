@@ -306,6 +306,18 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
                 Route::get('/users/roles', [AdminApi\Settings\UserController::class, 'roles'])->name('users.roles');
                 Route::match(['post', 'patch'], '/users/{id}/toggle-status', [AdminApi\Settings\UserController::class, 'toggleStatus'])->name('users.toggle-status');
                 Route::apiResource('users', AdminApi\Settings\UserController::class);
+
+                // Integrasi Lark Suite
+                Route::prefix('lark')->name('lark.')->group(function () {
+                    Route::get('/', [AdminApi\Settings\LarkIntegrationController::class, 'show'])->name('show');
+                    Route::match(['put', 'patch'], '/', [AdminApi\Settings\LarkIntegrationController::class, 'update'])->name('update');
+                    Route::post('/test-connection', [AdminApi\Settings\LarkIntegrationController::class, 'testConnection'])->name('test-connection');
+                    Route::post('/sync-employees', [AdminApi\Settings\LarkIntegrationController::class, 'syncEmployees'])->name('sync-employees');
+                    Route::post('/retry-sync', [AdminApi\Settings\LarkIntegrationController::class, 'retrySync'])->name('retry-sync');
+                    Route::get('/mapping', [AdminApi\Settings\LarkIntegrationController::class, 'mapping'])->name('mapping');
+                    Route::post('/mapping/{id}', [AdminApi\Settings\LarkIntegrationController::class, 'saveEmployeeMapping'])->name('mapping.save');
+                    Route::delete('/mapping/{id}', [AdminApi\Settings\LarkIntegrationController::class, 'unmapEmployee'])->name('mapping.unmap');
+                });
             });
         });
     });

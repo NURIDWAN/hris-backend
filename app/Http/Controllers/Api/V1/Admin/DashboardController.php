@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\V1\Admin\AdminBaseController;
 use App\Models\Announcement;
 use App\Models\Attendance;
 use App\Models\Company;
@@ -20,7 +20,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class DashboardController extends Controller
+class DashboardController extends AdminBaseController
 {
     private const DEFAULT_LATITUDE = -6.2088;
 
@@ -36,7 +36,7 @@ class DashboardController extends Controller
     public function stats(Request $request): JsonResponse
     {
         $user = $request->user();
-        $company = $user->company ?? Company::first();
+        $company = $this->getCompany($request);
 
         if (! $company) {
             return $this->emptyStatsResponse();
@@ -89,6 +89,13 @@ class DashboardController extends Controller
             'success' => true,
             'data' => [
                 'role_type' => $roleType,
+                'company' => [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'slug' => $company->slug ?? null,
+                    'subscription_plan' => $company->subscription_plan ?? null,
+                    'logo' => $company->logo ?? null,
+                ],
                 'stats' => [
                     'total_employees' => $totalEmployees,
                     'present_today' => $attendanceBreakdown['present_today'],
@@ -168,6 +175,13 @@ class DashboardController extends Controller
             'success' => true,
             'data' => [
                 'role_type' => 'user',
+                'company' => [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'slug' => $company->slug ?? null,
+                    'subscription_plan' => $company->subscription_plan ?? null,
+                    'logo' => $company->logo ?? null,
+                ],
                 'employee' => $employee ? [
                     'id' => $employee->id,
                     'name' => $employee->first_name . ' ' . $employee->last_name,
@@ -216,6 +230,7 @@ class DashboardController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
+                'company' => null,
                 'stats' => [
                     'total_employees' => 0,
                     'present_today' => 0,
