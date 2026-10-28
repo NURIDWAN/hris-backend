@@ -130,17 +130,24 @@ describe('POST /api/v1/admin/auth/login', function () {
             ]);
     });
 
-    it('rejects user without admin role with 403', function () {
+    it('allows regular employee user to login with user role_type', function () {
         $response = $this->postJson('/api/v1/admin/auth/login', [
             'email' => 'regular@testgajipro.com',
             'password' => 'password123',
         ]);
 
-        $response->assertStatus(403)
+        $response->assertOk()
             ->assertJson([
-                'success' => false,
-                'message' => 'Akses ditolak. Anda tidak memiliki hak akses dashboard admin.',
+                'success' => true,
+                'data' => [
+                    'user' => [
+                        'email' => 'regular@testgajipro.com',
+                        'role_type' => 'user',
+                    ],
+                ],
             ]);
+
+        expect($response->json('data.token'))->not->toBeEmpty();
     });
 });
 
@@ -234,6 +241,51 @@ describe('GET /api/v1/admin/dashboard/stats', function () {
             ]);
 
         expect($response->json('data.stats.total_employees'))->toBeGreaterThanOrEqual(1);
+        expect($response->json('data.role_type'))->toBe('admin');
+    });
+
+    it('returns dedicated personal dashboard data for regular employee', function () {
+        Sanctum::actingAs($this->regularUser);
+
+        $response = $this->getJson('/api/v1/admin/dashboard/stats');
+
+        $response->assertOk()
+            ->assertJsonStructure([
+                'success',
+                'data' => [
+                    'role_type',
+                    'employee' => [
+                        'id',
+                        'name',
+                        'employee_id',
+                        'department',
+                        'position',
+                    ],
+                    'today_attendance' => [
+                        'clock_in',
+                        'clock_out',
+                        'status',
+                        'schedule',
+                    ],
+                    'month_summary' => [
+                        'present',
+                        'late',
+                        'on_leave',
+                        'total_days',
+                    ],
+                    'leave_balance' => [
+                        'remaining',
+                        'used',
+                        'total',
+                    ],
+                    'recent_history',
+                    'office_locations',
+                    'announcements',
+                ],
+            ]);
+
+        expect($response->json('data.role_type'))->toBe('user');
+        expect($response->json('data.employee.name'))->toBe('John Doe');
     });
 });
 

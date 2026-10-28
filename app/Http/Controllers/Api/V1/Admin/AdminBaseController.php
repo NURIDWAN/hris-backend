@@ -14,17 +14,28 @@ abstract class AdminBaseController extends Controller
     {
         $user = $request->user();
 
+        // Khusus Superadmin: izinkan context switching via X-Company-Id header atau query param
+        if ($user && $user->isSuperAdmin()) {
+            $requestedCompanyId = $request->header('X-Company-Id') ?: $request->query('company_id');
+            if ($requestedCompanyId && Company::where('id', $requestedCompanyId)->exists()) {
+                return (int) $requestedCompanyId;
+            }
+        }
+
+        // Admin & User biasa: terkunci mutlak pada company_id miliknya
         return (int) ($user?->company_id ?: Company::value('id') ?: 1);
     }
 
     protected function getCompany(Request $request): ?Company
     {
+        $companyId = $this->getCompanyId($request);
         $user = $request->user();
-        if ($user?->company) {
+
+        if ($user && ! $user->isSuperAdmin() && $user->company) {
             return $user->company;
         }
 
-        return Company::find($this->getCompanyId($request)) ?? Company::first();
+        return Company::find($companyId) ?? Company::first();
     }
 
     protected function successResponse(mixed $data = null, string $message = 'Success', int $status = 200, array $meta = []): JsonResponse

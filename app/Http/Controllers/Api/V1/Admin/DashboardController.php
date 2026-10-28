@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use App\Models\Attendance;
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\Employee;
+use App\Models\LeaveBalance;
 use App\Models\LeaveRequest;
 use App\Models\OfficeLocation;
 use App\Models\PayrollItem;
+use App\Models\User;
 use App\Services\DashboardAnalyticsService;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -41,6 +45,19 @@ class DashboardController extends Controller
         $companyNow = method_exists($company, 'now') ? $company->now() : now();
         $companyToday = method_exists($company, 'today') ? $company->today() : today();
 
+        // Determine user role type
+        $roleType = 'user';
+        if ($user->is_superadmin || $user->hasRole('super-admin')) {
+            $roleType = 'superadmin';
+        } elseif ($user->hasAnyRole(['admin', 'hr-manager', 'payroll-manager', 'manager'])) {
+            $roleType = 'admin';
+        }
+
+        // If user is regular employee, return dedicated personal dashboard data
+        if ($roleType === 'user') {
+            return $this->getUserDashboardResponse($user, $company, $companyToday, $companyNow);
+        }
+
         $totalEmployees = Employee::where('company_id', $company->id)
             ->where('is_active', true)
             ->count();
@@ -51,15 +68,27 @@ class DashboardController extends Controller
             ->where('status', 'pending')
             ->count();
 
-        $totalPayrollThisMonth = $this->calculateTotalPayrollThisMonth($company, $companyNow);
+        $canViewPayroll = $user->is_superadmin || $user->hasRole('super-admin') || $user->can('view payroll') || $user->hasAnyRole(['admin', 'payroll-manager']);
+        $totalPayrollThisMonth = $canViewPayroll ? $this->calculateTotalPayrollThisMonth($company, $companyNow) : 0;
+
         $recentClockIns = $this->getRecentClockIns($company, $companyToday);
         $officeLocations = $this->getOfficeLocations($company);
         $attendanceLocations = $this->getAttendanceLocations($company, $companyToday, $officeLocations);
         $analytics = $this->analyticsService->getAllAnalytics($company->id, $company);
 
+        $systemStats = null;
+        if ($roleType === 'superadmin') {
+            $systemStats = [
+                'total_users' => User::where('company_id', $company->id)->count(),
+                'total_departments' => Department::where('company_id', $company->id)->count(),
+                'active_offices' => OfficeLocation::where('company_id', $company->id)->where('is_active', true)->count(),
+            ];
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
+                'role_type' => $roleType,
                 'stats' => [
                     'total_employees' => $totalEmployees,
                     'present_today' => $attendanceBreakdown['present_today'],
@@ -77,6 +106,104 @@ class DashboardController extends Controller
                 'office_locations' => $officeLocations,
                 'attendance_locations' => $attendanceLocations,
                 'analytics' => $analytics,
+                'system_stats' => $systemStats,
+            ],
+        ]);
+    }
+
+    /**
+     * Build personal self-service dashboard response for regular employees
+     */
+    private function getUserDashboardResponse(User $user, Company $company, CarbonInterface $companyToday, CarbonInterface $companyNow): JsonResponse
+    {
+        $employee = Employee::with(['department', 'position'])
+            ->where('user_id', $user->id)
+            ->first();
+
+        $todayAttendance = null;
+        if ($employee) {
+            $todayAttendance = Attendance::where('employee_id', $employee->id)
+                ->whereDate('date', $companyToday)
+                ->first();
+        }
+
+        $monthAttendances = collect();
+        if ($employee) {
+            $monthAttendances = Attendance::where('employee_id', $employee->id)
+                ->whereMonth('date', $companyNow->month)
+                ->whereYear('date', $companyNow->year)
+                ->get();
+        }
+
+        $onLeaveCount = 0;
+        if ($employee) {
+            $onLeaveCount = LeaveRequest::where('employee_id', $employee->id)
+                ->where('status', 'approved')
+                ->whereMonth('start_date', $companyNow->month)
+                ->whereYear('start_date', $companyNow->year)
+                ->count();
+        }
+
+        $leaveBalances = $employee
+            ? LeaveBalance::where('employee_id', $employee->id)->get()
+            : collect();
+
+        $recentHistory = $employee
+            ? Attendance::where('employee_id', $employee->id)
+                ->whereNotNull('clock_in')
+                ->orderBy('date', 'desc')
+                ->limit(5)
+                ->get()
+            : collect();
+
+        $officeLocations = $this->getOfficeLocations($company);
+
+        $announcements = Announcement::where('company_id', $company->id)
+            ->where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get(['id', 'title', 'content', 'created_at']);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'role_type' => 'user',
+                'employee' => $employee ? [
+                    'id' => $employee->id,
+                    'name' => $employee->first_name . ' ' . $employee->last_name,
+                    'employee_id' => $employee->employee_id,
+                    'department' => $employee->department?->name ?? 'Operasional',
+                    'position' => $employee->position?->name ?? 'Staff',
+                ] : null,
+                'today_attendance' => [
+                    'clock_in' => $this->formatClockInTime($todayAttendance?->clock_in),
+                    'clock_out' => $this->formatClockInTime($todayAttendance?->clock_out),
+                    'status' => $todayAttendance?->clock_in_status ?? 'absent',
+                    'schedule' => [
+                        'start_time' => '08:00',
+                        'end_time' => '17:00',
+                    ],
+                ],
+                'month_summary' => [
+                    'present' => $monthAttendances->where('clock_in_status', 'on_time')->count(),
+                    'late' => $monthAttendances->whereIn('clock_in_status', ['late', 'very_late'])->count(),
+                    'on_leave' => $onLeaveCount,
+                    'total_days' => $monthAttendances->count(),
+                ],
+                'leave_balance' => [
+                    'remaining' => (int) $leaveBalances->sum('remaining_days'),
+                    'used' => (int) $leaveBalances->sum('used_days'),
+                    'total' => (int) $leaveBalances->sum('entitlement_days') ?: 12,
+                ],
+                'recent_history' => $recentHistory->map(fn ($att) => [
+                    'id' => $att->id,
+                    'date' => $att->date instanceof \DateTimeInterface ? $att->date->format('Y-m-d') : (string) $att->date,
+                    'clock_in' => $this->formatClockInTime($att->clock_in),
+                    'clock_out' => $this->formatClockInTime($att->clock_out),
+                    'status' => $att->clock_in_status,
+                ]),
+                'office_locations' => $officeLocations,
+                'announcements' => $announcements,
             ],
         ]);
     }

@@ -40,19 +40,10 @@ class AuthController extends Controller
             setPermissionsTeamId($user->company_id);
         }
 
-        // Allow superadmin, or users with administrative roles
-        $adminRoles = ['admin', 'super-admin', 'hr-manager', 'payroll-manager', 'manager'];
-        $hasAdminAccess = $user->is_superadmin || $user->hasAnyRole($adminRoles);
-
-        if (! $hasAdminAccess) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Akses ditolak. Anda tidak memiliki hak akses dashboard admin.',
-            ], 403);
-        }
+        $roleType = $this->resolveRoleType($user);
 
         // Create Sanctum Token
-        $token = $user->createToken('admin-dashboard')->plainTextToken;
+        $token = $user->createToken('hris-dashboard')->plainTextToken;
 
         $roles = $user->roles->pluck('name');
         $permissions = $user->getAllPermissions()->pluck('name');
@@ -68,6 +59,7 @@ class AuthController extends Controller
                     'email' => $user->email,
                     'avatar' => $user->avatar,
                     'is_superadmin' => (bool) $user->is_superadmin,
+                    'role_type' => $roleType,
                     'roles' => $roles,
                     'permissions' => $permissions,
                 ],
@@ -100,6 +92,7 @@ class AuthController extends Controller
                     'email' => $user->email,
                     'avatar' => $user->avatar,
                     'is_superadmin' => (bool) $user->is_superadmin,
+                    'role_type' => $this->resolveRoleType($user),
                     'roles' => $user->roles->pluck('name'),
                     'permissions' => $user->getAllPermissions()->pluck('name'),
                 ],
@@ -110,6 +103,23 @@ class AuthController extends Controller
                 ] : null,
             ],
         ]);
+    }
+
+    /**
+     * Determine high-level role type for the user
+     */
+    private function resolveRoleType(User $user): string
+    {
+        if ($user->is_superadmin || $user->hasRole('super-admin')) {
+            return 'superadmin';
+        }
+
+        $adminRoles = ['admin', 'hr-manager', 'payroll-manager', 'manager'];
+        if ($user->hasAnyRole($adminRoles)) {
+            return 'admin';
+        }
+
+        return 'user';
     }
 
     /**

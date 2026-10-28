@@ -212,6 +212,13 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             // Dashboard Stats
             Route::get('/dashboard/stats', [AdminApi\DashboardController::class, 'stats'])->name('dashboard.stats');
 
+            // Superadmin Multi-Tenant Management
+            Route::prefix('superadmin')->name('superadmin.')->group(function () {
+                Route::get('/companies/options', [AdminApi\Superadmin\CompanyController::class, 'options'])->name('companies.options');
+                Route::match(['post', 'patch'], '/companies/{id}/toggle-status', [AdminApi\Superadmin\CompanyController::class, 'toggleStatus'])->name('companies.toggle-status');
+                Route::apiResource('companies', AdminApi\Superadmin\CompanyController::class);
+            });
+
             // Master Organisasi
             Route::apiResource('departments', AdminApi\DepartmentController::class);
             Route::apiResource('positions', AdminApi\PositionController::class);
