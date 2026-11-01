@@ -152,7 +152,14 @@ it('allows superadmin to create a new tenant with initial admin account', functi
 
     $newCompanyId = $response->json('data.id');
     expect(Company::where('id', $newCompanyId)->exists())->toBeTrue();
-    expect(User::where('email', 'admin@mitrabaru.com')->where('company_id', $newCompanyId)->exists())->toBeTrue();
+    $newUser = User::where('email', 'admin@mitrabaru.com')->where('company_id', $newCompanyId)->first();
+    expect($newUser)->not->toBeNull();
+
+    setPermissionsTeamId($newCompanyId);
+    expect($newUser->hasRole('admin'))->toBeTrue();
+
+    $teamColumn = config('permission.column_names.team_foreign_key', 'company_id');
+    expect(\Spatie\Permission\Models\Role::where('name', 'admin')->where($teamColumn, $newCompanyId)->exists())->toBeTrue();
 });
 
 it('allows superadmin to view and update company details', function () {

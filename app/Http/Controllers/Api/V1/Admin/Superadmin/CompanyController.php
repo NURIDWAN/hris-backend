@@ -154,12 +154,22 @@ class CompanyController extends AdminBaseController
             if ($request->boolean('create_admin_account') && ! empty($validated['admin_email'])) {
                 setPermissionsTeamId($company->id);
 
-                // Pastikan role admin tersedia untuk team ini
+                $teamColumn = config('permission.column_names.team_foreign_key', 'company_id');
+
+                // Pastikan role admin tersedia untuk team / company ini
                 $adminRole = Role::firstOrCreate([
                     'name' => 'admin',
-                    'team_id' => $company->id,
+                    $teamColumn => $company->id,
                     'guard_name' => 'web',
                 ]);
+
+                // Salin permission default jika role admin baru dibuat untuk perusahaan ini
+                if ($adminRole->wasRecentlyCreated) {
+                    $globalAdmin = Role::where('name', 'admin')->whereNull($teamColumn)->first();
+                    if ($globalAdmin && $globalAdmin->permissions()->exists()) {
+                        $adminRole->syncPermissions($globalAdmin->permissions);
+                    }
+                }
 
                 $user = User::create([
                     'company_id' => $company->id,
