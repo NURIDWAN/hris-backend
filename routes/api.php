@@ -15,6 +15,9 @@ use App\Http\Controllers\Api\V1\OfficeLocationController;
 use App\Http\Controllers\Api\V1\OvertimeController;
 use App\Http\Controllers\Api\V1\PayslipController;
 use App\Http\Controllers\Api\V1\ReimbursementController;
+use App\Http\Controllers\Api\V1\Public\PublicPaymentGatewayController;
+use App\Http\Controllers\Api\V1\Public\PublicPlanController;
+use App\Http\Controllers\Api\V1\Public\PublicTenantRegistrationController;
 use App\Http\Controllers\Api\V1\ScheduleController;
 use App\Http\Controllers\Api\V1\SubscriptionPlanController;
 use App\Http\Controllers\Api\V1\TaxFormController;
@@ -77,6 +80,15 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
     // Subscription Plans (public)
     Route::get('/plans', [SubscriptionPlanController::class, 'index'])->name('plans.index');
     Route::get('/plans/{slug}', [SubscriptionPlanController::class, 'show'])->name('plans.show');
+
+    // Public SaaS Endpoints (Landing Page, Pricing & Tenant Registration)
+    Route::prefix('public')->name('public.')->group(function () {
+        Route::get('/plans', [PublicPlanController::class, 'index'])->name('plans.index');
+        Route::get('/payment-gateways', [PublicPaymentGatewayController::class, 'index'])->name('payment-gateways.index');
+        Route::post('/register-tenant', [PublicTenantRegistrationController::class, 'register'])
+            ->middleware('throttle:5,1')
+            ->name('tenants.register');
+    });
 
     // Protected routes
     Route::middleware('auth:sanctum')->group(function () {
@@ -286,6 +298,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::apiResource('holidays', AdminApi\HolidayController::class);
 
             // Kehadiran (Presensi)
+            Route::get('/attendances/map-monitor', [AdminApi\AttendanceController::class, 'mapMonitor'])->name('attendances.map-monitor');
             Route::get('/attendances/report', [AdminApi\AttendanceController::class, 'report'])->name('attendances.report');
             Route::apiResource('attendances', AdminApi\AttendanceController::class);
 
@@ -363,6 +376,14 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
                     Route::get('/mapping', [AdminApi\Settings\LarkIntegrationController::class, 'mapping'])->name('mapping');
                     Route::post('/mapping/{id}', [AdminApi\Settings\LarkIntegrationController::class, 'saveEmployeeMapping'])->name('mapping.save');
                     Route::delete('/mapping/{id}', [AdminApi\Settings\LarkIntegrationController::class, 'unmapEmployee'])->name('mapping.unmap');
+                });
+
+                // Billing & Langganan
+                Route::prefix('billing')->name('billing.')->group(function () {
+                    Route::get('/', [AdminApi\Settings\BillingController::class, 'index'])->name('index');
+                    Route::post('/upgrade', [AdminApi\Settings\BillingController::class, 'upgrade'])->name('upgrade');
+                    Route::post('/cancel', [AdminApi\Settings\BillingController::class, 'cancel'])->name('cancel');
+                    Route::get('/invoices/{id}', [AdminApi\Settings\BillingController::class, 'invoice'])->name('invoice');
                 });
             });
         });

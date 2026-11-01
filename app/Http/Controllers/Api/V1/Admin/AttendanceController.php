@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Attendance;
 use App\Models\Employee;
+use App\Models\OfficeLocation;
 use App\Models\WorkSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -17,11 +18,11 @@ class AttendanceController extends AdminBaseController
         $companyId = $this->getCompanyId($request);
 
         $query = Attendance::with([
-            'employee:id,first_name,last_name,employee_id,department_id,position_id',
+            'employee:id,first_name,last_name,employee_id,department_id,position_id,avatar',
             'employee.department:id,name',
             'employee.position:id,name',
             'workSchedule:id,name,start_time,end_time',
-            'officeLocation:id,name',
+            'officeLocation:id,name,code,address,city,latitude,longitude,radius,is_headquarters',
         ])->where('company_id', $companyId);
 
         if ($date = $request->input('date')) {
@@ -40,6 +41,12 @@ class AttendanceController extends AdminBaseController
 
         if ($status = $request->input('status')) {
             $query->where('status', $status);
+        }
+
+        if ($officeLocationId = $request->input('office_location_id')) {
+            if ($officeLocationId !== 'ALL') {
+                $query->where('office_location_id', $officeLocationId);
+            }
         }
 
         if ($request->filled('month')) {
@@ -353,5 +360,187 @@ class AttendanceController extends AdminBaseController
         $end = Carbon::parse($clockOut);
 
         return (int) $start->diffInMinutes($end);
+    }
+
+    /**
+     * Get multi-branch attendance map monitoring data
+     */
+    public function mapMonitor(Request $request): JsonResponse
+    {
+        $company = $this->getCompany($request);
+        $companyId = $company ? $company->id : $this->getCompanyId($request);
+
+        $defaultLat = -6.2088;
+        $defaultLng = 106.8456;
+
+        $targetDate = $request->input('date');
+        if (! $targetDate) {
+            $targetDate = method_exists($company, 'today')
+                ? $company->today()->format('Y-m-d')
+                : now()->format('Y-m-d');
+        }
+
+        // Active office locations
+        $offices = OfficeLocation::withCount('employees')
+            ->where('company_id', $companyId)
+            ->where('is_active', true)
+            ->orderBy('is_headquarters', 'desc')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        if ($offices->isNotEmpty()) {
+            $hq = $offices->firstWhere('is_headquarters', true) ?? $offices->first();
+            $defaultLat = (float) $hq->latitude;
+            $defaultLng = (float) $hq->longitude;
+        }
+
+        // Build attendances query
+        $query = Attendance::with([
+            'employee:id,first_name,last_name,employee_id,department_id,position_id,avatar',
+            'employee.department:id,name',
+            'employee.position:id,name',
+            'officeLocation',
+        ])
+            ->where('company_id', $companyId)
+            ->whereDate('date', $targetDate);
+
+        if ($officeId = $request->input('office_location_id')) {
+            if ($officeId !== 'ALL') {
+                $query->where('office_location_id', $officeId);
+            }
+        }
+
+        if ($depId = $request->input('department_id')) {
+            if ($depId !== 'ALL') {
+                $query->whereHas('employee', function ($q) use ($depId) {
+                    $q->where('department_id', $depId);
+                });
+            }
+        }
+
+        if ($search = $request->input('search')) {
+            $query->whereHas('employee', function ($q) use ($search) {
+                $q->where(function ($sub) use ($search) {
+                    $sub->where('first_name', 'like', "%{$search}%")
+                        ->orWhere('last_name', 'like', "%{$search}%")
+                        ->orWhere('employee_id', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        $attendances = $query->orderBy('clock_in', 'desc')->get();
+
+        // Process attendances with coordinates, distance and geofence verification
+        $processedAttendances = $attendances->map(function ($att, $index) use ($offices, $defaultLat, $defaultLng) {
+            $hasCoords = $att->clock_in_latitude !== null && $att->clock_in_longitude !== null;
+            $lat = $hasCoords ? (float) $att->clock_in_latitude : ($defaultLat + (sin($index + 1) * 0.0006));
+            $lng = $hasCoords ? (float) $att->clock_in_longitude : ($defaultLng + (cos($index + 1) * 0.0006));
+
+            // Determine matching office
+            $office = $att->officeLocation;
+            if (! $office && $att->office_location_id) {
+                $office = $offices->firstWhere('id', $att->office_location_id);
+            }
+            if (! $office && $offices->isNotEmpty()) {
+                // Find closest office
+                $office = $offices->sortBy(fn ($o) => $o->distanceTo($lat, $lng))->first();
+            }
+
+            $distance = 0.0;
+            $isWithinRadius = true;
+            if ($office) {
+                $distance = $office->distanceTo($lat, $lng);
+                $isWithinRadius = $distance <= $office->radius;
+            }
+
+            $isOnTime = $att->clock_in_status === 'on_time' || ($att->status === 'present' && (int) $att->late_minutes === 0);
+            $clockInStatus = $isOnTime ? 'on_time' : 'late';
+
+            $photoUrl = null;
+            if ($att->clock_in_photo) {
+                $photoUrl = str_starts_with($att->clock_in_photo, 'http')
+                    ? $att->clock_in_photo
+                    : asset('storage/' . $att->clock_in_photo);
+            }
+
+            return [
+                'id' => $att->id,
+                'employee_id' => $att->employee_id,
+                'employee_name' => trim(($att->employee?->first_name ?? '') . ' ' . ($att->employee?->last_name ?? '')),
+                'employee_code' => $att->employee?->employee_id ?? '-',
+                'avatar' => $att->employee?->avatar,
+                'department' => $att->employee?->department?->name ?? 'Operasional',
+                'position' => $att->employee?->position?->name ?? 'Staff',
+                'date' => $att->date instanceof \DateTimeInterface ? $att->date->format('Y-m-d') : (string) $att->date,
+                'clock_in' => $att->clock_in ? ($att->clock_in instanceof \DateTimeInterface ? $att->clock_in->format('H:i:s') : (string) $att->clock_in) : null,
+                'clock_out' => $att->clock_out ? ($att->clock_out instanceof \DateTimeInterface ? $att->clock_out->format('H:i:s') : (string) $att->clock_out) : null,
+                'status' => $att->status,
+                'clock_in_status' => $clockInStatus,
+                'late_minutes' => (int) ($att->late_minutes ?? 0),
+                'latitude' => (float) $lat,
+                'longitude' => (float) $lng,
+                'office_id' => $office?->id,
+                'office_name' => $office?->name ?? 'Kantor Utama',
+                'office_radius' => $office?->radius ?? 100,
+                'distance_meters' => (float) $distance,
+                'is_within_radius' => (bool) $isWithinRadius,
+                'clock_in_photo' => $photoUrl,
+                'notes' => $att->clock_in_notes ?? $att->admin_notes ?? null,
+            ];
+        });
+
+        // Compute office-level aggregation
+        $officesData = $offices->map(function ($office) use ($processedAttendances) {
+            $officeAtts = $processedAttendances->where('office_id', $office->id);
+            $presentCount = $officeAtts->count();
+            $onTimeCount = $officeAtts->where('clock_in_status', 'on_time')->count();
+            $lateCount = $officeAtts->where('clock_in_status', 'late')->count();
+            $outsideRadiusCount = $officeAtts->where('is_within_radius', false)->count();
+
+            return [
+                'id' => $office->id,
+                'name' => $office->name,
+                'code' => $office->code,
+                'address' => $office->address,
+                'city' => $office->city,
+                'latitude' => (float) $office->latitude,
+                'longitude' => (float) $office->longitude,
+                'radius' => (int) $office->radius,
+                'is_headquarters' => (bool) $office->is_headquarters,
+                'assigned_count' => (int) ($office->employees_count ?? 0),
+                'present_count' => $presentCount,
+                'on_time_count' => $onTimeCount,
+                'late_count' => $lateCount,
+                'outside_radius_count' => $outsideRadiusCount,
+            ];
+        });
+
+        // Filter status if requested
+        $statusFilter = $request->input('status');
+        $filteredAttendances = $processedAttendances;
+        if ($statusFilter && $statusFilter !== 'ALL') {
+            if ($statusFilter === 'on_time') {
+                $filteredAttendances = $filteredAttendances->where('clock_in_status', 'on_time');
+            } elseif ($statusFilter === 'late') {
+                $filteredAttendances = $filteredAttendances->where('clock_in_status', 'late');
+            } elseif ($statusFilter === 'outside_radius') {
+                $filteredAttendances = $filteredAttendances->where('is_within_radius', false);
+            }
+        }
+
+        $summary = [
+            'total_offices' => $offices->count(),
+            'total_present' => $processedAttendances->count(),
+            'total_on_time' => $processedAttendances->where('clock_in_status', 'on_time')->count(),
+            'total_late' => $processedAttendances->where('clock_in_status', 'late')->count(),
+            'total_outside_radius' => $processedAttendances->where('is_within_radius', false)->count(),
+        ];
+
+        return $this->successResponse([
+            'date' => $targetDate,
+            'summary' => $summary,
+            'offices' => $officesData->values(),
+            'attendances' => $filteredAttendances->values(),
+        ], 'Data monitoring peta presensi berhasil diambil');
     }
 }
