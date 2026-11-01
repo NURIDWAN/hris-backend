@@ -1,0 +1,103 @@
+services:
+  # --------------------------------------------------------------------------
+  # Galera Cluster Node 1 (Bootstrap Primary Node)
+  # --------------------------------------------------------------------------
+  mariadb-node1:
+    image: mariadb:10.11
+    container_name: gajipro-mariadb-node1
+    restart: unless-stopped
+    command: ["mysqld", "--wsrep-new-cluster"]
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-gajipro}
+      MYSQL_USER: ${DB_USERNAME:-gajipro}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - db_cluster_node1_data:/var/lib/mysql
+      - ./docker/cluster/galera.cnf:/etc/mysql/conf.d/galera.cnf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  # --------------------------------------------------------------------------
+  # Galera Cluster Node 2 (Replication Peer)
+  # --------------------------------------------------------------------------
+  mariadb-node2:
+    image: mariadb:10.11
+    container_name: gajipro-mariadb-node2
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-gajipro}
+      MYSQL_USER: ${DB_USERNAME:-gajipro}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - db_cluster_node2_data:/var/lib/mysql
+      - ./docker/cluster/galera.cnf:/etc/mysql/conf.d/galera.cnf:ro
+    depends_on:
+      mariadb-node1:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  # --------------------------------------------------------------------------
+  # Galera Cluster Node 3 (Quorum & Replication Peer)
+  # --------------------------------------------------------------------------
+  mariadb-node3:
+    image: mariadb:10.11
+    container_name: gajipro-mariadb-node3
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-gajipro}
+      MYSQL_USER: ${DB_USERNAME:-gajipro}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - db_cluster_node3_data:/var/lib/mysql
+      - ./docker/cluster/galera.cnf:/etc/mysql/conf.d/galera.cnf:ro
+    depends_on:
+      mariadb-node2:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  # --------------------------------------------------------------------------
+  # HAProxy Load Balancer & Single Cluster Entrypoint
+  # --------------------------------------------------------------------------
+  db-cluster:
+    image: haproxy:2.8-alpine
+    container_name: gajipro-db-cluster
+    restart: unless-stopped
+    ports:
+      - "${FORWARD_DB_PORT:-3307}:3306"          # Port akses host / database tools
+      - "${FORWARD_DB_RO_PORT:-3308}:3308"       # Port read-only pool (opsional)
+      - "${FORWARD_DB_STATS_PORT:-8404}:8404"    # Web Dashboard monitoring HAProxy
+    volumes:
+      - ./docker/cluster/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      mariadb-node1:
+        condition: service_healthy
+
+networks:
+  default:
+    name: ${DOCKER_NETWORK:-gajipro-network}
+    driver: bridge
+
+volumes:
+  db_cluster_node1_data:
+  db_cluster_node2_data:
+  db_cluster_node3_data:

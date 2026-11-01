@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\Api\V1\Admin\AdminBaseController;
 use App\Models\Announcement;
 use App\Models\Attendance;
 use App\Models\Company;
@@ -184,7 +183,7 @@ class DashboardController extends AdminBaseController
                 ],
                 'employee' => $employee ? [
                     'id' => $employee->id,
-                    'name' => $employee->first_name . ' ' . $employee->last_name,
+                    'name' => $employee->first_name.' '.$employee->last_name,
                     'employee_id' => $employee->employee_id,
                     'department' => $employee->department?->name ?? 'Operasional',
                     'position' => $employee->position?->name ?? 'Staff',

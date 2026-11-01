@@ -5,7 +5,6 @@ use App\Models\Company;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
-use Carbon\Carbon;
 
 beforeEach(function () {
     $this->company = Company::factory()->create();

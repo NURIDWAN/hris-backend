@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Company;
 use App\Models\Employee;
-use App\Models\Payroll;
-use App\Models\PayrollItem;
 use App\Models\TaxForm1721A1;
 use App\Models\User;
 use Carbon\Carbon;

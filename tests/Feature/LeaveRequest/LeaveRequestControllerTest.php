@@ -42,7 +42,7 @@ describe('LeaveRequest Index', function () {
 
         $response->assertStatus(200);
         $response->assertViewHas('leaveRequests', function ($requests) use ($ownRequest, $otherRequest) {
-            return $requests->contains($ownRequest) && !$requests->contains($otherRequest);
+            return $requests->contains($ownRequest) && ! $requests->contains($otherRequest);
         });
     });
 

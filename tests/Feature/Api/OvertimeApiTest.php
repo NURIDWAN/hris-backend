@@ -313,6 +313,7 @@ describe('POST /api/v1/overtimes/{id}/cancel', function () {
 
 describe('GET /api/v1/overtimes/summary', function () {
     it('returns monthly overtime summary', function () {
+        \Illuminate\Support\Carbon::setTestNow('2026-06-15');
         Sanctum::actingAs($this->user);
 
         OvertimeRequest::factory()->create([

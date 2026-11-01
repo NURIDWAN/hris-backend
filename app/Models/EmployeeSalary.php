@@ -80,6 +80,7 @@ class EmployeeSalary extends Model
     public function isEffective(): bool
     {
         $today = now()->toDateString();
+
         return $this->effective_date <= $today
             && ($this->end_date === null || $this->end_date >= $today);
     }
@@ -87,14 +88,14 @@ class EmployeeSalary extends Model
     public function getTotalEarnings(): float
     {
         return $this->components()
-            ->whereHas('salaryComponent', fn($q) => $q->where('type', 'earning'))
+            ->whereHas('salaryComponent', fn ($q) => $q->where('type', 'earning'))
             ->sum('amount');
     }
 
     public function getTotalDeductions(): float
     {
         return $this->components()
-            ->whereHas('salaryComponent', fn($q) => $q->where('type', 'deduction'))
+            ->whereHas('salaryComponent', fn ($q) => $q->where('type', 'deduction'))
             ->sum('amount');
     }
 
@@ -111,7 +112,7 @@ class EmployeeSalary extends Model
     // Accessors
     public function getFormattedBasicSalaryAttribute(): string
     {
-        return 'Rp ' . number_format($this->basic_salary, 0, ',', '.');
+        return 'Rp '.number_format($this->basic_salary, 0, ',', '.');
     }
 
     public function getPaymentMethodLabelAttribute(): string

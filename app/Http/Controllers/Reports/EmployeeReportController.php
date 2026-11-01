@@ -80,7 +80,8 @@ class EmployeeReportController extends Controller
         if ($format === 'pdf') {
             $company = auth()->user()->company;
             $pdf = Pdf::loadView('reports.employees.pdf', compact('employees', 'company'));
-            return $pdf->download('laporan-karyawan-' . now()->format('Y-m-d') . '.pdf');
+
+            return $pdf->download('laporan-karyawan-'.now()->format('Y-m-d').'.pdf');
         }
 
         // Excel export
@@ -119,7 +120,7 @@ class EmployeeReportController extends Controller
 
     private function exportExcel($employees)
     {
-        $filename = 'laporan-karyawan-' . now()->format('Y-m-d') . '.csv';
+        $filename = 'laporan-karyawan-'.now()->format('Y-m-d').'.csv';
 
         $headers = [
             'Content-Type' => 'text/csv',

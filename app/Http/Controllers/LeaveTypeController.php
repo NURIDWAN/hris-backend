@@ -128,7 +128,7 @@ class LeaveTypeController extends Controller
             abort(404);
         }
 
-        $leaveType->update(['is_active' => !$leaveType->is_active]);
+        $leaveType->update(['is_active' => ! $leaveType->is_active]);
 
         $status = $leaveType->is_active ? 'diaktifkan' : 'dinonaktifkan';
 

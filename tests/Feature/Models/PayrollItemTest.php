@@ -6,7 +6,6 @@ use App\Models\EmployeeSalary;
 use App\Models\Payroll;
 use App\Models\PayrollItem;
 use App\Models\PayrollItemDetail;
-use App\Models\SalaryComponent;
 use App\Models\User;
 
 beforeEach(function () {

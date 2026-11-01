@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1\Admin\Settings;
 
 use App\Http\Controllers\Api\V1\Admin\AdminBaseController;
 use App\Models\Employee;
-use App\Models\LarkIntegration;
 use App\Services\Lark\LarkAttendanceService;
 use App\Services\Lark\LarkAuthService;
 use App\Services\Lark\LarkEmployeeService;

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\AnnouncementController;
 use App\Http\Controllers\Api\V1\ApprovalController;
 use App\Http\Controllers\Api\V1\AttendanceController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\BillingController;
 use App\Http\Controllers\Api\V1\DashboardController;
 use App\Http\Controllers\Api\V1\DeviceTokenController;
 use App\Http\Controllers\Api\V1\EmployeeOfficeController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Api\V1\OvertimeController;
 use App\Http\Controllers\Api\V1\PayslipController;
 use App\Http\Controllers\Api\V1\ReimbursementController;
 use App\Http\Controllers\Api\V1\ScheduleController;
+use App\Http\Controllers\Api\V1\SubscriptionPlanController;
 use App\Http\Controllers\Api\V1\TaxFormController;
 use App\Http\Controllers\Api\V1\Webhooks\LarkWebhookController;
 use App\Http\Controllers\Api\WebhookController;
@@ -51,6 +53,11 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
 
     // Authentication (public) - with strict rate limiting
     Route::prefix('auth')->name('auth.')->group(function () {
+        // Public Tenant Self-Registration: 5 attempts per minute per IP
+        Route::post('/register', [AuthController::class, 'register'])
+            ->middleware(['throttle:5,1', 'abort_if_single_tenant'])
+            ->name('register');
+
         // Login: 5 attempts per minute per IP (brute-force protection)
         Route::post('/login', [AuthController::class, 'login'])
             ->middleware('throttle:5,1')
@@ -66,6 +73,10 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             ->middleware('throttle:5,1')
             ->name('forgot-password');
     });
+
+    // Subscription Plans (public)
+    Route::get('/plans', [SubscriptionPlanController::class, 'index'])->name('plans.index');
+    Route::get('/plans/{slug}', [SubscriptionPlanController::class, 'show'])->name('plans.show');
 
     // Protected routes
     Route::middleware('auth:sanctum')->group(function () {
@@ -195,6 +206,15 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::delete('/{office}', [EmployeeOfficeController::class, 'destroy'])->name('destroy');
             Route::patch('/{office}/set-primary', [EmployeeOfficeController::class, 'setPrimary'])->name('set-primary');
         });
+
+        // Billing & Subscription (disabled in single-tenant mode)
+        Route::prefix('billing')->name('billing.')->middleware('abort_if_single_tenant')->group(function () {
+            Route::get('/subscription', [BillingController::class, 'subscription'])->name('subscription');
+            Route::post('/upgrade', [BillingController::class, 'upgrade'])->name('upgrade');
+            Route::get('/invoices', [BillingController::class, 'invoices'])->name('invoices');
+            Route::get('/invoices/{id}', [BillingController::class, 'invoiceDetail'])->name('invoices.show');
+            Route::post('/cancel', [BillingController::class, 'cancel'])->name('cancel');
+        });
     });
 
     /*
@@ -217,11 +237,32 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             // Dashboard Stats
             Route::get('/dashboard/stats', [AdminApi\DashboardController::class, 'stats'])->name('dashboard.stats');
 
-            // Superadmin Multi-Tenant Management
-            Route::prefix('superadmin')->name('superadmin.')->group(function () {
+            // Superadmin Multi-Tenant & Billing Management
+            Route::prefix('superadmin')->name('superadmin.')->middleware('abort_if_single_tenant')->group(function () {
+                // Companies
                 Route::get('/companies/options', [AdminApi\Superadmin\CompanyController::class, 'options'])->name('companies.options');
                 Route::match(['post', 'patch'], '/companies/{id}/toggle-status', [AdminApi\Superadmin\CompanyController::class, 'toggleStatus'])->name('companies.toggle-status');
                 Route::apiResource('companies', AdminApi\Superadmin\CompanyController::class);
+
+                // Subscriptions
+                Route::post('/subscriptions/{id}/activate', [AdminApi\Superadmin\SubscriptionController::class, 'activate'])->name('subscriptions.activate');
+                Route::post('/subscriptions/{id}/suspend', [AdminApi\Superadmin\SubscriptionController::class, 'suspend'])->name('subscriptions.suspend');
+                Route::post('/subscriptions/{id}/extend', [AdminApi\Superadmin\SubscriptionController::class, 'extend'])->name('subscriptions.extend');
+                Route::post('/subscriptions/{id}/change-plan', [AdminApi\Superadmin\SubscriptionController::class, 'changePlan'])->name('subscriptions.change-plan');
+                Route::apiResource('subscriptions', AdminApi\Superadmin\SubscriptionController::class)->only(['index', 'show']);
+
+                // Payments
+                Route::post('/payments/{id}/confirm', [AdminApi\Superadmin\PaymentController::class, 'confirm'])->name('payments.confirm');
+                Route::post('/payments/{id}/refund', [AdminApi\Superadmin\PaymentController::class, 'refund'])->name('payments.refund');
+                Route::apiResource('payments', AdminApi\Superadmin\PaymentController::class)->only(['index', 'show']);
+
+                // Plans
+                Route::match(['post', 'patch'], '/plans/{id}/toggle-status', [AdminApi\Superadmin\PlanController::class, 'toggleStatus'])->name('plans.toggle-status');
+                Route::apiResource('plans', AdminApi\Superadmin\PlanController::class);
+
+                // Payment Gateways
+                Route::match(['post', 'patch'], '/payment-gateways/{id}/toggle-status', [AdminApi\Superadmin\PaymentGatewayController::class, 'toggleStatus'])->name('payment-gateways.toggle-status');
+                Route::apiResource('payment-gateways', AdminApi\Superadmin\PaymentGatewayController::class);
             });
 
             // Master Organisasi

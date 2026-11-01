@@ -1,0 +1,45 @@
+# ==============================================================================
+# Docker Compose Override untuk Menghubungkan GajiPro App ke Database Cluster
+#
+# Penggunaan:
+#   docker compose -f docker-compose.yml -f docker-compose.cluster.yml up -d
+# ==============================================================================
+services:
+  app:
+    environment:
+      - DB_HOST=db-cluster
+      - DB_PORT=3306
+    networks:
+      - default
+      - gajipro-network
+    depends_on: !reset
+      redis:
+        condition: service_healthy
+
+  queue:
+    environment:
+      - DB_HOST=db-cluster
+      - DB_PORT=3306
+    networks:
+      - default
+      - gajipro-network
+    depends_on: !reset
+      app:
+        condition: service_started
+      redis:
+        condition: service_healthy
+
+  redis:
+    networks:
+      - default
+      - gajipro-network
+
+  # Nonaktifkan single-instance mariadb lokal bawaan saat menggunakan cluster
+  mariadb:
+    profiles:
+      - standalone-only
+
+networks:
+  gajipro-network:
+    name: ${DOCKER_NETWORK:-gajipro-network}
+    external: true

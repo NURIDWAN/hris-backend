@@ -13,8 +13,7 @@ class FaceRecognitionController extends Controller
 {
     public function __construct(
         protected FaceRecognitionService $faceRecognitionService
-    ) {
-    }
+    ) {}
 
     /**
      * Display list of employees with face enrollment status.

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Attendance;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Employee;

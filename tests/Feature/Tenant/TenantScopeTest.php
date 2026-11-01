@@ -20,7 +20,7 @@ describe('Tenant Scope', function () {
         app()->instance('tenant', $company1);
 
         // Now querying should only return company1 users
-        $users = User::query()->withGlobalScope('tenant', new TenantScope())->get();
+        $users = User::query()->withGlobalScope('tenant', new TenantScope)->get();
 
         expect($users)->toHaveCount(3)
             ->and($users->pluck('company_id')->unique()->first())->toBe($company1->id);

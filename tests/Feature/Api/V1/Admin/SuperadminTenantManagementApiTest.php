@@ -262,4 +262,3 @@ it('allows superadmin to switch dashboard context via X-Company-Id header while 
     expect($adminResponse->json('data.company.id'))->toBe($this->companyA->id);
     expect($adminResponse->json('data.company.name'))->toBe('PT Perusahaan A');
 });
-

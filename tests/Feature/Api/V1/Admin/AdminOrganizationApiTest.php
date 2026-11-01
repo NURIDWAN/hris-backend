@@ -3,7 +3,6 @@
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Employee;
-use App\Models\OfficeLocation;
 use App\Models\Position;
 use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;

@@ -22,12 +22,14 @@ class MobileTestingSeeder extends Seeder
         $company = Company::find(1);
         if (! $company) {
             $this->command->error('Company ID 1 tidak ditemukan!');
+
             return;
         }
 
         $employee = Employee::where('user_id', 16)->first() ?? Employee::find(27);
         if (! $employee) {
             $this->command->error('Employee untuk user mobile tidak ditemukan!');
+
             return;
         }
 

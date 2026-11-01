@@ -1,0 +1,32 @@
+[mysqld]
+# Basic Engine Settings Required for Galera
+binlog_format=ROW
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
+innodb_flush_log_at_trx_commit=2
+innodb_doublewrite=1
+innodb_file_per_table=1
+bind-address=0.0.0.0
+
+# Character Set & Collation (Consistent with GajiPro Indonesian HRIS)
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+
+# Performance & Connections
+max_connections=500
+wait_timeout=600
+interactive_timeout=600
+
+# Galera Provider Configuration
+wsrep_on=ON
+wsrep_provider=/usr/lib/galera/libgalera_smm.so
+wsrep_cluster_name="gajipro_cluster"
+wsrep_cluster_address="gcomm://mariadb-node1,mariadb-node2,mariadb-node3"
+
+# State Snapshot Transfer (SST) Configuration
+wsrep_sst_method=rsync
+
+# Flow Control & Parallel Slave Threads
+wsrep_slave_threads=4
+wsrep_certify_nonPK=1
+wsrep_auto_increment_control=1

@@ -105,7 +105,7 @@ class LarkAttendanceService
 
             $createdRecords = $response['data']['flow_records'] ?? ($response['data']['user_flow_records'] ?? []);
             $recordId = ! empty($createdRecords) ? ($createdRecords[0]['record_id'] ?? null) : null;
-            $fallbackRecordId = 'synced_' . $punchTime->timestamp . '_' . $employee->id;
+            $fallbackRecordId = 'synced_'.$punchTime->timestamp.'_'.$employee->id;
 
             $attendance->update([
                 'lark_record_id' => $recordId ?: ($attendance->lark_record_id ?: $fallbackRecordId),

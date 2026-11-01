@@ -3,7 +3,6 @@
 use App\Models\Company;
 use App\Models\Holiday;
 use App\Models\User;
-use App\Models\WorkSchedule;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;

@@ -73,13 +73,14 @@ class LeaveRequestFormRequest extends FormRequest
             ->where('year', $year)
             ->first();
 
-        if (!$balance) {
-            $validator->errors()->add('leave_type_id', 'Tidak ada saldo cuti untuk jenis cuti ini di tahun ' . $year);
+        if (! $balance) {
+            $validator->errors()->add('leave_type_id', 'Tidak ada saldo cuti untuk jenis cuti ini di tahun '.$year);
+
             return;
         }
 
-        if (!$balance->hasEnoughBalance($totalDays)) {
-            $validator->errors()->add('leave_type_id', 'Saldo cuti tidak mencukupi. Tersedia: ' . $balance->remaining_days . ' hari');
+        if (! $balance->hasEnoughBalance($totalDays)) {
+            $validator->errors()->add('leave_type_id', 'Saldo cuti tidak mencukupi. Tersedia: '.$balance->remaining_days.' hari');
         }
     }
 }

@@ -182,17 +182,17 @@ class PayrollItem extends Model
 
     public function getFormattedNetSalaryAttribute(): string
     {
-        return 'Rp ' . number_format($this->net_salary, 0, ',', '.');
+        return 'Rp '.number_format($this->net_salary, 0, ',', '.');
     }
 
     public function getFormattedGrossSalaryAttribute(): string
     {
-        return 'Rp ' . number_format($this->gross_salary, 0, ',', '.');
+        return 'Rp '.number_format($this->gross_salary, 0, ',', '.');
     }
 
     public function getFormattedBasicSalaryAttribute(): string
     {
-        return 'Rp ' . number_format($this->basic_salary, 0, ',', '.');
+        return 'Rp '.number_format($this->basic_salary, 0, ',', '.');
     }
 
     public function getAttendanceSummaryAttribute(): string

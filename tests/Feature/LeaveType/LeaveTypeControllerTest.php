@@ -29,7 +29,7 @@ describe('LeaveType Index', function () {
 
         $response->assertStatus(200);
         $response->assertViewHas('leaveTypes', function ($leaveTypes) use ($ownLeaveType, $otherLeaveType) {
-            return $leaveTypes->contains($ownLeaveType) && !$leaveTypes->contains($otherLeaveType);
+            return $leaveTypes->contains($ownLeaveType) && ! $leaveTypes->contains($otherLeaveType);
         });
     });
 

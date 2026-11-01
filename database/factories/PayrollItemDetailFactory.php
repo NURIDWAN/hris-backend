@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\PayrollItem;
 use App\Models\PayrollItemDetail;
-use App\Models\SalaryComponent;
 use Database\Factories\Concerns\GeneratesRandomData;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

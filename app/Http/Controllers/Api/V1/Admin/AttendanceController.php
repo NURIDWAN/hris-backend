@@ -271,7 +271,7 @@ class AttendanceController extends AdminBaseController
             return [
                 'employee_id' => $emp->id,
                 'employee_number' => $emp->employee_id ?? '',
-                'employee_name' => trim(($emp->first_name ?? '') . ' ' . ($emp->last_name ?? '')),
+                'employee_name' => trim(($emp->first_name ?? '').' '.($emp->last_name ?? '')),
                 'department_name' => $emp->department->name ?? 'Belum diatur',
                 'position_name' => $emp->position->name ?? '-',
                 'total_days' => $totalDays,
@@ -308,6 +308,7 @@ class AttendanceController extends AdminBaseController
         if ($monthInput && is_numeric($monthInput)) {
             $year = $yearInput && is_numeric($yearInput) ? (int) $yearInput : (int) now()->year;
             $month = (int) $monthInput;
+
             return Carbon::createFromDate($year, $month, 1)->startOfMonth();
         }
 
@@ -320,6 +321,7 @@ class AttendanceController extends AdminBaseController
         }
 
         $year = $yearInput && is_numeric($yearInput) ? (int) $yearInput : (int) now()->year;
+
         return Carbon::createFromDate($year, (int) now()->month, 1)->startOfMonth();
     }
 

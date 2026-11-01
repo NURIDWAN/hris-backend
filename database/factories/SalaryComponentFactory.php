@@ -75,7 +75,7 @@ class SalaryComponentFactory extends Factory
     /**
      * Configure as percentage calculation.
      */
-    public function percentage(float $percentage = null): static
+    public function percentage(?float $percentage = null): static
     {
         return $this->state(fn (array $attributes) => [
             'calculation_type' => 'percentage',
@@ -87,7 +87,7 @@ class SalaryComponentFactory extends Factory
     /**
      * Configure as fixed calculation.
      */
-    public function fixed(float $amount = null): static
+    public function fixed(?float $amount = null): static
     {
         return $this->state(fn (array $attributes) => [
             'calculation_type' => 'fixed',

@@ -81,7 +81,7 @@ describe('Employee Index', function () {
             'position_id' => $this->position->id,
         ]);
 
-        $response = $this->get('/employees?department_id=' . $dept1->id);
+        $response = $this->get('/employees?department_id='.$dept1->id);
 
         $response->assertStatus(200);
         $response->assertViewHas('employees', function ($employees) {

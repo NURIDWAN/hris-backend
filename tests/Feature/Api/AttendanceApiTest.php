@@ -24,6 +24,7 @@ beforeEach(function () {
         'name' => 'Regular',
         'start_time' => '08:00:00',
         'end_time' => '17:00:00',
+        'working_days' => [1, 2, 3, 4, 5, 6, 7],
     ]);
     $this->user = User::factory()->create([
         'company_id' => $this->company->id,

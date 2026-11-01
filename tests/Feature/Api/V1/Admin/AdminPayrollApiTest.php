@@ -5,8 +5,6 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\EmployeeSalary;
 use App\Models\Payroll;
-use App\Models\PayrollItem;
-use App\Models\PayrollSetting;
 use App\Models\Position;
 use App\Models\SalaryComponent;
 use App\Models\User;

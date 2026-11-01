@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\Api\V1\RegisterTenantRequest;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Employee;
@@ -9,6 +10,8 @@ use App\Models\OfficeLocation;
 use App\Models\Position;
 use App\Models\User;
 use App\Models\WorkSchedule;
+use App\Services\TenantRegistrationService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +22,117 @@ use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
+    public function __construct(
+        protected ?TenantRegistrationService $registrationService = null
+    ) {
+        $this->registrationService = $registrationService ?? app(TenantRegistrationService::class);
+    }
+
+    #[OA\Post(
+        path: '/auth/register',
+        summary: 'Pendaftaran Tenant Baru (Self-Service)',
+        description: 'Mendaftarkan perusahaan (tenant) baru beserta akun administrator awal dan mengembalikan token autentikasi Sanctum',
+        tags: ['Authentication'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['company_name', 'name', 'email', 'password', 'password_confirmation'],
+                properties: [
+                    new OA\Property(property: 'company_name', type: 'string', example: 'PT Maju Bersama'),
+                    new OA\Property(property: 'name', type: 'string', example: 'Budi Santoso'),
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'budi@majubersama.com'),
+                    new OA\Property(property: 'phone', type: 'string', example: '081234567890'),
+                    new OA\Property(property: 'password', type: 'string', minLength: 8, example: 'password123'),
+                    new OA\Property(property: 'password_confirmation', type: 'string', example: 'password123'),
+                    new OA\Property(property: 'plan', type: 'string', example: 'starter', description: 'Slug paket langganan (default: trial)'),
+                    new OA\Property(property: 'billing_cycle', type: 'string', enum: ['monthly', 'yearly'], example: 'yearly'),
+                    new OA\Property(property: 'gateway', type: 'string', enum: ['xendit', 'midtrans', 'manual'], example: 'xendit'),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Registrasi tenant berhasil',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Registrasi perusahaan berhasil.'),
+                        new OA\Property(
+                            property: 'data',
+                            type: 'object',
+                            properties: [
+                                new OA\Property(property: 'token', type: 'string', example: '1|abcdef123456...'),
+                                new OA\Property(property: 'user', type: 'object'),
+                                new OA\Property(property: 'company', type: 'object'),
+                                new OA\Property(property: 'payment', type: 'object', nullable: true),
+                            ]
+                        ),
+                    ]
+                )
+            ),
+            new OA\Response(response: 403, description: 'Single-tenant mode active'),
+            new OA\Response(response: 422, description: 'Validation error'),
+        ]
+    )]
+    public function register(RegisterTenantRequest $request): JsonResponse
+    {
+        if (single_tenant_mode()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pendaftaran dinonaktifkan dalam mode single-tenant.',
+            ], 403);
+        }
+
+        $result = $this->registrationService->registerTenant($request->validated());
+
+        event(new Registered($result['user']));
+
+        $user = $result['user'];
+        $company = $result['company'];
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        $paymentData = null;
+        if ($result['isPaidPlan'] && $result['payment']) {
+            $payment = $result['payment'];
+            $gatewayResult = $result['gatewayResult'] ?? null;
+            $paymentData = [
+                'id' => $payment->id,
+                'payment_number' => $payment->payment_number,
+                'amount' => (float) $payment->amount,
+                'status' => $payment->status,
+                'gateway' => $payment->gateway,
+                'invoice_url' => $gatewayResult['invoice_url'] ?? $gatewayResult['redirect_url'] ?? null,
+                'expired_at' => $payment->expired_at?->toIso8601String(),
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registrasi perusahaan berhasil.',
+            'data' => [
+                'token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'roles' => $user->roles->pluck('name'),
+                ],
+                'company' => [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    'slug' => $company->slug,
+                    'subscription_plan' => $company->subscription_plan,
+                    'subscription_ends_at' => $company->subscription_ends_at?->toIso8601String(),
+                    'max_employees' => $company->max_employees,
+                    'is_demo_mode' => (bool) $company->is_demo_mode,
+                ],
+                'payment' => $paymentData,
+            ],
+        ], 201);
+    }
+
     #[OA\Post(
         path: '/auth/demo-register',
         summary: 'Registrasi akun demo',
