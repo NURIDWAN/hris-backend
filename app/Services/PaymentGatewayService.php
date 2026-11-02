@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\PaymentGatewaySetting;
 use App\Models\Subscription;
@@ -26,6 +27,23 @@ class PaymentGatewayService
         }
 
         $this->gatewaySetting = $query->first();
+
+        // Fallback jika belum tersimpan di DB namun ada di env config
+        if (! $this->gatewaySetting && ($gateway === 'xendit' || $gateway === null)) {
+            $secretKey = config('services.xendit.secret_key');
+            if ($secretKey) {
+                $this->gatewaySetting = new PaymentGatewaySetting([
+                    'gateway' => 'xendit',
+                    'name' => 'Xendit',
+                    'environment' => 'sandbox',
+                    'credentials' => [
+                        'secret_key' => $secretKey,
+                        'callback_token' => config('services.xendit.callback_token'),
+                    ],
+                    'is_active' => true,
+                ]);
+            }
+        }
     }
 
     public function setGateway(string $gateway): self
@@ -50,25 +68,40 @@ class PaymentGatewayService
 
     protected function createXenditInvoice(array $data): array
     {
-        $credentials = $this->gatewaySetting->credentials;
-        $secretKey = $credentials['secret_key'] ?? '';
+        $credentials = $this->gatewaySetting?->credentials ?? [];
+        $secretKey = $credentials['secret_key'] ?? config('services.xendit.secret_key') ?? '';
 
-        $baseUrl = $this->gatewaySetting->environment === 'production'
+        if (empty($secretKey)) {
+            throw new \Exception('Xendit Secret Key is not configured');
+        }
+
+        $baseUrl = ($this->gatewaySetting && $this->gatewaySetting->environment === 'production')
             ? 'https://api.xendit.co'
             : 'https://api.xendit.co';
 
+        $frontendUrl = rtrim(env('FRONTEND_URL', config('app.frontend_url', 'http://localhost:3000')), '/');
+
         $payload = [
             'external_id' => $data['order_id'],
-            'amount' => $data['amount'],
+            'amount' => (int) $data['amount'],
             'payer_email' => $data['customer_email'],
-            'description' => $data['description'] ?? 'Payment',
+            'description' => $data['description'] ?? 'Langganan Paket HRIS',
             'invoice_duration' => 86400, // 24 hours
+            'currency' => 'IDR',
             'customer' => [
-                'given_names' => $data['customer_name'],
+                'given_names' => $data['customer_name'] ?? 'Pelanggan',
                 'email' => $data['customer_email'],
             ],
-            'success_redirect_url' => config('app.url').'/settings/billing?status=success',
-            'failure_redirect_url' => config('app.url').'/settings/billing?status=failed',
+            'items' => [
+                [
+                    'name' => $data['description'] ?? 'Paket Langganan',
+                    'quantity' => 1,
+                    'price' => (int) $data['amount'],
+                    'category' => 'Subscription',
+                ],
+            ],
+            'success_redirect_url' => $frontendUrl.'/settings?tab=billing&status=success&payment_id='.$data['order_id'],
+            'failure_redirect_url' => $frontendUrl.'/settings?tab=billing&status=failed&payment_id='.$data['order_id'],
         ];
 
         $response = Http::withBasicAuth($secretKey, '')
@@ -76,10 +109,12 @@ class PaymentGatewayService
 
         if (! $response->successful()) {
             Log::error('Xendit invoice creation failed', [
+                'status' => $response->status(),
                 'response' => $response->json(),
                 'payload' => $payload,
             ]);
-            throw new \Exception('Failed to create Xendit invoice');
+            $errorMessage = $response->json('message') ?? 'Failed to create Xendit invoice';
+            throw new \Exception($errorMessage);
         }
 
         $result = $response->json();
@@ -89,6 +124,7 @@ class PaymentGatewayService
             'invoice_url' => $result['invoice_url'],
             'status' => $result['status'],
             'amount' => $result['amount'],
+            'expiry_date' => $result['expiry_date'] ?? null,
         ];
     }
 
@@ -169,6 +205,14 @@ class PaymentGatewayService
                 'paid_at' => now(),
             ]);
 
+            // Update associated invoice
+            if ($payment->invoice_id) {
+                Invoice::where('id', $payment->invoice_id)->update([
+                    'status' => Invoice::STATUS_PAID,
+                    'paid_at' => now(),
+                ]);
+            }
+
             // Extend subscription if applicable
             $this->extendSubscription($payment);
 
@@ -181,6 +225,12 @@ class PaymentGatewayService
                 'gateway_transaction_id' => $invoiceId,
                 'gateway_response' => $payload,
             ]);
+
+            if ($payment->invoice_id) {
+                Invoice::where('id', $payment->invoice_id)->update([
+                    'status' => $status === 'EXPIRED' ? Invoice::STATUS_EXPIRED : Invoice::STATUS_CANCELLED,
+                ]);
+            }
 
             return ['success' => true, 'message' => 'Payment marked as failed'];
         }
@@ -244,21 +294,104 @@ class PaymentGatewayService
             return;
         }
 
-        $currentEndsAt = $subscription->ends_at ?? now();
+        $baseDate = ($subscription->ends_at && $subscription->ends_at->isFuture())
+            ? $subscription->ends_at->copy()
+            : now();
+
         $newEndsAt = $payment->billing_cycle === 'yearly'
-            ? $currentEndsAt->addYear()
-            : $currentEndsAt->addMonth();
+            ? $baseDate->addYear()
+            : $baseDate->addMonth();
 
         $subscription->update([
             'status' => 'active',
             'ends_at' => $newEndsAt,
         ]);
 
-        Log::info('Subscription extended', [
+        if ($payment->company_id) {
+            $payment->company?->update(['is_active' => true]);
+        }
+
+        Log::info('Subscription extended and company activated', [
             'subscription_id' => $subscription->id,
             'payment_id' => $payment->id,
             'new_ends_at' => $newEndsAt,
         ]);
+    }
+
+    public function syncXenditInvoice(Payment $payment): array
+    {
+        $this->loadActiveGateway('xendit');
+        $credentials = $this->gatewaySetting?->credentials ?? [];
+        $secretKey = $credentials['secret_key'] ?? config('services.xendit.secret_key') ?? '';
+
+        if (empty($secretKey)) {
+            return [
+                'success' => false,
+                'message' => 'Kunci rahasia (Secret Key) Xendit belum dikonfigurasi',
+            ];
+        }
+
+        $invoiceId = $payment->gateway_transaction_id;
+
+        $baseUrl = ($this->gatewaySetting && $this->gatewaySetting->environment === 'production')
+            ? 'https://api.xendit.co'
+            : 'https://api.xendit.co';
+
+        $response = null;
+        if ($invoiceId) {
+            $response = Http::withBasicAuth($secretKey, '')
+                ->get($baseUrl."/v2/invoices/{$invoiceId}");
+        }
+
+        if (! $response || ! $response->successful()) {
+            $response = Http::withBasicAuth($secretKey, '')
+                ->get($baseUrl."/v2/invoices?external_id={$payment->payment_number}");
+
+            $invoices = $response->json();
+            if (! $response->successful() || empty($invoices) || ! isset($invoices[0])) {
+                return [
+                    'success' => false,
+                    'message' => 'Status invoice tidak ditemukan di Xendit',
+                ];
+            }
+            $invoiceData = $invoices[0];
+        } else {
+            $invoiceData = $response->json();
+        }
+
+        $status = strtoupper($invoiceData['status'] ?? '');
+
+        if (in_array($status, ['PAID', 'SETTLED'])) {
+            $this->handleXenditCallback($invoiceData);
+
+            return [
+                'success' => true,
+                'is_paid' => true,
+                'status' => 'success',
+                'message' => 'Pembayaran telah diverifikasi sukses dan langganan aktif!',
+                'data' => $invoiceData,
+            ];
+        }
+
+        if ($status === 'EXPIRED') {
+            $this->handleXenditCallback($invoiceData);
+
+            return [
+                'success' => true,
+                'is_paid' => false,
+                'status' => 'expired',
+                'message' => 'Tagihan Xendit telah kedaluwarsa.',
+                'data' => $invoiceData,
+            ];
+        }
+
+        return [
+            'success' => true,
+            'is_paid' => false,
+            'status' => strtolower($status),
+            'message' => 'Menunggu pembayaran dari pelanggan.',
+            'data' => $invoiceData,
+        ];
     }
 
     protected function mapXenditPaymentMethod(?string $method): string

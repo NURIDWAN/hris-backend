@@ -13,6 +13,7 @@ use App\Services\PaymentGatewayService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BillingController extends AdminBaseController
 {
@@ -120,6 +121,8 @@ class BillingController extends AdminBaseController
                 'created_at' => $p->created_at?->toISOString(),
                 'expired_at' => $p->expired_at?->toISOString(),
                 'paid_at' => $p->paid_at?->toISOString(),
+                'invoice_url' => $p->gateway_response['invoice_url'] ?? null,
+                'payment_proof' => $p->gateway_response['payment_proof'] ?? null,
             ]);
 
         $subscriptionData = null;
@@ -273,6 +276,10 @@ class BillingController extends AdminBaseController
             $payment->update([
                 'gateway_order_id' => $payment->payment_number,
                 'gateway_transaction_id' => $result['invoice_id'] ?? $result['token'] ?? null,
+                'gateway_response' => array_merge($payment->gateway_response ?? [], [
+                    'invoice_url' => $result['invoice_url'] ?? $result['redirect_url'] ?? null,
+                    'invoice_id' => $result['invoice_id'] ?? null,
+                ]),
             ]);
 
             return $this->successResponse([
@@ -375,6 +382,8 @@ class BillingController extends AdminBaseController
             'expired_at' => $payment->expired_at?->toISOString(),
             'paid_at' => $payment->paid_at?->toISOString(),
             'bank_info' => $bankInfo,
+            'invoice_url' => $payment->gateway_response['invoice_url'] ?? null,
+            'payment_proof' => $payment->gateway_response['payment_proof'] ?? null,
             'company' => [
                 'name' => $company->name,
                 'email' => $company->email,
@@ -387,5 +396,125 @@ class BillingController extends AdminBaseController
                 'max_employees' => $plan->max_employees,
             ] : null,
         ], 'Detail faktur berhasil diambil');
+    }
+
+    /**
+     * Konfirmasi pembayaran manual dan unggah bukti transfer oleh tenant admin.
+     */
+    public function confirmPayment(Request $request, int $id): JsonResponse
+    {
+        $company = $this->getCompany($request);
+
+        if (! $company) {
+            return $this->errorResponse('Data perusahaan tidak ditemukan', 404);
+        }
+
+        $payment = Payment::where('company_id', $company->id)
+            ->where(function ($query) use ($id) {
+                $query->where('id', $id)
+                    ->orWhere('invoice_id', $id);
+            })
+            ->with(['invoice', 'subscription.plan'])
+            ->first();
+
+        if (! $payment) {
+            return $this->errorResponse('Faktur atau transaksi pembayaran tidak ditemukan', 404);
+        }
+
+        if ($payment->status === Payment::STATUS_SUCCESS) {
+            return $this->errorResponse('Pembayaran ini telah terkonfirmasi lunas.', 400);
+        }
+
+        $validated = $request->validate([
+            'sender_bank' => ['required', 'string', 'max:50'],
+            'sender_name' => ['required', 'string', 'max:100'],
+            'sender_account' => ['required', 'string', 'max:50'],
+            'transfer_date' => ['nullable', 'date'],
+            'notes' => ['nullable', 'string', 'max:500'],
+            'proof_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+        ]);
+
+        $proofFilePath = null;
+        $proofFileUrl = null;
+
+        if ($request->hasFile('proof_file')) {
+            $path = $request->file('proof_file')->store('payment-proofs/'.$company->id, 'public');
+            $proofFilePath = $path;
+            $proofFileUrl = asset('storage/'.$path);
+        }
+
+        $proofData = [
+            'sender_bank' => $validated['sender_bank'],
+            'sender_name' => $validated['sender_name'],
+            'sender_account' => $validated['sender_account'],
+            'transfer_date' => $validated['transfer_date'] ?? now()->toDateString(),
+            'notes' => $validated['notes'] ?? null,
+            'file_path' => $proofFilePath,
+            'file_url' => $proofFileUrl,
+            'submitted_at' => now()->toIso8601String(),
+        ];
+
+        // Simpan ke gateway_response
+        $existingGatewayResponse = $payment->gateway_response ?? [];
+        $existingGatewayResponse['payment_proof'] = $proofData;
+
+        $payment->update([
+            'gateway_response' => $existingGatewayResponse,
+            'payment_method' => Payment::METHOD_MANUAL,
+        ]);
+
+        if ($payment->invoice) {
+            $invoiceDetails = $payment->invoice->payment_details ?? [];
+            $invoiceDetails['payment_proof'] = $proofData;
+            $payment->invoice->update([
+                'payment_details' => $invoiceDetails,
+            ]);
+        }
+
+        return $this->successResponse([
+            'payment_id' => $payment->id,
+            'invoice_id' => $payment->invoice_id,
+            'status' => $payment->status,
+            'payment_proof' => $proofData,
+        ], 'Bukti pembayaran berhasil dikirim. Menunggu verifikasi dari Superadmin.');
+    }
+
+    /**
+     * Sinkronisasi status invoice Xendit secara instan dari sisi tenant.
+     */
+    public function syncXenditStatus(Request $request, int $id): JsonResponse
+    {
+        $company = $this->getCompany($request);
+
+        if (! $company) {
+            return $this->errorResponse('Data perusahaan tidak ditemukan', 404);
+        }
+
+        $payment = Payment::where('company_id', $company->id)
+            ->where(function ($query) use ($id) {
+                $query->where('id', $id)
+                    ->orWhere('invoice_id', $id);
+            })
+            ->first();
+
+        if (! $payment) {
+            return $this->errorResponse('Tagihan atau bukti pembayaran tidak ditemukan', 404);
+        }
+
+        if ($payment->gateway !== PaymentGatewaySetting::GATEWAY_XENDIT) {
+            return $this->errorResponse('Metode pembayaran transaksi ini bukan Xendit', 400);
+        }
+
+        $result = $this->paymentService->syncXenditInvoice($payment);
+
+        if (! $result['success']) {
+            return $this->errorResponse($result['message'], 400);
+        }
+
+        return $this->successResponse([
+            'payment_id' => $payment->id,
+            'status' => $result['status'],
+            'is_paid' => $result['is_paid'] ?? false,
+        ], $result['message']);
     }
 }

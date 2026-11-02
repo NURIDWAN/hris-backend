@@ -190,4 +190,53 @@ describe('Admin Billing API', function () {
 
         $response->assertStatus(404);
     });
+
+    it('can submit payment proof for pending invoice', function () {
+        Illuminate\Support\Facades\Storage::fake('public');
+
+        $payment = Payment::factory()->create([
+            'company_id' => $this->company->id,
+            'amount' => 3500000,
+            'gateway' => 'manual',
+            'status' => Payment::STATUS_PENDING,
+        ]);
+
+        $file = Illuminate\Http\UploadedFile::fake()->image('bukti_transfer.jpg');
+
+        $response = $this->postJson("/api/v1/admin/settings/billing/invoices/{$payment->id}/confirm-payment", [
+            'sender_bank' => 'BCA',
+            'sender_name' => 'Budi Santoso',
+            'sender_account' => '0812345678',
+            'transfer_date' => now()->toDateString(),
+            'notes' => 'Sudah ditransfer melalui m-BCA',
+            'proof_file' => $file,
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.payment_proof.sender_bank', 'BCA')
+            ->assertJsonPath('data.payment_proof.sender_name', 'Budi Santoso');
+
+        $freshPayment = $payment->fresh();
+        expect($freshPayment->gateway_response)->toHaveKey('payment_proof');
+        expect($freshPayment->gateway_response['payment_proof']['sender_bank'])->toBe('BCA');
+    });
+
+    it('denies submitting payment proof for invoice of another tenant', function () {
+        $otherCompany = Company::factory()->create(['name' => 'PT Lain']);
+
+        $otherPayment = Payment::factory()->create([
+            'company_id' => $otherCompany->id,
+            'amount' => 100000,
+            'status' => Payment::STATUS_PENDING,
+        ]);
+
+        $response = $this->postJson("/api/v1/admin/settings/billing/invoices/{$otherPayment->id}/confirm-payment", [
+            'sender_bank' => 'BCA',
+            'sender_name' => 'Budi',
+            'sender_account' => '123',
+        ]);
+
+        $response->assertStatus(404);
+    });
 });

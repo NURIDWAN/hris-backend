@@ -24,18 +24,13 @@ class WebhookController extends Controller
         ]);
 
         // Verify callback token - REQUIRED for security
-        $callbackToken = $request->header('X-CALLBACK-TOKEN');
+        $callbackToken = $request->header('X-CALLBACK-TOKEN') ?? $request->header('x-callback-token');
         $gateway = PaymentGatewaySetting::where('gateway', 'xendit')
             ->where('is_active', true)
             ->first();
 
-        if (! $gateway) {
-            Log::error('Xendit gateway not configured');
+        $expectedToken = $gateway?->credentials['callback_token'] ?? config('services.xendit.callback_token');
 
-            return response()->json(['message' => 'Gateway not configured'], 503);
-        }
-
-        $expectedToken = $gateway->credentials['callback_token'] ?? null;
         if (! $expectedToken) {
             Log::error('Xendit callback token not configured');
 

@@ -384,6 +384,8 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
                     Route::post('/upgrade', [AdminApi\Settings\BillingController::class, 'upgrade'])->name('upgrade');
                     Route::post('/cancel', [AdminApi\Settings\BillingController::class, 'cancel'])->name('cancel');
                     Route::get('/invoices/{id}', [AdminApi\Settings\BillingController::class, 'invoice'])->name('invoice');
+                    Route::post('/invoices/{id}/confirm-payment', [AdminApi\Settings\BillingController::class, 'confirmPayment'])->name('invoices.confirm-payment');
+                    Route::post('/invoices/{id}/sync-xendit', [AdminApi\Settings\BillingController::class, 'syncXenditStatus'])->name('invoices.sync-xendit');
                 });
             });
         });

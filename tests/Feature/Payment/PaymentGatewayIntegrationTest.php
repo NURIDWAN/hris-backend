@@ -213,7 +213,9 @@ describe('Payment Webhook', function () {
             'amount' => 299000,
         ]);
 
-        $response = $this->postJson('/api/webhooks/xendit', [
+        $response = $this->withHeaders([
+            'X-CALLBACK-TOKEN' => 'test-callback-token',
+        ])->postJson('/api/webhooks/xendit', [
             'external_id' => 'PAY-WEBHOOK-123',
             'status' => 'PAID',
             'amount' => 299000,
@@ -230,7 +232,9 @@ describe('Payment Webhook', function () {
     it('returns 404 for invalid external_id', function () {
         PaymentGatewaySetting::factory()->xendit()->create();
 
-        $response = $this->postJson('/api/webhooks/xendit', [
+        $response = $this->withHeaders([
+            'X-CALLBACK-TOKEN' => 'test-callback-token',
+        ])->postJson('/api/webhooks/xendit', [
             'external_id' => 'INVALID-ORDER-ID',
             'status' => 'PAID',
             'amount' => 299000,
