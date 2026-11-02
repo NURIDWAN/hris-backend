@@ -14,7 +14,8 @@ class OfficeLocationController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
-        $query = OfficeLocation::withCount('employees')
+        $query = OfficeLocation::with(['employees:id,first_name,last_name,employee_id'])
+            ->withCount('employees')
             ->where('company_id', $companyId);
 
         if ($search = $request->input('search')) {

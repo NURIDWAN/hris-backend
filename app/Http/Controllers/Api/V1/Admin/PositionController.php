@@ -42,6 +42,28 @@ class PositionController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
+        // Normalize string level to integer if necessary
+        if ($request->has('level') && ! is_numeric($request->input('level'))) {
+            $levelMap = [
+                'intern' => 1,
+                'internship' => 1,
+                'magang' => 1,
+                'junior' => 2,
+                'staff' => 2,
+                'senior' => 3,
+                'lead' => 4,
+                'team_lead' => 4,
+                'supervisor' => 5,
+                'spv' => 5,
+                'manager' => 6,
+                'head' => 6,
+                'director' => 7,
+                'vp' => 7,
+            ];
+            $lvl = strtolower(trim((string) $request->input('level')));
+            $request->merge(['level' => $levelMap[$lvl] ?? 1]);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'code' => [
@@ -86,6 +108,28 @@ class PositionController extends AdminBaseController
         $companyId = $this->getCompanyId($request);
 
         $position = Position::where('company_id', $companyId)->findOrFail($id);
+
+        // Normalize string level to integer if necessary
+        if ($request->has('level') && ! is_numeric($request->input('level'))) {
+            $levelMap = [
+                'intern' => 1,
+                'internship' => 1,
+                'magang' => 1,
+                'junior' => 2,
+                'staff' => 2,
+                'senior' => 3,
+                'lead' => 4,
+                'team_lead' => 4,
+                'supervisor' => 5,
+                'spv' => 5,
+                'manager' => 6,
+                'head' => 6,
+                'director' => 7,
+                'vp' => 7,
+            ];
+            $lvl = strtolower(trim((string) $request->input('level')));
+            $request->merge(['level' => $levelMap[$lvl] ?? 1]);
+        }
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],

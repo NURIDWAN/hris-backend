@@ -66,6 +66,32 @@ class AttendanceController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
+        // Normalize parameter aliases for frontend compatibility
+        $normalizations = [];
+        if ($request->has('time_in') && ! $request->has('clock_in')) {
+            $normalizations['clock_in'] = $request->input('time_in');
+        }
+        if ($request->has('time_out') && ! $request->has('clock_out')) {
+            $normalizations['clock_out'] = $request->input('time_out');
+        }
+        if ($request->has('notes') && ! $request->has('admin_notes')) {
+            $normalizations['admin_notes'] = $request->input('notes');
+        }
+        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
+        if (! empty($normalizations['clock_in'])) {
+            $normalizations['clock_in'] = substr($normalizations['clock_in'], 0, 5);
+        } elseif ($request->has('clock_in') && is_string($request->input('clock_in'))) {
+            $normalizations['clock_in'] = substr($request->input('clock_in'), 0, 5);
+        }
+        if (! empty($normalizations['clock_out'])) {
+            $normalizations['clock_out'] = substr($normalizations['clock_out'], 0, 5);
+        } elseif ($request->has('clock_out') && is_string($request->input('clock_out'))) {
+            $normalizations['clock_out'] = substr($request->input('clock_out'), 0, 5);
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
+
         $validated = $request->validate([
             'employee_id' => [
                 'required',
@@ -149,6 +175,32 @@ class AttendanceController extends AdminBaseController
         $companyId = $this->getCompanyId($request);
 
         $attendance = Attendance::where('company_id', $companyId)->findOrFail($id);
+
+        // Normalize parameter aliases for frontend compatibility
+        $normalizations = [];
+        if ($request->has('time_in') && ! $request->has('clock_in')) {
+            $normalizations['clock_in'] = $request->input('time_in');
+        }
+        if ($request->has('time_out') && ! $request->has('clock_out')) {
+            $normalizations['clock_out'] = $request->input('time_out');
+        }
+        if ($request->has('notes') && ! $request->has('admin_notes')) {
+            $normalizations['admin_notes'] = $request->input('notes');
+        }
+        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
+        if (! empty($normalizations['clock_in'])) {
+            $normalizations['clock_in'] = substr($normalizations['clock_in'], 0, 5);
+        } elseif ($request->has('clock_in') && is_string($request->input('clock_in'))) {
+            $normalizations['clock_in'] = substr($request->input('clock_in'), 0, 5);
+        }
+        if (! empty($normalizations['clock_out'])) {
+            $normalizations['clock_out'] = substr($normalizations['clock_out'], 0, 5);
+        } elseif ($request->has('clock_out') && is_string($request->input('clock_out'))) {
+            $normalizations['clock_out'] = substr($request->input('clock_out'), 0, 5);
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
 
         $validated = $request->validate([
             'date' => ['sometimes', 'required', 'date'],

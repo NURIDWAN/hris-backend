@@ -97,6 +97,18 @@ class EmployeeController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
+        // Normalize parameter aliases for frontend compatibility
+        $normalizations = [];
+        if ($request->has('birth_date') && ! $request->has('date_of_birth')) {
+            $normalizations['date_of_birth'] = $request->input('birth_date');
+        }
+        if ($request->input('employment_status') === 'internship') {
+            $normalizations['employment_status'] = 'intern';
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
+
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['nullable', 'string', 'max:255'],
@@ -215,6 +227,18 @@ class EmployeeController extends AdminBaseController
             $emailRule[] = Rule::unique('users', 'email')->ignore($employee->user_id);
         } else {
             $emailRule[] = 'unique:users,email';
+        }
+
+        // Normalize parameter aliases for frontend compatibility
+        $normalizations = [];
+        if ($request->has('birth_date') && ! $request->has('date_of_birth')) {
+            $normalizations['date_of_birth'] = $request->input('birth_date');
+        }
+        if ($request->input('employment_status') === 'internship') {
+            $normalizations['employment_status'] = 'intern';
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
         }
 
         $validated = $request->validate([

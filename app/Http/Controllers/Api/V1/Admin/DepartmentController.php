@@ -116,6 +116,10 @@ class DepartmentController extends AdminBaseController
             return $this->errorResponse('Departemen tidak dapat dihapus karena masih memiliki karyawan terkait', 422);
         }
 
+        if ($department->children()->count() > 0) {
+            return $this->errorResponse('Departemen tidak dapat dihapus karena masih memiliki sub-departemen turunan', 422);
+        }
+
         $department->delete();
 
         return $this->successResponse(null, 'Departemen berhasil dihapus');

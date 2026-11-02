@@ -40,6 +40,11 @@ class HolidayController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
+        // Normalize is_national boolean to type string
+        if ($request->has('is_national') && ! $request->has('type')) {
+            $request->merge(['type' => $request->boolean('is_national') ? 'national' : 'company']);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'date' => [
@@ -79,6 +84,11 @@ class HolidayController extends AdminBaseController
         $companyId = $this->getCompanyId($request);
 
         $holiday = Holiday::where('company_id', $companyId)->findOrFail($id);
+
+        // Normalize is_national boolean to type string
+        if ($request->has('is_national') && ! $request->has('type')) {
+            $request->merge(['type' => $request->boolean('is_national') ? 'national' : 'company']);
+        }
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],

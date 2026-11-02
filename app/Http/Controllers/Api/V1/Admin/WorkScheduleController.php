@@ -37,6 +37,32 @@ class WorkScheduleController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
+        // Normalize parameter aliases for frontend compatibility
+        $normalizations = [];
+        if ($request->has('time_in') && ! $request->has('start_time')) {
+            $normalizations['start_time'] = $request->input('time_in');
+        }
+        if ($request->has('time_out') && ! $request->has('end_time')) {
+            $normalizations['end_time'] = $request->input('time_out');
+        }
+        if ($request->has('late_tolerance_minutes') && ! $request->has('late_tolerance')) {
+            $normalizations['late_tolerance'] = $request->input('late_tolerance_minutes');
+        }
+        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
+        if (! empty($normalizations['start_time'])) {
+            $normalizations['start_time'] = substr($normalizations['start_time'], 0, 5);
+        } elseif ($request->has('start_time') && is_string($request->input('start_time'))) {
+            $normalizations['start_time'] = substr($request->input('start_time'), 0, 5);
+        }
+        if (! empty($normalizations['end_time'])) {
+            $normalizations['end_time'] = substr($normalizations['end_time'], 0, 5);
+        } elseif ($request->has('end_time') && is_string($request->input('end_time'))) {
+            $normalizations['end_time'] = substr($request->input('end_time'), 0, 5);
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'code' => [
@@ -92,6 +118,32 @@ class WorkScheduleController extends AdminBaseController
         $companyId = $this->getCompanyId($request);
 
         $schedule = WorkSchedule::where('company_id', $companyId)->findOrFail($id);
+
+        // Normalize parameter aliases for frontend compatibility
+        $normalizations = [];
+        if ($request->has('time_in') && ! $request->has('start_time')) {
+            $normalizations['start_time'] = $request->input('time_in');
+        }
+        if ($request->has('time_out') && ! $request->has('end_time')) {
+            $normalizations['end_time'] = $request->input('time_out');
+        }
+        if ($request->has('late_tolerance_minutes') && ! $request->has('late_tolerance')) {
+            $normalizations['late_tolerance'] = $request->input('late_tolerance_minutes');
+        }
+        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
+        if (! empty($normalizations['start_time'])) {
+            $normalizations['start_time'] = substr($normalizations['start_time'], 0, 5);
+        } elseif ($request->has('start_time') && is_string($request->input('start_time'))) {
+            $normalizations['start_time'] = substr($request->input('start_time'), 0, 5);
+        }
+        if (! empty($normalizations['end_time'])) {
+            $normalizations['end_time'] = substr($normalizations['end_time'], 0, 5);
+        } elseif ($request->has('end_time') && is_string($request->input('end_time'))) {
+            $normalizations['end_time'] = substr($request->input('end_time'), 0, 5);
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
