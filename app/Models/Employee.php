@@ -58,6 +58,10 @@ class Employee extends Model
         'is_active',
     ];
 
+    protected $appends = [
+        'avatar',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -234,6 +238,17 @@ class Employee extends Model
     public function getFullNameAttribute(): string
     {
         return trim($this->first_name.' '.$this->last_name);
+    }
+
+    public function getAvatarAttribute(): ?string
+    {
+        if (! $this->photo) {
+            return null;
+        }
+
+        return str_starts_with($this->photo, 'http')
+            ? $this->photo
+            : asset('storage/'.$this->photo);
     }
 
     public function getAgeAttribute(): int

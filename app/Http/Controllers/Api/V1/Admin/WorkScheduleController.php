@@ -37,31 +37,7 @@ class WorkScheduleController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
-        // Normalize parameter aliases for frontend compatibility
-        $normalizations = [];
-        if ($request->has('time_in') && ! $request->has('start_time')) {
-            $normalizations['start_time'] = $request->input('time_in');
-        }
-        if ($request->has('time_out') && ! $request->has('end_time')) {
-            $normalizations['end_time'] = $request->input('time_out');
-        }
-        if ($request->has('late_tolerance_minutes') && ! $request->has('late_tolerance')) {
-            $normalizations['late_tolerance'] = $request->input('late_tolerance_minutes');
-        }
-        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
-        if (! empty($normalizations['start_time'])) {
-            $normalizations['start_time'] = substr($normalizations['start_time'], 0, 5);
-        } elseif ($request->has('start_time') && is_string($request->input('start_time'))) {
-            $normalizations['start_time'] = substr($request->input('start_time'), 0, 5);
-        }
-        if (! empty($normalizations['end_time'])) {
-            $normalizations['end_time'] = substr($normalizations['end_time'], 0, 5);
-        } elseif ($request->has('end_time') && is_string($request->input('end_time'))) {
-            $normalizations['end_time'] = substr($request->input('end_time'), 0, 5);
-        }
-        if (! empty($normalizations)) {
-            $request->merge($normalizations);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -85,9 +61,7 @@ class WorkScheduleController extends AdminBaseController
         ]);
 
         if (! empty($validated['is_default'])) {
-            WorkSchedule::where('company_id', $companyId)
-                ->where('is_default', true)
-                ->update(['is_default' => false]);
+            $this->unsetOtherDefaults($companyId);
         }
 
         $schedule = WorkSchedule::create([
@@ -119,31 +93,7 @@ class WorkScheduleController extends AdminBaseController
 
         $schedule = WorkSchedule::where('company_id', $companyId)->findOrFail($id);
 
-        // Normalize parameter aliases for frontend compatibility
-        $normalizations = [];
-        if ($request->has('time_in') && ! $request->has('start_time')) {
-            $normalizations['start_time'] = $request->input('time_in');
-        }
-        if ($request->has('time_out') && ! $request->has('end_time')) {
-            $normalizations['end_time'] = $request->input('time_out');
-        }
-        if ($request->has('late_tolerance_minutes') && ! $request->has('late_tolerance')) {
-            $normalizations['late_tolerance'] = $request->input('late_tolerance_minutes');
-        }
-        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
-        if (! empty($normalizations['start_time'])) {
-            $normalizations['start_time'] = substr($normalizations['start_time'], 0, 5);
-        } elseif ($request->has('start_time') && is_string($request->input('start_time'))) {
-            $normalizations['start_time'] = substr($request->input('start_time'), 0, 5);
-        }
-        if (! empty($normalizations['end_time'])) {
-            $normalizations['end_time'] = substr($normalizations['end_time'], 0, 5);
-        } elseif ($request->has('end_time') && is_string($request->input('end_time'))) {
-            $normalizations['end_time'] = substr($request->input('end_time'), 0, 5);
-        }
-        if (! empty($normalizations)) {
-            $request->merge($normalizations);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
@@ -167,10 +117,7 @@ class WorkScheduleController extends AdminBaseController
         ]);
 
         if (! empty($validated['is_default'])) {
-            WorkSchedule::where('company_id', $companyId)
-                ->where('id', '!=', $schedule->id)
-                ->where('is_default', true)
-                ->update(['is_default' => false]);
+            $this->unsetOtherDefaults($companyId, (int) $schedule->id);
         }
 
         if ($request->has('is_active')) {
@@ -195,5 +142,54 @@ class WorkScheduleController extends AdminBaseController
         $schedule->delete();
 
         return $this->successResponse(null, 'Jadwal kerja berhasil dihapus');
+    }
+
+    /**
+     * Normalize frontend parameter aliases for work schedule payload.
+     */
+    private function normalizePayload(Request $request): void
+    {
+        $normalizations = [];
+        if ($request->has('time_in') && ! $request->has('start_time')) {
+            $normalizations['start_time'] = $request->input('time_in');
+        }
+        if ($request->has('time_out') && ! $request->has('end_time')) {
+            $normalizations['end_time'] = $request->input('time_out');
+        }
+        if ($request->has('late_tolerance_minutes') && ! $request->has('late_tolerance')) {
+            $normalizations['late_tolerance'] = $request->input('late_tolerance_minutes');
+        }
+
+        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
+        if (! empty($normalizations['start_time'])) {
+            $normalizations['start_time'] = substr($normalizations['start_time'], 0, 5);
+        } elseif ($request->has('start_time') && is_string($request->input('start_time'))) {
+            $normalizations['start_time'] = substr($request->input('start_time'), 0, 5);
+        }
+
+        if (! empty($normalizations['end_time'])) {
+            $normalizations['end_time'] = substr($normalizations['end_time'], 0, 5);
+        } elseif ($request->has('end_time') && is_string($request->input('end_time'))) {
+            $normalizations['end_time'] = substr($request->input('end_time'), 0, 5);
+        }
+
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
+    }
+
+    /**
+     * Reset default flag on other work schedules within the company.
+     */
+    private function unsetOtherDefaults(int $companyId, ?int $exceptScheduleId = null): void
+    {
+        $query = WorkSchedule::where('company_id', $companyId)
+            ->where('is_default', true);
+
+        if ($exceptScheduleId !== null) {
+            $query->where('id', '!=', $exceptScheduleId);
+        }
+
+        $query->update(['is_default' => false]);
     }
 }

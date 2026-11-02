@@ -310,7 +310,7 @@ class DashboardController extends AdminBaseController
     private function getRecentClockIns(Company $company, CarbonInterface $companyToday): Collection
     {
         return Attendance::with([
-            'employee:id,first_name,last_name,employee_id,avatar,department_id',
+            'employee:id,first_name,last_name,employee_id,photo,department_id',
             'employee.department:id,name',
         ])
             ->where('company_id', $company->id)
@@ -355,7 +355,7 @@ class DashboardController extends AdminBaseController
         }
 
         return Attendance::with([
-            'employee:id,first_name,last_name,employee_id,avatar,department_id',
+            'employee:id,first_name,last_name,employee_id,photo,department_id',
             'employee.department:id,name',
         ])
             ->where('company_id', $company->id)

@@ -97,17 +97,7 @@ class EmployeeController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
-        // Normalize parameter aliases for frontend compatibility
-        $normalizations = [];
-        if ($request->has('birth_date') && ! $request->has('date_of_birth')) {
-            $normalizations['date_of_birth'] = $request->input('birth_date');
-        }
-        if ($request->input('employment_status') === 'internship') {
-            $normalizations['employment_status'] = 'intern';
-        }
-        if (! empty($normalizations)) {
-            $request->merge($normalizations);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
@@ -142,31 +132,9 @@ class EmployeeController extends AdminBaseController
         ]);
 
         $employee = DB::transaction(function () use ($validated, $companyId, $request) {
-            $user = null;
-            if (! empty($validated['password']) && ! empty($validated['email'])) {
-                setPermissionsTeamId($companyId);
-                $fullName = trim($validated['first_name'].' '.($validated['last_name'] ?? ''));
+            $user = $this->createUserAccount($companyId, $validated);
 
-                $user = User::create([
-                    'company_id' => $companyId,
-                    'name' => $fullName,
-                    'email' => $validated['email'],
-                    'password' => Hash::make($validated['password']),
-                    'is_active' => true,
-                ]);
-
-                $user->assignRole('employee');
-            }
-
-            // Assign default work schedule if not specified
-            $scheduleId = $validated['work_schedule_id'] ?? null;
-            if (! $scheduleId) {
-                $defaultSchedule = WorkSchedule::where('company_id', $companyId)
-                    ->where('is_active', true)
-                    ->orderByDesc('is_default')
-                    ->first();
-                $scheduleId = $defaultSchedule?->id;
-            }
+            $scheduleId = $this->resolveWorkScheduleId($companyId, $validated['work_schedule_id'] ?? null);
 
             $employeeData = $validated;
             unset($employeeData['password'], $employeeData['office_location_ids'], $employeeData['primary_office_id']);
@@ -180,15 +148,11 @@ class EmployeeController extends AdminBaseController
 
             $emp = Employee::create($employeeData);
 
-            // Office locations
             $officeIds = $request->input('office_location_ids', []);
             $primaryOfficeId = (int) $request->input('primary_office_id');
 
             if (empty($officeIds)) {
-                $defaultOffice = OfficeLocation::where('company_id', $companyId)
-                    ->where('is_active', true)
-                    ->orderByDesc('is_headquarters')
-                    ->first();
+                $defaultOffice = $this->resolveDefaultOfficeLocation($companyId);
                 if ($defaultOffice) {
                     $officeIds = [$defaultOffice->id];
                     $primaryOfficeId = $defaultOffice->id;
@@ -196,10 +160,7 @@ class EmployeeController extends AdminBaseController
             }
 
             if (! empty($officeIds)) {
-                $syncData = [];
-                foreach ($officeIds as $offId) {
-                    $syncData[(int) $offId] = ['is_primary' => ((int) $offId === $primaryOfficeId)];
-                }
+                $syncData = $this->buildOfficePivotData($officeIds, $primaryOfficeId);
                 $emp->officeLocations()->attach($syncData);
             }
 
@@ -229,17 +190,7 @@ class EmployeeController extends AdminBaseController
             $emailRule[] = 'unique:users,email';
         }
 
-        // Normalize parameter aliases for frontend compatibility
-        $normalizations = [];
-        if ($request->has('birth_date') && ! $request->has('date_of_birth')) {
-            $normalizations['date_of_birth'] = $request->input('birth_date');
-        }
-        if ($request->input('employment_status') === 'internship') {
-            $normalizations['employment_status'] = 'intern';
-        }
-        if (! empty($normalizations)) {
-            $request->merge($normalizations);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'first_name' => ['sometimes', 'required', 'string', 'max:255'],
@@ -300,10 +251,7 @@ class EmployeeController extends AdminBaseController
             if ($request->has('office_location_ids')) {
                 $officeIds = $request->input('office_location_ids', []);
                 $primaryId = (int) $request->input('primary_office_id');
-                $syncData = [];
-                foreach ($officeIds as $offId) {
-                    $syncData[(int) $offId] = ['is_primary' => ((int) $offId === $primaryId)];
-                }
+                $syncData = $this->buildOfficePivotData($officeIds, $primaryId);
                 $employee->officeLocations()->sync($syncData);
             }
         });
@@ -371,9 +319,15 @@ class EmployeeController extends AdminBaseController
             ->orderBy('name')
             ->get();
 
-        $positions = Position::where('company_id', $companyId)
-            ->where('is_active', true)
-            ->select('id', 'name', 'code', 'level')
+        $positionsQuery = Position::where('company_id', $companyId)
+            ->where('is_active', true);
+
+        if ($request->filled('department_id')) {
+            $positionsQuery->where('department_id', $request->input('department_id'));
+        }
+
+        $positions = $positionsQuery
+            ->select('id', 'company_id', 'department_id', 'name', 'code', 'level')
             ->orderBy('name')
             ->get();
 
@@ -398,5 +352,90 @@ class EmployeeController extends AdminBaseController
                 'office_locations' => $officeLocations,
             ],
         ]);
+    }
+
+    /**
+     * Normalize frontend parameter aliases for employee payload.
+     */
+    private function normalizePayload(Request $request): void
+    {
+        $normalizations = [];
+        if ($request->has('birth_date') && ! $request->has('date_of_birth')) {
+            $normalizations['date_of_birth'] = $request->input('birth_date');
+        }
+        if ($request->input('employment_status') === 'internship') {
+            $normalizations['employment_status'] = 'intern';
+        }
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
+    }
+
+    /**
+     * Build pivot data array for syncing employee office locations.
+     */
+    private function buildOfficePivotData(array $officeIds, int $primaryOfficeId): array
+    {
+        $syncData = [];
+        foreach ($officeIds as $offId) {
+            $syncData[(int) $offId] = [
+                'is_primary' => ((int) $offId === $primaryOfficeId),
+            ];
+        }
+
+        return $syncData;
+    }
+
+    /**
+     * Create user account associated with employee if credentials are provided.
+     */
+    private function createUserAccount(int $companyId, array $validated): ?User
+    {
+        if (empty($validated['password']) || empty($validated['email'])) {
+            return null;
+        }
+
+        setPermissionsTeamId($companyId);
+        $fullName = trim($validated['first_name'].' '.($validated['last_name'] ?? ''));
+
+        $user = User::create([
+            'company_id' => $companyId,
+            'name' => $fullName,
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'is_active' => true,
+        ]);
+
+        $user->assignRole('employee');
+
+        return $user;
+    }
+
+    /**
+     * Resolve default or specified work schedule ID.
+     */
+    private function resolveWorkScheduleId(int $companyId, ?int $scheduleId): ?int
+    {
+        if ($scheduleId) {
+            return $scheduleId;
+        }
+
+        $defaultSchedule = WorkSchedule::where('company_id', $companyId)
+            ->where('is_active', true)
+            ->orderByDesc('is_default')
+            ->first();
+
+        return $defaultSchedule?->id;
+    }
+
+    /**
+     * Resolve default headquarters office location for the company.
+     */
+    private function resolveDefaultOfficeLocation(int $companyId): ?OfficeLocation
+    {
+        return OfficeLocation::where('company_id', $companyId)
+            ->where('is_active', true)
+            ->orderByDesc('is_headquarters')
+            ->first();
     }
 }

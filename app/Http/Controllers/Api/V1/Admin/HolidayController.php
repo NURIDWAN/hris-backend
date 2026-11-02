@@ -40,10 +40,7 @@ class HolidayController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
-        // Normalize is_national boolean to type string
-        if ($request->has('is_national') && ! $request->has('type')) {
-            $request->merge(['type' => $request->boolean('is_national') ? 'national' : 'company']);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -85,10 +82,7 @@ class HolidayController extends AdminBaseController
 
         $holiday = Holiday::where('company_id', $companyId)->findOrFail($id);
 
-        // Normalize is_national boolean to type string
-        if ($request->has('is_national') && ! $request->has('type')) {
-            $request->merge(['type' => $request->boolean('is_national') ? 'national' : 'company']);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
@@ -173,5 +167,17 @@ class HolidayController extends AdminBaseController
             'created' => $created,
             'skipped' => $skipped,
         ], "Berhasil men-generate {$created} hari libur nasional ({$skipped} dilewati)");
+    }
+
+    /**
+     * Normalize frontend parameter aliases for holiday payload.
+     */
+    private function normalizePayload(Request $request): void
+    {
+        if ($request->has('is_national') && ! $request->has('type')) {
+            $request->merge([
+                'type' => $request->boolean('is_national') ? 'national' : 'company',
+            ]);
+        }
     }
 }

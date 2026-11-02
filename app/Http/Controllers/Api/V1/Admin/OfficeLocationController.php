@@ -60,13 +60,11 @@ class OfficeLocationController extends AdminBaseController
         ]);
 
         if (! empty($validated['is_headquarters'])) {
-            OfficeLocation::where('company_id', $companyId)
-                ->where('is_headquarters', true)
-                ->update(['is_headquarters' => false]);
+            $this->unsetOtherHeadquarters($companyId);
         }
 
         if (empty($validated['code'])) {
-            $validated['code'] = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $validated['name']), 0, 4)).'-'.rand(100, 999);
+            $validated['code'] = $this->generateLocationCode($validated['name']);
         }
 
         $location = OfficeLocation::create([
@@ -116,10 +114,7 @@ class OfficeLocationController extends AdminBaseController
         ]);
 
         if (! empty($validated['is_headquarters'])) {
-            OfficeLocation::where('company_id', $companyId)
-                ->where('id', '!=', $location->id)
-                ->where('is_headquarters', true)
-                ->update(['is_headquarters' => false]);
+            $this->unsetOtherHeadquarters($companyId, (int) $location->id);
         }
 
         if ($request->has('is_active')) {
@@ -194,5 +189,31 @@ class OfficeLocationController extends AdminBaseController
         $location->employees()->detach($employee->id);
 
         return $this->successResponse(null, 'Karyawan berhasil dilepas dari lokasi kantor');
+    }
+
+    /**
+     * Unset headquarters flag on other office locations within the company.
+     */
+    private function unsetOtherHeadquarters(int $companyId, ?int $exceptLocationId = null): void
+    {
+        $query = OfficeLocation::where('company_id', $companyId)
+            ->where('is_headquarters', true);
+
+        if ($exceptLocationId !== null) {
+            $query->where('id', '!=', $exceptLocationId);
+        }
+
+        $query->update(['is_headquarters' => false]);
+    }
+
+    /**
+     * Generate fallback office location code from name.
+     */
+    private function generateLocationCode(string $name): string
+    {
+        $sanitized = preg_replace('/[^A-Za-z0-9]/', '', $name);
+        $prefix = strtoupper(substr((string) $sanitized, 0, 4));
+
+        return $prefix.'-'.rand(100, 999);
     }
 }

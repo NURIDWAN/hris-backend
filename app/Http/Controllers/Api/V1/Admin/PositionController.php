@@ -9,6 +9,23 @@ use Illuminate\Validation\Rule;
 
 class PositionController extends AdminBaseController
 {
+    private const LEVEL_MAP = [
+        'intern' => 1,
+        'internship' => 1,
+        'magang' => 1,
+        'junior' => 2,
+        'staff' => 2,
+        'senior' => 3,
+        'lead' => 4,
+        'team_lead' => 4,
+        'supervisor' => 5,
+        'spv' => 5,
+        'manager' => 6,
+        'head' => 6,
+        'director' => 7,
+        'vp' => 7,
+    ];
+
     public function index(Request $request): JsonResponse
     {
         $companyId = $this->getCompanyId($request);
@@ -42,27 +59,7 @@ class PositionController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
-        // Normalize string level to integer if necessary
-        if ($request->has('level') && ! is_numeric($request->input('level'))) {
-            $levelMap = [
-                'intern' => 1,
-                'internship' => 1,
-                'magang' => 1,
-                'junior' => 2,
-                'staff' => 2,
-                'senior' => 3,
-                'lead' => 4,
-                'team_lead' => 4,
-                'supervisor' => 5,
-                'spv' => 5,
-                'manager' => 6,
-                'head' => 6,
-                'director' => 7,
-                'vp' => 7,
-            ];
-            $lvl = strtolower(trim((string) $request->input('level')));
-            $request->merge(['level' => $levelMap[$lvl] ?? 1]);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -109,27 +106,7 @@ class PositionController extends AdminBaseController
 
         $position = Position::where('company_id', $companyId)->findOrFail($id);
 
-        // Normalize string level to integer if necessary
-        if ($request->has('level') && ! is_numeric($request->input('level'))) {
-            $levelMap = [
-                'intern' => 1,
-                'internship' => 1,
-                'magang' => 1,
-                'junior' => 2,
-                'staff' => 2,
-                'senior' => 3,
-                'lead' => 4,
-                'team_lead' => 4,
-                'supervisor' => 5,
-                'spv' => 5,
-                'manager' => 6,
-                'head' => 6,
-                'director' => 7,
-                'vp' => 7,
-            ];
-            $lvl = strtolower(trim((string) $request->input('level')));
-            $request->merge(['level' => $levelMap[$lvl] ?? 1]);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
@@ -171,5 +148,16 @@ class PositionController extends AdminBaseController
         $position->delete();
 
         return $this->successResponse(null, 'Jabatan berhasil dihapus');
+    }
+
+    /**
+     * Normalize frontend position level parameter to integer.
+     */
+    private function normalizePayload(Request $request): void
+    {
+        if ($request->has('level') && ! is_numeric($request->input('level'))) {
+            $lvl = strtolower(trim((string) $request->input('level')));
+            $request->merge(['level' => self::LEVEL_MAP[$lvl] ?? 1]);
+        }
     }
 }

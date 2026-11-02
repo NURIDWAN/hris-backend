@@ -50,6 +50,7 @@ beforeEach(function () {
 
     $this->position = Position::create([
         'company_id' => $this->company->id,
+        'department_id' => $this->department->id,
         'name' => 'Software Engineer',
         'code' => 'SWE',
         'level' => 1,
@@ -302,13 +303,27 @@ describe('GET /api/v1/admin/employees/options', function () {
                         '*' => ['id', 'name', 'code'],
                     ],
                     'positions' => [
-                        '*' => ['id', 'name', 'code', 'level'],
+                        '*' => ['id', 'company_id', 'department_id', 'name', 'code', 'level'],
                     ],
                 ],
             ]);
 
         expect($response->json('data.departments'))->not->toBeEmpty();
         expect($response->json('data.positions'))->not->toBeEmpty();
+    });
+
+    it('filters positions by department_id when provided', function () {
+        Sanctum::actingAs($this->adminUser);
+
+        $deptId = $this->department->id;
+        $response = $this->getJson("/api/v1/admin/employees/options?department_id={$deptId}");
+
+        $response->assertOk();
+        $positions = $response->json('data.positions');
+        expect($positions)->not->toBeEmpty();
+        foreach ($positions as $pos) {
+            expect($pos['department_id'])->toBe($deptId);
+        }
     });
 });
 

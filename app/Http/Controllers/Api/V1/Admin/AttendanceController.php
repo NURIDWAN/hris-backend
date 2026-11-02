@@ -9,6 +9,7 @@ use App\Models\WorkSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 
 class AttendanceController extends AdminBaseController
@@ -18,7 +19,7 @@ class AttendanceController extends AdminBaseController
         $companyId = $this->getCompanyId($request);
 
         $query = Attendance::with([
-            'employee:id,first_name,last_name,employee_id,department_id,position_id,avatar',
+            'employee:id,first_name,last_name,employee_id,department_id,position_id,photo',
             'employee.department:id,name',
             'employee.position:id,name',
             'workSchedule:id,name,start_time,end_time',
@@ -66,31 +67,7 @@ class AttendanceController extends AdminBaseController
     {
         $companyId = $this->getCompanyId($request);
 
-        // Normalize parameter aliases for frontend compatibility
-        $normalizations = [];
-        if ($request->has('time_in') && ! $request->has('clock_in')) {
-            $normalizations['clock_in'] = $request->input('time_in');
-        }
-        if ($request->has('time_out') && ! $request->has('clock_out')) {
-            $normalizations['clock_out'] = $request->input('time_out');
-        }
-        if ($request->has('notes') && ! $request->has('admin_notes')) {
-            $normalizations['admin_notes'] = $request->input('notes');
-        }
-        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
-        if (! empty($normalizations['clock_in'])) {
-            $normalizations['clock_in'] = substr($normalizations['clock_in'], 0, 5);
-        } elseif ($request->has('clock_in') && is_string($request->input('clock_in'))) {
-            $normalizations['clock_in'] = substr($request->input('clock_in'), 0, 5);
-        }
-        if (! empty($normalizations['clock_out'])) {
-            $normalizations['clock_out'] = substr($normalizations['clock_out'], 0, 5);
-        } elseif ($request->has('clock_out') && is_string($request->input('clock_out'))) {
-            $normalizations['clock_out'] = substr($request->input('clock_out'), 0, 5);
-        }
-        if (! empty($normalizations)) {
-            $request->merge($normalizations);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'employee_id' => [
@@ -115,9 +92,7 @@ class AttendanceController extends AdminBaseController
 
         $employee = Employee::where('company_id', $companyId)->findOrFail($validated['employee_id']);
         $date = Carbon::parse($validated['date']);
-        $resolvedSchedule = method_exists($employee, 'resolveScheduleForDate')
-            ? $employee->resolveScheduleForDate($date)
-            : $employee->workSchedule;
+        $resolvedSchedule = $this->resolveEmployeeSchedule($employee, $date);
 
         $clockInTime = ! empty($validated['clock_in'])
             ? $date->copy()->setTimeFromTimeString($validated['clock_in'])
@@ -176,31 +151,7 @@ class AttendanceController extends AdminBaseController
 
         $attendance = Attendance::where('company_id', $companyId)->findOrFail($id);
 
-        // Normalize parameter aliases for frontend compatibility
-        $normalizations = [];
-        if ($request->has('time_in') && ! $request->has('clock_in')) {
-            $normalizations['clock_in'] = $request->input('time_in');
-        }
-        if ($request->has('time_out') && ! $request->has('clock_out')) {
-            $normalizations['clock_out'] = $request->input('time_out');
-        }
-        if ($request->has('notes') && ! $request->has('admin_notes')) {
-            $normalizations['admin_notes'] = $request->input('notes');
-        }
-        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
-        if (! empty($normalizations['clock_in'])) {
-            $normalizations['clock_in'] = substr($normalizations['clock_in'], 0, 5);
-        } elseif ($request->has('clock_in') && is_string($request->input('clock_in'))) {
-            $normalizations['clock_in'] = substr($request->input('clock_in'), 0, 5);
-        }
-        if (! empty($normalizations['clock_out'])) {
-            $normalizations['clock_out'] = substr($normalizations['clock_out'], 0, 5);
-        } elseif ($request->has('clock_out') && is_string($request->input('clock_out'))) {
-            $normalizations['clock_out'] = substr($request->input('clock_out'), 0, 5);
-        }
-        if (! empty($normalizations)) {
-            $request->merge($normalizations);
-        }
+        $this->normalizePayload($request);
 
         $validated = $request->validate([
             'date' => ['sometimes', 'required', 'date'],
@@ -212,9 +163,7 @@ class AttendanceController extends AdminBaseController
 
         $date = isset($validated['date']) ? Carbon::parse($validated['date']) : Carbon::parse($attendance->date);
         $employee = $attendance->employee;
-        $resolvedSchedule = method_exists($employee, 'resolveScheduleForDate')
-            ? $employee->resolveScheduleForDate($date)
-            : $employee->workSchedule;
+        $resolvedSchedule = $this->resolveEmployeeSchedule($employee, $date);
 
         $clockInStr = array_key_exists('clock_in', $validated)
             ? $validated['clock_in']
@@ -448,7 +397,7 @@ class AttendanceController extends AdminBaseController
 
         // Build attendances query
         $query = Attendance::with([
-            'employee:id,first_name,last_name,employee_id,department_id,position_id,avatar',
+            'employee:id,first_name,last_name,employee_id,department_id,position_id,photo',
             'employee.department:id,name',
             'employee.position:id,name',
             'officeLocation',
@@ -484,101 +433,17 @@ class AttendanceController extends AdminBaseController
 
         // Process attendances with coordinates, distance and geofence verification
         $processedAttendances = $attendances->map(function ($att, $index) use ($offices, $defaultLat, $defaultLng) {
-            $hasCoords = $att->clock_in_latitude !== null && $att->clock_in_longitude !== null;
-            $lat = $hasCoords ? (float) $att->clock_in_latitude : ($defaultLat + (sin($index + 1) * 0.0006));
-            $lng = $hasCoords ? (float) $att->clock_in_longitude : ($defaultLng + (cos($index + 1) * 0.0006));
-
-            // Determine matching office
-            $office = $att->officeLocation;
-            if (! $office && $att->office_location_id) {
-                $office = $offices->firstWhere('id', $att->office_location_id);
-            }
-            if (! $office && $offices->isNotEmpty()) {
-                // Find closest office
-                $office = $offices->sortBy(fn ($o) => $o->distanceTo($lat, $lng))->first();
-            }
-
-            $distance = 0.0;
-            $isWithinRadius = true;
-            if ($office) {
-                $distance = $office->distanceTo($lat, $lng);
-                $isWithinRadius = $distance <= $office->radius;
-            }
-
-            $isOnTime = $att->clock_in_status === 'on_time' || ($att->status === 'present' && (int) $att->late_minutes === 0);
-            $clockInStatus = $isOnTime ? 'on_time' : 'late';
-
-            $photoUrl = null;
-            if ($att->clock_in_photo) {
-                $photoUrl = str_starts_with($att->clock_in_photo, 'http')
-                    ? $att->clock_in_photo
-                    : asset('storage/' . $att->clock_in_photo);
-            }
-
-            return [
-                'id' => $att->id,
-                'employee_id' => $att->employee_id,
-                'employee_name' => trim(($att->employee?->first_name ?? '') . ' ' . ($att->employee?->last_name ?? '')),
-                'employee_code' => $att->employee?->employee_id ?? '-',
-                'avatar' => $att->employee?->avatar,
-                'department' => $att->employee?->department?->name ?? 'Operasional',
-                'position' => $att->employee?->position?->name ?? 'Staff',
-                'date' => $att->date instanceof \DateTimeInterface ? $att->date->format('Y-m-d') : (string) $att->date,
-                'clock_in' => $att->clock_in ? ($att->clock_in instanceof \DateTimeInterface ? $att->clock_in->format('H:i:s') : (string) $att->clock_in) : null,
-                'clock_out' => $att->clock_out ? ($att->clock_out instanceof \DateTimeInterface ? $att->clock_out->format('H:i:s') : (string) $att->clock_out) : null,
-                'status' => $att->status,
-                'clock_in_status' => $clockInStatus,
-                'late_minutes' => (int) ($att->late_minutes ?? 0),
-                'latitude' => (float) $lat,
-                'longitude' => (float) $lng,
-                'office_id' => $office?->id,
-                'office_name' => $office?->name ?? 'Kantor Utama',
-                'office_radius' => $office?->radius ?? 100,
-                'distance_meters' => (float) $distance,
-                'is_within_radius' => (bool) $isWithinRadius,
-                'clock_in_photo' => $photoUrl,
-                'notes' => $att->clock_in_notes ?? $att->admin_notes ?? null,
-            ];
+            return $this->formatMapAttendanceRecord($att, $index, $offices, $defaultLat, $defaultLng);
         });
 
         // Compute office-level aggregation
         $officesData = $offices->map(function ($office) use ($processedAttendances) {
-            $officeAtts = $processedAttendances->where('office_id', $office->id);
-            $presentCount = $officeAtts->count();
-            $onTimeCount = $officeAtts->where('clock_in_status', 'on_time')->count();
-            $lateCount = $officeAtts->where('clock_in_status', 'late')->count();
-            $outsideRadiusCount = $officeAtts->where('is_within_radius', false)->count();
-
-            return [
-                'id' => $office->id,
-                'name' => $office->name,
-                'code' => $office->code,
-                'address' => $office->address,
-                'city' => $office->city,
-                'latitude' => (float) $office->latitude,
-                'longitude' => (float) $office->longitude,
-                'radius' => (int) $office->radius,
-                'is_headquarters' => (bool) $office->is_headquarters,
-                'assigned_count' => (int) ($office->employees_count ?? 0),
-                'present_count' => $presentCount,
-                'on_time_count' => $onTimeCount,
-                'late_count' => $lateCount,
-                'outside_radius_count' => $outsideRadiusCount,
-            ];
+            return $this->buildOfficeMapSummary($office, $processedAttendances);
         });
 
         // Filter status if requested
         $statusFilter = $request->input('status');
-        $filteredAttendances = $processedAttendances;
-        if ($statusFilter && $statusFilter !== 'ALL') {
-            if ($statusFilter === 'on_time') {
-                $filteredAttendances = $filteredAttendances->where('clock_in_status', 'on_time');
-            } elseif ($statusFilter === 'late') {
-                $filteredAttendances = $filteredAttendances->where('clock_in_status', 'late');
-            } elseif ($statusFilter === 'outside_radius') {
-                $filteredAttendances = $filteredAttendances->where('is_within_radius', false);
-            }
-        }
+        $filteredAttendances = $this->filterMapAttendances($processedAttendances, $statusFilter);
 
         $summary = [
             'total_offices' => $offices->count(),
@@ -594,5 +459,161 @@ class AttendanceController extends AdminBaseController
             'offices' => $officesData->values(),
             'attendances' => $filteredAttendances->values(),
         ], 'Data monitoring peta presensi berhasil diambil');
+    }
+
+    /**
+     * Normalize frontend parameter aliases and sanitize time strings.
+     */
+    private function normalizePayload(Request $request): void
+    {
+        $normalizations = [];
+        if ($request->has('time_in') && ! $request->has('clock_in')) {
+            $normalizations['clock_in'] = $request->input('time_in');
+        }
+        if ($request->has('time_out') && ! $request->has('clock_out')) {
+            $normalizations['clock_out'] = $request->input('time_out');
+        }
+        if ($request->has('notes') && ! $request->has('admin_notes')) {
+            $normalizations['admin_notes'] = $request->input('notes');
+        }
+
+        // Sanitize seconds format (e.g. "08:00:00" -> "08:00")
+        if (! empty($normalizations['clock_in'])) {
+            $normalizations['clock_in'] = substr($normalizations['clock_in'], 0, 5);
+        } elseif ($request->has('clock_in') && is_string($request->input('clock_in'))) {
+            $normalizations['clock_in'] = substr($request->input('clock_in'), 0, 5);
+        }
+
+        if (! empty($normalizations['clock_out'])) {
+            $normalizations['clock_out'] = substr($normalizations['clock_out'], 0, 5);
+        } elseif ($request->has('clock_out') && is_string($request->input('clock_out'))) {
+            $normalizations['clock_out'] = substr($request->input('clock_out'), 0, 5);
+        }
+
+        if (! empty($normalizations)) {
+            $request->merge($normalizations);
+        }
+    }
+
+    /**
+     * Resolve employee work schedule for the given date.
+     */
+    private function resolveEmployeeSchedule(?Employee $employee, Carbon $date): ?WorkSchedule
+    {
+        if (! $employee) {
+            return null;
+        }
+
+        return method_exists($employee, 'resolveScheduleForDate')
+            ? $employee->resolveScheduleForDate($date)
+            : $employee->workSchedule;
+    }
+
+    /**
+     * Format a single attendance record for map monitor response.
+     */
+    private function formatMapAttendanceRecord(
+        Attendance $att,
+        int $index,
+        Collection $offices,
+        float $defaultLat,
+        float $defaultLng
+    ): array {
+        $hasCoords = $att->clock_in_latitude !== null && $att->clock_in_longitude !== null;
+        $lat = $hasCoords ? (float) $att->clock_in_latitude : ($defaultLat + (sin($index + 1) * 0.0006));
+        $lng = $hasCoords ? (float) $att->clock_in_longitude : ($defaultLng + (cos($index + 1) * 0.0006));
+
+        // Determine matching office
+        $office = $att->officeLocation;
+        if (! $office && $att->office_location_id) {
+            $office = $offices->firstWhere('id', $att->office_location_id);
+        }
+        if (! $office && $offices->isNotEmpty()) {
+            $office = $offices->sortBy(fn ($o) => $o->distanceTo($lat, $lng))->first();
+        }
+
+        $distance = 0.0;
+        $isWithinRadius = true;
+        if ($office) {
+            $distance = $office->distanceTo($lat, $lng);
+            $isWithinRadius = $distance <= $office->radius;
+        }
+
+        $isOnTime = $att->clock_in_status === 'on_time' || ($att->status === 'present' && (int) $att->late_minutes === 0);
+        $clockInStatus = $isOnTime ? 'on_time' : 'late';
+
+        $photoUrl = null;
+        if ($att->clock_in_photo) {
+            $photoUrl = str_starts_with($att->clock_in_photo, 'http')
+                ? $att->clock_in_photo
+                : asset('storage/'.$att->clock_in_photo);
+        }
+
+        return [
+            'id' => $att->id,
+            'employee_id' => $att->employee_id,
+            'employee_name' => trim(($att->employee?->first_name ?? '').' '.($att->employee?->last_name ?? '')),
+            'employee_code' => $att->employee?->employee_id ?? '-',
+            'avatar' => $att->employee?->avatar,
+            'department' => $att->employee?->department?->name ?? 'Operasional',
+            'position' => $att->employee?->position?->name ?? 'Staff',
+            'date' => $att->date instanceof \DateTimeInterface ? $att->date->format('Y-m-d') : (string) $att->date,
+            'clock_in' => $att->clock_in ? ($att->clock_in instanceof \DateTimeInterface ? $att->clock_in->format('H:i:s') : (string) $att->clock_in) : null,
+            'clock_out' => $att->clock_out ? ($att->clock_out instanceof \DateTimeInterface ? $att->clock_out->format('H:i:s') : (string) $att->clock_out) : null,
+            'status' => $att->status,
+            'clock_in_status' => $clockInStatus,
+            'late_minutes' => (int) ($att->late_minutes ?? 0),
+            'latitude' => (float) $lat,
+            'longitude' => (float) $lng,
+            'office_id' => $office?->id,
+            'office_name' => $office?->name ?? 'Kantor Utama',
+            'office_radius' => $office?->radius ?? 100,
+            'distance_meters' => (float) $distance,
+            'is_within_radius' => (bool) $isWithinRadius,
+            'clock_in_photo' => $photoUrl,
+            'notes' => $att->clock_in_notes ?? $att->admin_notes ?? null,
+        ];
+    }
+
+    /**
+     * Compute office-level aggregation metrics for map monitor.
+     */
+    private function buildOfficeMapSummary(OfficeLocation $office, Collection $processedAttendances): array
+    {
+        $officeAtts = $processedAttendances->where('office_id', $office->id);
+
+        return [
+            'id' => $office->id,
+            'name' => $office->name,
+            'code' => $office->code,
+            'address' => $office->address,
+            'city' => $office->city,
+            'latitude' => (float) $office->latitude,
+            'longitude' => (float) $office->longitude,
+            'radius' => (int) $office->radius,
+            'is_headquarters' => (bool) $office->is_headquarters,
+            'assigned_count' => (int) ($office->employees_count ?? 0),
+            'present_count' => $officeAtts->count(),
+            'on_time_count' => $officeAtts->where('clock_in_status', 'on_time')->count(),
+            'late_count' => $officeAtts->where('clock_in_status', 'late')->count(),
+            'outside_radius_count' => $officeAtts->where('is_within_radius', false)->count(),
+        ];
+    }
+
+    /**
+     * Filter processed attendances by status.
+     */
+    private function filterMapAttendances(Collection $attendances, ?string $statusFilter): Collection
+    {
+        if (! $statusFilter || $statusFilter === 'ALL') {
+            return $attendances;
+        }
+
+        return match ($statusFilter) {
+            'on_time' => $attendances->where('clock_in_status', 'on_time'),
+            'late' => $attendances->where('clock_in_status', 'late'),
+            'outside_radius' => $attendances->where('is_within_radius', false),
+            default => $attendances,
+        };
     }
 }

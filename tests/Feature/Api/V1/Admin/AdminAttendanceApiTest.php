@@ -59,6 +59,22 @@ beforeEach(function () {
 });
 
 describe('Admin Attendance Management API', function () {
+    it('can list attendances without column errors', function () {
+        $this->employee->update(['photo' => 'avatars/test.jpg']);
+
+        Attendance::create([
+            'company_id' => $this->company->id,
+            'employee_id' => $this->employee->id,
+            'date' => '2026-03-10',
+            'status' => 'present',
+        ]);
+
+        $response = $this->getJson('/api/v1/admin/attendances');
+        $response->assertStatus(200)
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.0.employee.photo', 'avatars/test.jpg')
+            ->assertJsonPath('data.0.employee.avatar', asset('storage/avatars/test.jpg'));
+    });
     it('can record manual attendance and auto-calculate late minutes', function () {
         $response = $this->postJson('/api/v1/admin/attendances', [
             'employee_id' => $this->employee->id,
